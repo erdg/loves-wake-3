@@ -1,0 +1,16 @@
+import React from 'react';
+
+import Button from '@material-ui/core/Button';
+
+const RecoverAccountButton = (props) => {
+   return (
+      <Button
+         variant="outlined"
+         color="primary"
+         onClick={props.handleRecover}
+      > Recover Account
+      </Button>
+   )
+}
+
+export default RecoverAccountButton;
