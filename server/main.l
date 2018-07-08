@@ -35,10 +35,10 @@
 # jwt secret key
 # WARNING -- CHANGE THIS SUPER SECRET KEY TO 
 # SOMETHING SECURE FOR PRODUCTION
-(setq *Secret "Secret")
+# (setq *Secret "Secret")
 
 # production
-# (setq *Secret (rc "loves-wake-3/.config" '*Secret))
+(setq *Secret (rc "loves-wake-3/.config" '*Secret))
 
 # email address
 (setq *Email "erik@erikdgustafson.com")
@@ -50,7 +50,8 @@
       (if *Dbg
          # "http://192.168.0.48:8888/"
          "http://192.168.0.23:8888/"
-         "https://erikdgustafson.com/api/" )
+         # "https://erikdgustafson.com/api/" )
+         "https://erikdgustafson.com/lw3/" )
 ]
 
 # FIXME - this allows access to the blob directory.
@@ -67,7 +68,7 @@
 (allow *Blob T)
 
 (de main ()
-   (call "mkdir" "-p" "db/loves-wake/" *Blob)
+   (call "mkdir" "-p" *Pool *Blob)
    (pool *Pool *Dbs) )
 
 (de go () 

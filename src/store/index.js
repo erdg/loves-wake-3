@@ -7,13 +7,14 @@ import history from '../history';
 // const API_ENDPOINT = "http://192.168.0.48:8888/";
 
 // kathleen's house
-const API_ENDPOINT = "http://192.168.0.23:8888/";
+// const API_ENDPOINT = "http://192.168.0.23:8888/";
 
 // production
 // const API_ENDPOINT = "https://erikdgustafson.com/api/";
+const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
 
-let store = devtools(createStore({
-// let store = createStore({
+// let store = devtools(createStore({
+let store = createStore({
    // loading state toggle for store actions
    loading: null,
    // server error
@@ -27,8 +28,8 @@ let store = devtools(createStore({
    secondaryAppHeader: false,
    secondaryAppHeaderVisible: true,
 
-}))
-// })
+// }))
+})
 
 let actions = store => ({
 
