@@ -30,7 +30,7 @@ class Memorial extends React.Component {
       ));
 
       return (
-         <div>
+         <div style={{width: '100%'}}>
             <MemorialTabs
                memorial={memorial}
                handleTabChange={this.handleTabChange}
