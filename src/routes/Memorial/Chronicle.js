@@ -22,7 +22,7 @@ const Chronicle2 = (props) => (
          overflow: 'auto',
          maxHeight: (
             props.secondaryAppHeaderVisible ? 
-               window.screen.availHeight - 244
+               window.screen.availHeight - 260
                   :
                document.getElementById("screen").scrollHeight
          )
