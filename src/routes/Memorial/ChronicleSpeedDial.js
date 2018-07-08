@@ -65,28 +65,48 @@ class ChronicleSpeedDial extends React.Component {
                   <Button
                      variant="fab"
                      mini
-                     onClick={this.handleClick}
+                     onClick={
+                        () => {
+                           this.handleClick();
+                           alert("Added a photo");
+                        }
+                     }
                      style={{marginBottom: 16}}
                   > <PhotoIcon />
                   </Button>
                   <Button
                      variant="fab"
                      mini
-                     onClick={this.handleClick}
+                     onClick={
+                        () => {
+                           this.handleClick();
+                           alert("Added a story/memory");
+                        }
+                     }
                      style={{marginBottom: 16}}
                   > <EmailIcon />
                   </Button>
                   <Button
                      variant="fab"
                      mini
-                     onClick={this.handleClick}
+                     onClick={
+                        () => {
+                           this.handleClick();
+                           alert("Added a video");
+                        }
+                     }
                      style={{marginBottom: 16}}
                   > <VideoIcon />
                   </Button>
                   <Button
                      variant="fab"
                      mini
-                     onClick={this.handleClick}
+                     onClick={
+                        () => {
+                           this.handleClick();
+                           alert("Added audio");
+                        }
+                     }
                      style={{marginBottom: 16}}
                   > <AudioIcon />
                   </Button>

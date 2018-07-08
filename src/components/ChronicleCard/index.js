@@ -16,6 +16,8 @@ import Paper from '@material-ui/core/Paper';
 import Menu from '@material-ui/core/Menu';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
@@ -157,20 +159,24 @@ const ChronicleCardMenu = (props) => {
                   backgroundColor: '#eee'
                }}
             >
-               <MenuList>
-                  <MenuItem>
+               <List>
+                  <ListItem button
+                     onClick={() => alert("Edited item (fake)")}
+                  >
                      <ListItemIcon>
                         <EditIcon />
                      </ListItemIcon>
                      <ListItemText inset primary="Edit item" />
-                  </MenuItem>
-                  <MenuItem>
+                  </ListItem>
+                  <ListItem button
+                     onClick={() => alert("Deleted item (fake)")}
+                  >
                      <ListItemIcon>
                         <DeleteIcon />
                      </ListItemIcon>
                      <ListItemText inset primary="Delete item" />
-                  </MenuItem>
-               </MenuList>
+                  </ListItem>
+               </List>
             </Paper>
          }
       </div>
