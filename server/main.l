@@ -48,8 +48,8 @@
    *Blob "blob/"
    *API 
       (if *Dbg
-         # "http://192.168.0.48:8888/"
-         "http://192.168.0.23:8888/"
+         # "http://192.168.0.48:8887/"
+         "http://192.168.0.23:8887/"
          # "https://erikdgustafson.com/api/" )
          "https://erikdgustafson.com/lw3/" )
 ]
@@ -73,4 +73,4 @@
 
 (de go () 
    (retire 10)
-   (server 8888) )
+   (server 8887) )

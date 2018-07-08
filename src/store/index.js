@@ -4,10 +4,10 @@ import history from '../history';
 
 // API
 // development
-// const API_ENDPOINT = "http://192.168.0.48:8888/";
+// const API_ENDPOINT = "http://192.168.0.48:8887/";
 
 // kathleen's house
-// const API_ENDPOINT = "http://192.168.0.23:8888/";
+// const API_ENDPOINT = "http://192.168.0.23:8887/";
 
 // production
 // const API_ENDPOINT = "https://erikdgustafson.com/api/";
