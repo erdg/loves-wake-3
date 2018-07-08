@@ -19,24 +19,6 @@ const AppMenu = (props) => {
             role="button"
             onKeyDown={props.toggleMenu}
          >
-            <ListItem
-               button
-               onClick={props.toggleMenu}
-               style={{
-                  backgroundColor: theme.palette.primary.main,
-               }}
-            >
-               <ListItemIcon>
-                  <MenuIcon
-                     style={{
-                        color: theme.palette.secondary.main,
-                        marginTop: 8,
-                        marginBottom: 8
-                     }}
-                  />
-               </ListItemIcon>
-            </ListItem>
-            <Divider />
             <AppMenuItems
                toggleMenu={props.toggleMenu}
             />
