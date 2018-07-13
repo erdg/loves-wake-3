@@ -10,12 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import Badge from '@material-ui/core/Badge';
 import Paper from '@material-ui/core/Paper';
-import Menu from '@material-ui/core/Menu';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -94,6 +89,9 @@ class ChronicleCard extends React.Component {
                <ChronicleCardMedia
                   item={this.props.item}
                />
+               {this.props.item.txt &&
+                  <ChronicleCardContent content={this.props.item.txt} />
+               }
                <ChronicleCardActions
                   liked={this.state.liked}
                   handleLikeClick={this.handleLikeClick}
@@ -240,16 +238,20 @@ const ChronicleCardActions = (props) => {
    )
 }
 
+const ChronicleCardContent = (props) => {
+   return (
+      <CardContent>
+         <Typography variant="body1">
+            {props.content}
+         </Typography>
+      </CardContent>
+   )
+}
+
 const ChronicleCardExpandedContent = (props) => {
    return (
       <Collapse in={props.expanded} unmountOnExit >
          <CardContent>
-            <Typography variant="subheading">
-               Additional Content
-            </Typography>
-            <Typography variant="body1">
-               Additional written content goes here
-            </Typography>
             <ChronicleCardComments 
                comments={comments}
             />
