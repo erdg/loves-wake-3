@@ -9,10 +9,13 @@ import VideoIcon from '@material-ui/icons/Videocam';
 import AudioIcon from '@material-ui/icons/Audiotrack';
 import EmailIcon from '@material-ui/icons/Email';
 
+import ChronicleAddItemModal from './ChronicleAddItemModal';
+
 class ChronicleSpeedDial extends React.Component {
    state = {
       open: false,
-      speedDialActions: false
+      speedDialActions: false,
+      showChronicleAddItemModal: false
    }
 
    handleClick = () => {
@@ -27,24 +30,29 @@ class ChronicleSpeedDial extends React.Component {
       this.setState({ open: false })
    }
 
-   handlePhotoClick = () => {
-      alert("added a photo");
+   // handle speed dial action click (add photo, video, etc..)
+   handleActionClick = () => {
+      this.setState({ showChronicleAddItemModal: true })
+   }
+
+   handleCloseChronicleAddItemModal = () => {
+      this.setState({ showChronicleAddItemModal: false })
    }
 
    render () {
-      let isTouch;
-      if (typeof document !== 'undefined') {
-         isTouch = 'ontouchstart' in document.documentElement;
-      }
-
       return (
          <div
             style={{
-               position: 'absolute',
+               position: 'fixed',
                bottom: 16,
                right: 16
             }}
          >
+            <ChronicleAddItemModal
+               showChronicleAddItemModal={this.state.showChronicleAddItemModal}
+               handleCloseChronicleAddItemModal={this.handleCloseChronicleAddItemModal}
+               memorialId={this.props.memorial.id}
+            />
             <Button
                variant="fab"
                color="primary"
@@ -68,7 +76,7 @@ class ChronicleSpeedDial extends React.Component {
                      onClick={
                         () => {
                            this.handleClick();
-                           alert("Added a photo");
+                           this.handleActionClick();
                         }
                      }
                      style={{marginBottom: 16}}

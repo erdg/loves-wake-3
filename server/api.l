@@ -23,6 +23,7 @@
       (cons "user"
          (make
             # name
+            (link (cons "id" (: id)))
             (if (: nm) (link (cons "name" @)))
             (if (: img) (link (cons "img" (pack *API (blob This 'img)))))
             # email
@@ -103,6 +104,7 @@
 # gathers all chronicle entries
 (dm jsonAll> ()
    (make
+      (link (cons "id" (: id)))
       (link (cons "urlNm" (: urlNm)))
       (link (cons "urlStr" (: urlStr)))
       (link (cons "nm" (: nm)))
@@ -297,9 +299,12 @@
       (respondJsonError "This memorial does not exist") ) )
 
 # API/!newChronicle
+# NOTE - need to associate a chronicle item with the user that
+# created it. need to check that user trying to create item has 
+# permission to post to the memorial
 (allow "!newChronicle")
 (de newChronicle ()
-   (if (db 'urlNm '+Memorial (posted "urlNm"))  # -> '@'
+   (if (db 'id '+Memorial (posted "memorialId"))  # -> '@'
       (with 
          # new +Chronicle -> 'This' for rest of prg
          [new! '(+Chronicle)
@@ -311,11 +316,12 @@
          (cond 
             ((posted "image")  # '@' now contains base64 data URL
                (put!> This 'img T)
-               (pipe
-                  # send to base64 utility to decode
-                  (out '(base64 "-d") (prin @))
-                  # write decoded image to db blob file
-                  (out (blob This 'img) (echo) ) ) )
+               (finally (put!> This 'ratio (getImageAspectRatio This))
+                  (pipe
+                     # send to base64 utility to decode
+                     (out '(base64 "-d") (prin @))
+                     # write decoded image to db blob file
+                     (out (blob This 'img) (echo) ) ) ) )
             ((posted "audio")  # '@' now contains base64 data URL
                (put!> This 'aud T)
                (pipe
@@ -330,8 +336,14 @@
                   (out '(base64 "-d") (prin @))
                   # write decoded video to db blob file
                   (out (blob This 'vid) (echo) ) ) ) )
+         (when (posted "txt")  # -> @
+            (put!> This 'txt T)
+            (out (blob This 'txt) (prin @)) )
          (respondJson 
             (json> This) ) ) ) )
+
+(de getImageAspectRatio (Obj)
+   (in (list 'convert (blob Obj 'img) "-format" "%[fx:w/h]" "info:") (line T)) )
 
 (allow "!delChronicle")
 (de delChronicle ()

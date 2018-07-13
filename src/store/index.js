@@ -1,20 +1,24 @@
 import createStore from 'unistore';
 import devtools from 'unistore/devtools';
 import history from '../history';
+import update from 'immutability-helper';
 
 // API
 // development
 // const API_ENDPOINT = "http://192.168.0.48:8887/";
 
 // kathleen's house
-// const API_ENDPOINT = "http://192.168.0.23:8887/";
+const API_ENDPOINT = "http://192.168.0.23:8887/";
+
+// parent's house
+// const API_ENDPOINT = "http://10.0.0.98:8887/";
 
 // production
 // const API_ENDPOINT = "https://erikdgustafson.com/api/";
-const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
+// const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
 
-// let store = devtools(createStore({
-let store = createStore({
+let store = devtools(createStore({
+// let store = createStore({
    // loading state toggle for store actions
    loading: null,
    // server error
@@ -28,8 +32,8 @@ let store = createStore({
    secondaryAppHeader: false,
    secondaryAppHeaderVisible: true,
 
-// }))
-})
+}))
+// })
 
 let actions = store => ({
 
@@ -48,6 +52,20 @@ let actions = store => ({
 
    hideSecondaryAppHeader (state) {
       store.setState({ secondaryAppHeaderVisible: false })
+   },
+
+   addChronicleItem (state, item, memorialId) {
+      // fuck this noise
+      // this is the pattern
+      let newState = update(state.user, {
+         memorials: memorials => update(memorials, {
+            [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+               items: items => update(items, {$unshift: [item]})
+            })
+         })
+      });
+      console.log({ newState });
+      return { user: newState };
    },
 
    loginUser (state, em, pw) {
@@ -125,4 +143,4 @@ let actions = store => ({
 
 })
 
-export { store, actions };
+export { store, actions, API_ENDPOINT };

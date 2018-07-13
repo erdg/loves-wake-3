@@ -4,7 +4,7 @@ import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
 // import MemorialAvatar from 'components/MemorialAvatar';
 import MemorialTabs from './MemorialTabs';
-import Chronicle2 from './Chronicle';
+import Chronicle from './Chronicle';
 import ChronicleSpeedDial from './ChronicleSpeedDial';
 
 class Memorial extends React.Component {
@@ -45,8 +45,8 @@ class Memorial extends React.Component {
             }
             {this.state.view === "C" &&
                <div>
-                  <Chronicle2 memorial={memorial} />
-                  <ChronicleSpeedDial />
+                  <Chronicle memorial={memorial} />
+                  <ChronicleSpeedDial memorial={memorial}/>
                </div>
             }
             {this.state.view === "A" &&
