@@ -38,7 +38,7 @@
 # (setq *Secret "Secret")
 
 # production
-(setq *Secret (rc "loves-wake-3/.config" '*Secret))
+(setq *Secret (rc ".config" '*Secret))
 
 # email address
 (setq *Email "erik@erikdgustafson.com")
