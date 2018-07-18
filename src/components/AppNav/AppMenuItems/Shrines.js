@@ -9,19 +9,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import Dot from '@material-ui/icons/FiberManualRecord';
 
 import { connect } from 'unistore/react';
-
-const testData = {
-   custodian: [ 'Karen Fox', 'Tamlin Olson' ],
-   visitor: [ 'Eric Foster', 'Bruce Foster', 'Grace Galvin' ],
-   follower: [ 'Kurt Cobain', 'Bob Marley' ]
-}
 
 class Shrines extends React.Component {
    state = {
@@ -146,92 +140,92 @@ const ShrinesContent = connect('user')(
    )
 })
 
-const Custodian = (props) => {
-   return (
-      <div>
-         <ListItem button onClick={props.handleCustodianClick}>
-            {props.custodianOpen ? <ExpandLess style={style.colorPrimary} /> : <ExpandMore style={style.colorPrimary} />}
-            <ListItemText>
-               <Typography style={style.colorPrimary}
-                  variant="subheading"
-               >
-                  {`Custodian (${props.shrines.length})`} 
-               </Typography>
-            </ListItemText>
-         </ListItem>
-         <Collapse in={props.custodianOpen} timeout="auto" unmountOnExit >
-            <List component="div">
-               { props.shrines.map((name, index) => (
-                  <ListItem key={index} >
-                     <Dot style={style.colorSecondary} />
-                     <Dot style={style.colorGrey} />
-                     <ListItemText
-                        inset
-                        primary={name}
-                     />
-                  </ListItem>
-               ))}
-            </List>
-         </Collapse>
-      </div>
-   )
-}
+// const Custodian = (props) => {
+//    return (
+//       <div>
+//          <ListItem button onClick={props.handleCustodianClick}>
+//             {props.custodianOpen ? <ExpandLess style={style.colorPrimary} /> : <ExpandMore style={style.colorPrimary} />}
+//             <ListItemText>
+//                <Typography style={style.colorPrimary}
+//                   variant="subheading"
+//                >
+//                   {`Custodian (${props.shrines.length})`} 
+//                </Typography>
+//             </ListItemText>
+//          </ListItem>
+//          <Collapse in={props.custodianOpen} timeout="auto" unmountOnExit >
+//             <List component="div">
+//                { props.shrines.map((name, index) => (
+//                   <ListItem key={index} >
+//                      <Dot style={style.colorSecondary} />
+//                      <Dot style={style.colorGrey} />
+//                      <ListItemText
+//                         inset
+//                         primary={name}
+//                      />
+//                   </ListItem>
+//                ))}
+//             </List>
+//          </Collapse>
+//       </div>
+//    )
+// }
 
-const Visitor = (props) => {
-   return (
-      <div>
-         <ListItem button onClick={props.handleVisitorClick}>
-            {props.visitorOpen ? <ExpandLess style={style.colorPrimary} /> : <ExpandMore style={style.colorPrimary} />}
-            <ListItemText>
-               <Typography style={style.colorPrimary}
-                  variant="subheading"
-               >
-                  {`Visitor (${props.shrines.length})`} 
-               </Typography>
-            </ListItemText>
-         </ListItem>
-         <Collapse in={props.visitorOpen} timeout="auto" unmountOnExit >
-            <List component="div">
-               { props.shrines.map((name, index) => (
-                  <ListItem key={index} >
-                     <ListItemText
-                        inset
-                        primary={name}
-                     />
-                  </ListItem>
-               ))}
-            </List>
-         </Collapse>
-      </div>
-   )
-}
+// const Visitor = (props) => {
+//    return (
+//       <div>
+//          <ListItem button onClick={props.handleVisitorClick}>
+//             {props.visitorOpen ? <ExpandLess style={style.colorPrimary} /> : <ExpandMore style={style.colorPrimary} />}
+//             <ListItemText>
+//                <Typography style={style.colorPrimary}
+//                   variant="subheading"
+//                >
+//                   {`Visitor (${props.shrines.length})`} 
+//                </Typography>
+//             </ListItemText>
+//          </ListItem>
+//          <Collapse in={props.visitorOpen} timeout="auto" unmountOnExit >
+//             <List component="div">
+//                { props.shrines.map((name, index) => (
+//                   <ListItem key={index} >
+//                      <ListItemText
+//                         inset
+//                         primary={name}
+//                      />
+//                   </ListItem>
+//                ))}
+//             </List>
+//          </Collapse>
+//       </div>
+//    )
+// }
 
-const Follower = (props) => {
-   return (
-      <div>
-         <ListItem button onClick={props.handleFollowerClick}>
-            {props.followerOpen ? <ExpandLess style={style.colorPrimary} /> : <ExpandMore style={style.colorPrimary} />}
-            <ListItemText>
-               <Typography style={style.colorPrimary}
-                  variant="subheading"
-               >
-                  {`Follower (${props.shrines.length})`} 
-               </Typography>
-            </ListItemText>
-         </ListItem>
-         <Collapse in={props.followerOpen} timeout="auto" unmountOnExit >
-            <List component="div">
-               { props.shrines.map((name, index) => (
-                  <ListItem key={index}>
-                     <ListItemText
-                        inset
-                        primary={name}
-                     />
-                  </ListItem>
-               ))}
-            </List>
-         </Collapse>
-      </div>
-   )
-}
+// const Follower = (props) => {
+//    return (
+//       <div>
+//          <ListItem button onClick={props.handleFollowerClick}>
+//             {props.followerOpen ? <ExpandLess style={style.colorPrimary} /> : <ExpandMore style={style.colorPrimary} />}
+//             <ListItemText>
+//                <Typography style={style.colorPrimary}
+//                   variant="subheading"
+//                >
+//                   {`Follower (${props.shrines.length})`} 
+//                </Typography>
+//             </ListItemText>
+//          </ListItem>
+//          <Collapse in={props.followerOpen} timeout="auto" unmountOnExit >
+//             <List component="div">
+//                { props.shrines.map((name, index) => (
+//                   <ListItem key={index}>
+//                      <ListItemText
+//                         inset
+//                         primary={name}
+//                      />
+//                   </ListItem>
+//                ))}
+//             </List>
+//          </Collapse>
+//       </div>
+//    )
+// }
 
