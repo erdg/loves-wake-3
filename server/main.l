@@ -35,10 +35,10 @@
 # jwt secret key
 # WARNING -- CHANGE THIS SUPER SECRET KEY TO 
 # SOMETHING SECURE FOR PRODUCTION
-(setq *Secret "Secret")
+# (setq *Secret "Secret")
 
 # production
-# (setq *Secret (rc "loves-wake-3/.config" '*Secret))
+(setq *Secret (rc "loves-wake-3/.config" '*Secret))
 
 # email address
 (setq *Email "erik@erikdgustafson.com")
