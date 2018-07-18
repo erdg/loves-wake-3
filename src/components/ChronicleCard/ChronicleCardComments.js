@@ -2,15 +2,14 @@ import React from 'react';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import MemorialAvatar from 'components/MemorialAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
-import Collapse from '@material-ui/core/Collapse';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import AddIcon from '@material-ui/icons/Add';
+// import Collapse from '@material-ui/core/Collapse';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import AddIcon from '@material-ui/icons/Add';
 
 class ChronicleCardComments extends React.Component {
    state = {

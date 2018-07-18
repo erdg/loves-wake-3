@@ -27,6 +27,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import ChronicleCardComments from './ChronicleCardComments';
+import ChronicleEditItemModal from 'routes/Memorial/ChronicleEditItemModal';
+import ChronicleDeleteItemModal from 'routes/Memorial/ChronicleDeleteItemModal';
 
 const comments = [
    { usr: "Bob", text: "I love this picture"},
@@ -38,12 +40,12 @@ const styles = {
    card: {
       margin: 16,
       transform: 'translate(0px,0)',
-      transition: '0.20s ease-in-out'
+      transition: '0.2s ease-in-out'
       // maxWidth: 400
    },
    edit: {
       transform: 'translate(-200px,0)',
-      transition: '0.20s ease-in-out'
+      transition: '0.2s ease-in-out'
    },
 }
 
@@ -53,6 +55,8 @@ class ChronicleCard extends React.Component {
       liked: false,
       isAdmin: true,
       showMenu: false,
+      showChronicleEditItemModal: false,
+      showChronicleDeleteItemModal: false,
    }
 
    // toggleAdmin = () => {
@@ -70,14 +74,38 @@ class ChronicleCard extends React.Component {
    handleMenuClick = () => {
       this.setState({ showMenu: !this.state.showMenu });
    }
-   
+
+   handleCloseMenu = () => {
+      this.setState({ showMenu: false })
+   }
+
+   handleShowChronicleEditItemModal = () => {
+      this.setState({ showChronicleEditItemModal: true })
+   }
+
+   handleCloseChronicleEditItemModal = () => {
+      this.setState({ showChronicleEditItemModal: false })
+   }
+
+   handleShowChronicleDeleteItemModal = () => {
+      this.setState({ showChronicleDeleteItemModal: true })
+   }
+
+   handleCloseChronicleDeleteItemModal = () => {
+      this.setState({ showChronicleDeleteItemModal: false })
+   }
+
    render () {
       const { classes } = this.props;
       return (
          <div>
             <Card 
                id={`chronicleCard${this.props.item.id}`}
-               className={ classes.card + (this.state.showMenu ? " " + classes.edit : "") }
+               className={
+                  classes.card
+                  + (this.state.showMenu ? " " + classes.edit : "")
+               }
+                     
                style={{overflow: 'visible'}}
             >
                <ChronicleCardHeader 
@@ -85,6 +113,12 @@ class ChronicleCard extends React.Component {
                   isAdmin={this.state.isAdmin}
                   showMenu={this.state.showMenu}
                   handleMenuClick={this.handleMenuClick}
+                  showChronicleEditItemModal={this.state.showChronicleEditItemModal}
+                  handleShowChronicleEditItemModal={this.handleShowChronicleEditItemModal}
+                  handleCloseChronicleEditItemModal={this.handleCloseChronicleEditItemModal}
+                  showChronicleDeleteItemModal={this.state.showChronicleDeleteItemModal}
+                  handleShowChronicleDeleteItemModal={this.handleShowChronicleDeleteItemModal}
+                  handleCloseChronicleDeleteItemModal={this.handleCloseChronicleDeleteItemModal}
                />
                <ChronicleCardMedia
                   item={this.props.item}
@@ -102,6 +136,25 @@ class ChronicleCard extends React.Component {
                   expanded={this.state.expanded}
                />
             </Card>
+            <ChronicleEditItemModal
+               key={Math.random()}
+               item={this.props.item}
+               showChronicleEditItemModal={this.state.showChronicleEditItemModal}
+               handleShowChronicleEditItemModal={this.handleShowChronicleEditItemModal}
+               handleCloseChronicleEditItemModal={this.handleCloseChronicleEditItemModal}
+               memorialId={this.props.memorialId} 
+               handleCloseMenu={this.handleCloseMenu}
+            />
+            <ChronicleDeleteItemModal
+               key={Math.random()}
+               id={this.props.item.id}
+               memorialId={this.props.memorialId} 
+               showChronicleDeleteItemModal={this.state.showChronicleDeleteItemModal}
+               handleShowChronicleDeleteItemModal={this.handleShowChronicleDeleteItemModal}
+               handleCloseChronicleDeleteItemModal={this.handleCloseChronicleDeleteItemModal}
+               handleCloseMenu={this.handleCloseMenu}
+               handleDeleted={this.handleDeleted}
+            />
          </div>
       )
    }
@@ -115,7 +168,7 @@ const ChronicleCardHeader = (props) => (
       subheader={
          <div>
             <Typography variant="caption">
-               {props.item.start}
+               {props.item.date}
             </Typography>
             <Typography variant="caption">
                {props.item.location}
@@ -128,6 +181,12 @@ const ChronicleCardHeader = (props) => (
                item={props.item}
                showMenu={props.showMenu}
                handleMenuClick={props.handleMenuClick}
+               showChronicleEditItemModal={props.showChronicleEditItemModal}
+               handleShowChronicleEditItemModal={props.handleShowChronicleEditItemModal}
+               handleCloseChronicleEditItemModal={props.handleCloseChronicleEditItemModal}
+               showChronicleDeleteItemModal={props.showChronicleDeleteItemModal}
+               handleShowChronicleDeleteItemModal={props.handleShowChronicleDeleteItemModal}
+               handleCloseChronicleDeleteItemModal={props.handleCloseChronicleDeleteItemModal}
             />
       }
    />
@@ -159,7 +218,7 @@ const ChronicleCardMenu = (props) => {
             >
                <List>
                   <ListItem button
-                     onClick={() => alert("Edited item (fake)")}
+                     onClick={props.handleShowChronicleEditItemModal}
                   >
                      <ListItemIcon>
                         <EditIcon />
@@ -167,7 +226,7 @@ const ChronicleCardMenu = (props) => {
                      <ListItemText inset primary="Edit item" />
                   </ListItem>
                   <ListItem button
-                     onClick={() => alert("Deleted item (fake)")}
+                     onClick={props.handleShowChronicleDeleteItemModal}
                   >
                      <ListItemIcon>
                         <DeleteIcon />

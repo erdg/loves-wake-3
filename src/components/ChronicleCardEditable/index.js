@@ -11,6 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 
+import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
@@ -63,6 +64,7 @@ const ChronicleCardEditable = (props) => {
                            props.title !== "" && props.handleRenderField(e);
                         }
                      }
+                     multiline
                      style={{display: 'flex'}}
                   />
                   :
@@ -153,7 +155,7 @@ const ChronicleCardEditable = (props) => {
                uploadSuccess={props.uploadSuccess}
             />
                :
-            <div>
+            <div style={{position: 'relative'}}>
                <CardMedia
                   component={
                      props.fileURL.split(':')[1].split('/')[0] === "image" ?
@@ -165,11 +167,21 @@ const ChronicleCardEditable = (props) => {
                   controls
                />
                <Button
-                  variant="outlined"
+                  variant="fab"
                   color="inherit"
                   onClick={props.handleFileDelete}
-                  style={{margin: '16px auto', display: 'flex'}}
-               > Clear File
+                  mini
+                  mini
+                  style={{
+                      position: 'absolute',
+                      top: 16,
+                      right: (props.fullScreen ? 24 : 30),
+                      width: 36,
+                      height: 36,
+                      display: 'flex',
+                      color: 'rgba(0, 0, 0, 0.54)',
+                  }}
+               > <CloseIcon />
                </Button>
             </div>
          }
@@ -185,7 +197,7 @@ const ChronicleCardEditable = (props) => {
                   <TextField
                      multiline
                      id="txt"
-                     label="Story, memory or caption..."
+                     label="Story, memory or caption"
                      name="txt"
                      type="text"
                      value={props.txt}

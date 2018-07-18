@@ -5,19 +5,12 @@ import Typography from '@material-ui/core/Typography';
 // import MemorialAvatar from 'components/MemorialAvatar';
 import MemorialTabs from './MemorialTabs';
 import Chronicle from './Chronicle';
-import ChronicleSpeedDial from './ChronicleSpeedDial';
+import ChronicleFab from './ChronicleFab';
+import ChronicleEditItemModal from './ChronicleEditItemModal';
 
 class Memorial extends React.Component {
    state = {
-      view: "C"
-   }
-
-   componentDidMount () {
-      this.props.setSecondaryAppHeader();
-   }
-   
-   componentWillUnmount () {
-      this.props.unsetSecondaryAppHeader();
+      view: "C",
    }
 
    handleTabChange = (e, val) => {
@@ -44,9 +37,9 @@ class Memorial extends React.Component {
                </div>
             }
             {this.state.view === "C" &&
-               <div>
+               <div style={{maxWidth: 600, margin: '0 auto'}}>
                   <Chronicle memorial={memorial} />
-                  <ChronicleSpeedDial memorial={memorial}/>
+                  <ChronicleFab memorial={memorial}/>
                </div>
             }
             {this.state.view === "A" &&

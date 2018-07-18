@@ -180,11 +180,12 @@ class ChronicleAddItemModal extends React.Component {
                }
             }
             fullScreen={this.props.fullScreen}
+            scroll="body"
          >
             <DialogTitle>
                Add an item to Chronicle
             </DialogTitle>
-            <DialogContent>
+            <DialogContent style={{borderTop: '1px solid #ddd', borderBottom: '1px solid #ddd'}}>
                <ChronicleCardEditable
                   title={this.state.title}
                   location={this.state.location}

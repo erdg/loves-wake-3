@@ -22,7 +22,7 @@ const FileUpload = (props) => {
                display: 'flex',
                flexDirection: 'column',
                justifyContent: 'center',
-               alignItems: 'center'
+               alignItems: 'center',
             }}
          >
             <Dropzone
@@ -46,10 +46,10 @@ const FileUpload = (props) => {
                <Typography
                   variant="caption"
                   style={{
-                     marginTop: '24%',
+                     marginTop: 32,
                      marginLeft: 48,
                      marginRight: 48,
-                     marginBottom: 16
+                     marginBottom: 32 
                   }}
                >
                   Drop a file here, or click to select a file to upload.
@@ -75,14 +75,15 @@ const FileUpload = (props) => {
                   }
                </div>
             </Dropzone>
-            <Button
-               variant="outlined"
-               onClick={props.handleFileDelete}
-               style={{marginTop: 16}}
-               disabled={!props.file}
-            >
-               Clear File
-            </Button>
+            {props.uploadSuccess &&
+               <Button
+                  variant="raised"
+                  onClick={props.handleFileDelete}
+                  style={{position: 'absolute', bottom: 72}}
+               >
+                  Clear File
+               </Button>
+            }
          </div>
       )
    }

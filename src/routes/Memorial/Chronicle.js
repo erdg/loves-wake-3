@@ -9,9 +9,11 @@ const Chronicle = (props) => (
             key={i}
             height={400}
             offset={400}
+            once
          >
             <ChronicleCard
                item={item}
+               memorialId={props.memorial.id}
             />
          </LazyLoad>
       ))}

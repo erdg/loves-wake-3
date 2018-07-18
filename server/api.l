@@ -283,8 +283,7 @@
       (if (: id) (link (cons "id" @)))
       (if (: title) (link (cons "title" @)))
       (if (: location) (link (cons "location" @)))
-      # use 'start' for vis.Timeline - start date (the 'point') on timeline
-      (if (: date) (link (cons "start" @)))
+      (if (: date) (link (cons "date" @)))
       (if (: txt) (link (cons "txt" (glue "\n\n" (make (in (blob This 'txt) (until (eof) (link (line T)))))))))
       (if (: img) (link (cons "imageSrc" (pack *API (blob This 'img)))))
       (if (: ratio) (link (cons "ratio" @)))
@@ -302,6 +301,10 @@
 # NOTE - need to associate a chronicle item with the user that
 # created it. need to check that user trying to create item has 
 # permission to post to the memorial
+
+# NOTE - what if media type changes? e.g. item had a photo and it's
+# changed to a video. probably keep old blob and put!> NIL in obj attribute
+# and then store the new blob.
 (allow "!newChronicle")
 (de newChronicle ()
    (if (db 'id '+Memorial (posted "memorialId"))  # -> '@'
@@ -345,10 +348,12 @@
 (de getImageAspectRatio (Obj)
    (in (list 'convert (blob Obj 'img) "-format" "%[fx:w/h]" "info:") (line T)) )
 
+# NOTE - this works but needs to be improved
 (allow "!delChronicle")
 (de delChronicle ()
    (let [User (db 'id '+User (getJWT "sub" "loginToken"))
          Item (db 'id '+Chronicle (posted "id")) ]
+      # if user is not the creator of the memorial, can't delete
       (ifn (member (; Item memorial) (; User memorials))
          (respondJsonError "No permission to delete item")
          (lose!> Item)
@@ -377,7 +382,7 @@
 (de updChronicle ()
    (let [UserId   (getJWT "sub" "loginToken")
          User     (db 'id '+User UserId)
-         Memorial (db 'urlNm '+Memorial (posted "urlNm"))
+         Memorial (db 'id '+Memorial (posted "memorialId"))
          Item     (db 'id '+Chronicle (posted "id")) ]
       (and *Dbg
          (msg "!updChronicle" " - " (stamp))
@@ -406,12 +411,30 @@
                (put!> Item 'location (posted "location")) )
             (when (posted "image")  # '@' now contains base64 data URL
                (or (; Item img) (put!> Item 'img T))
+               (finally (put!> Item 'ratio (getImageAspectRatio Item))
+                  (pipe
+                     # send to base64 utility to decode
+                     (out '(base64 "-d") (prin (posted "image")))
+                     # write decoded image to db blob file
+                     (out (blob Item 'img) (echo)) ) ) )
+            (when (posted "audio")  # '@' now contains base64 data URL
+               (or (; Item aud) (put!> Item 'aud T))
                (pipe
                   # send to base64 utility to decode
-                  (out '(base64 "-d") (prin (posted "image")))
-                  # write decoded image to db blob file
-                  (out (blob Item 'img) (echo)) ) )
-            (respondJson (list (cons "yep" "Item updated"))) ) ) ) )
+                  (out '(base64 "-d") (prin @))
+                  # write decoded audio to db blob file
+                  (out (blob Item 'aud) (echo) ) ) )
+            (when (posted "video")  # '@' now contains base64 data URL
+               (or (; Item vid) (put!> Item 'vid T))
+               (pipe
+                  # send to base64 utility to decode
+                  (out '(base64 "-d") (prin @))
+                  # write decoded video to db blob file
+                  (out (blob Item 'vid) (echo) ) ) )
+            (when (posted "txt")  # -> @
+               (or (; Item txt) (put!> Item 'txt T))
+               (out (blob Item 'txt) (prin (posted "txt"))) )
+            (respondJson (json> Item)) ) ) ) )
 
 
 ############

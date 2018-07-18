@@ -35,10 +35,10 @@
 # jwt secret key
 # WARNING -- CHANGE THIS SUPER SECRET KEY TO 
 # SOMETHING SECURE FOR PRODUCTION
-# (setq *Secret "Secret")
+(setq *Secret "Secret")
 
 # production
-(setq *Secret (rc "loves-wake-3/.config" '*Secret))
+# (setq *Secret (rc "loves-wake-3/.config" '*Secret))
 
 # email address
 (setq *Email "erik@erikdgustafson.com")
@@ -48,8 +48,12 @@
    *Blob "blob/"
    *API 
       (if *Dbg
-         # "http://192.168.0.48:8887/"
-         "http://192.168.0.23:8887/"
+         # office
+         "http://192.168.0.48:8887/"
+         # kathleen's place
+         # "http://192.168.0.23:8887/"
+         # parents' place
+         # "http://10.0.0.98:8887/"
          # "https://erikdgustafson.com/api/" )
          "https://erikdgustafson.com/lw3/" )
 ]
