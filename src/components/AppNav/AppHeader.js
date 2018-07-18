@@ -1,45 +1,47 @@
 import React from 'react';
+import history from '../../history';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
-import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import Zoom from '@material-ui/core/Zoom';
+import Headroom from 'react-headroom';
 
 const AppHeader = (props) => (
-   <AppBar id="AppHeader">
-      <Toolbar>
-         <IconButton
-            onClick={props.toggleMenu}
-            color="inherit"
-            aria-label="Menu"
-            style={{
-               marginLeft: -12
-            }}
-         > <MenuIcon />
-         </IconButton>
-         <Zoom
-            in={props.secondaryAppHeader && !props.secondaryAppHeaderVisible}
-            timeout={250}
-            unmountOnExit
-         >
+   <Headroom id="AppHeader">
+      <AppBar position="static">
+         <Toolbar>
             <IconButton
+               onClick={props.toggleMenu}
                color="inherit"
-               onClick={props.showSecondaryAppHeader}
+               aria-label="Menu"
                style={{
-                  marginLeft: 'auto',
-                  marginRight: -12 
+                  marginLeft: -12
                }}
-            >
-               <UnfoldMoreIcon />
+            > <MenuIcon />
             </IconButton>
-         </Zoom>
-     </Toolbar>
-  </AppBar>
+            {!props.user.email &&
+               <div style={{marginLeft: 'auto'}}>
+                  <Button
+                     color="inherit"
+                     onClick={() => history.push("/signup")}
+                     style={{ marginLeft: 'auto' }}
+                  > Sign Up
+                  </Button>
+                  <Button
+                     color="inherit"
+                     onClick={() => history.push("/login")}
+                  > Log In
+                  </Button>
+               </div>
+            }
+        </Toolbar>
+     </AppBar>
+  </Headroom>
 )
 
-export default connect('secondaryAppHeader, secondaryAppHeaderVisible', actions)(AppHeader);
+export default connect('user', actions)(AppHeader);
