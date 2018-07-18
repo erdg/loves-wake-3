@@ -1,0 +1,126 @@
+- date picker component!!!
+
+
+- chronicle items each need unique url
+
+
+- chronicle items need user (creator) associated with them
+
+
+- store/index.js should be split into several files
+   - keep store only stuff in
+   - fetch calls and api details to another file
+
+
+- add item experience
+   - what does the FAB expand into?
+      - likely a little modal... would you like to:
+         - add a single card?
+            - existing add card screen
+         - upload a bunch of media?
+         - share a story? (this is mostly the same as the first option,
+           but maybe the distinction is helpful
+
+
+- function choose a new 64bit urlStr?
+   - try to filter, sometimes you get weird shit
+      - '/memorial/Hkaasw0w/RandyRandleman' lol, ass-wow!
+   - this would allow to reset the memorial 'password' in a sense, if we
+     go with the share a signup url
+
+
+- edit item experience
+
+
+- onboarding experience
+   - submits sign up form
+   - lands on profile page
+   - "did you come here to create a memorial or contribute to an
+     existing memorial?"
+   - create
+      - begin create memorial experience
+   - contribute
+      - figure out which memorial
+      - request join/access to contribute
+      - ideally, if person followed link to sign up (contribute),
+        learned about it from an invitation, we should know which 
+        memorial they are going to contribute to.
+      - show how to contribute (contributor tour?)
+
+
+- invitations
+   - email invite
+   - text message invite
+      - copy and paste from create invitation workflow
+   - have link to signup in invitation?
+      - link is something like '/signup/urlStr/urlNm'
+         - if they visit the extended signup url (above) and their email
+           is on the list of contributors for that memorial, they are
+           automatically subscribed and given contrib permissions
+      - send out link with optional password?
+
+
+- solidify create memorial exp
+   - name, birth, death. done.
+   - route to MemorialView
+   - show how to add content
+      - create, edit, and delete first card
+      - batch photo (media) imports
+   - show how to invite others
+   - show how to moderate content
+      - edit
+      - delete
+      - show/hide content for public view
+      - remove contributors
+
+
+- landing page exp
+   - tour a memorial?
+
+
+- is it reasonable to expect every person that is invited to contribute
+  to create an account before contributing?
+   - unless I was really close to the person, i would probably say eh,
+      nah.
+   - but maybe that's not a thing? do people outside of hackernews have
+      as much pushback at the idea of (rather) spontaneously joining new
+      services
+   - several solutions to shrine privacy
+      - shrine has a contributor password
+         - anyone that visits can click fab
+         - prompted for password
+         - if correct, can post to shrine
+            - how to attribute card to creator?
+               - ask for name?
+      - shrine has list of email addresses that can post
+         - prompted for email, if valid can submit
+            - card is at least associated with an email address
+            - can ask for name, too
+
+
+
+Refactoring
+===========
+- move more state to store
+
+
+- move things 'up'
+   - e.g. right now 'ChronicleAddItemModal' is a child of
+     'ChronicleSpeedDial' (which isn't even a speed dial anymore)
+   - same with 'ChronicleEditItemModal' (see below)
+   - I think almost all state/app logic should be contained in the
+     store. This allows for more "surgical" precision with props, rather
+     than passing props through a bunch of different layers. I think
+     that the react documentation suggests just passing them a couple of
+     layers if that's all the deeper you have to go, but I really
+     dislike doing that.
+
+
+- move 'MemorialTabs' to header, so it's all one 'Headroom' component
+
+
+- edit cards are a mess
+   - maybe have 'currentlyEditedItem' as state in store?
+   - or just 'currentItem' as state?
+   - ChronicleEditItemModal is a child of Chronicle card
+      - should just be a (mostly hidden) child of Memorial
