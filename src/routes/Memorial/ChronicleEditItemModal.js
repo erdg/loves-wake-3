@@ -26,6 +26,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
 import ChronicleCardEditable from 'components/ChronicleCardEditable';
 
 class ChronicleEditItemModal extends React.Component {
@@ -126,17 +129,22 @@ class ChronicleEditItemModal extends React.Component {
    // it  would certainly make this thing shorter...
    //
    updChronicle = () => {
-      // handle errors
-      if (  // nothing has changed
-            this.props.item.title === this.state.title
-            && this.props.item.date === this.state.date
-            && this.props.item.location === this.state.location
-            && this.props.item.txt === this.state.txt
-            && !this.state.fileURL ) {
-         this.setState({ error: true });
-         return;
-      }
-      this.setState({ error: false });
+      // TODO - handle errors
+      //
+      // this is the idea, but not quite right. skipping for now,
+      // hopefully the spam bots won't click the edit button a million
+      // times a minute.
+      //
+      // if (  // nothing has changed
+      //       this.props.item.title === this.state.title
+      //       && this.props.item.date === this.state.date
+      //       && this.props.item.location === this.state.location
+      //       && this.props.item.txt === this.state.txt
+      //       && !this.state.fileURL ) {
+      //    this.setState({ error: true });
+      //    return;
+      // }
+      // this.setState({ error: false });
 
       // if there's an image to upload...
       if (this.state.fileURL) {
@@ -211,11 +219,57 @@ class ChronicleEditItemModal extends React.Component {
             }
             fullScreen={this.props.fullScreen}
          >
-            <DialogTitle>
-               Edit item
+            <DialogTitle
+               disableTypography
+               style={{
+                  background: theme.palette.primary.main,
+                  display: 'flex'
+               }}
+            >
+               <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
+                  <IconButton
+                     onClick={
+                        () => {
+                           this.handleClearFields();
+                           this.props.handleCloseChronicleEditItemModal();
+                        }
+                     }
+                  > <CloseIcon style={{color: 'white'}}/>
+                  </IconButton>
+                  <Typography
+                     variant="title"
+                     component="h2"
+                     style={{
+                        color: 'white',
+                        display: 'inline',
+                        marginLeft: 16 
+                     }}
+                  > Edit Chronicle Card
+                  </Typography>
+                  <Button
+                     onClick={
+                        () => {
+                           this.updChronicle();
+                        }
+                     }
+                     style={{color: 'white', marginLeft: 'auto'}}
+                  > Update
+                  </Button>
+               </div>
             </DialogTitle>
             <DialogContent style={{borderTop: '1px solid #ddd', borderBottom: '1px solid #ddd'}}>
-                <Card style={{marginTop: 16, marginBottom: 16}}>
+               <div style={{margin: '0 auto', marginTop: 16, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <Typography
+                     variant="body1"
+                     style={{
+                        color: theme.palette.error.main,
+                        display: (this.state.error ? 'block' : 'none')
+                     }}
+                  >
+                     Nothing has changed
+                  </Typography>
+               </div>
+                <Card style={{marginTop: 16, marginBottom: 32}}>
                    <CardHeader
                       title={
                          !this.state.rendertitle ?
@@ -322,7 +376,7 @@ class ChronicleEditItemModal extends React.Component {
                          uploadSuccess={this.state.uploadSuccess}
                       />
                          :
-                      <div style={{position: 'relative'}}>
+                      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                          {this.state.existingImage &&
                             <CardMedia component="img" src={this.state.existingImage} />
                          }
@@ -345,20 +399,10 @@ class ChronicleEditItemModal extends React.Component {
                             />
                          }
                          <Button
-                            variant="fab"
+                            variant="raised"
                             onClick={this.handleFileDelete}
-                            color="inherit"
-                            mini
-                            style={{
-                               position: 'absolute',
-                               top: 16,
-                               right: (this.props.fullScreen ? 24 : 30),
-                               width: 36,
-                               height: 36,
-                               display: 'flex',
-                               color: 'rgba(0, 0, 0, 0.54)',
-                            }}
-                         > <CloseIcon />
+                            style={{marginTop: 16}}
+                         > Choose a different file
                          </Button>
                       </div>
                    }
@@ -402,34 +446,6 @@ class ChronicleEditItemModal extends React.Component {
                    </CardContent>
                 </Card>
             </DialogContent>
-            <DialogActions style={{marginLeft: 16, marginRight: 16}}>
-               {this.state.error &&
-                  <Typography
-                     variant="body1"
-                     style={{marginRight: 'auto', color: theme.palette.error.main}}
-                  >
-                     Nothing has changed
-                  </Typography>
-               }
-               <Button
-                  onClick={
-                     () => {
-                        this.props.handleCloseChronicleEditItemModal();
-                     }
-                  }
-               > Cancel
-               </Button>
-               <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={
-                     () => {
-                        this.updChronicle();
-                     }
-                  }
-               > Update
-               </Button>
-            </DialogActions>
          </Dialog>
       )
    }

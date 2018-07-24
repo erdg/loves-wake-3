@@ -16,6 +16,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
 
+import theme from 'theme';
+
 // expects the following props:
 //
 //       title: '',
@@ -48,7 +50,12 @@ import FileUpload from 'components/FileUpload';
 
 const ChronicleCardEditable = (props) => {
    return (
-      <Card style={{marginTop: 16, marginBottom: 16}}>
+      <Card
+         style={{
+            marginTop: 16,
+            marginBottom: 32,
+         }}
+      >
          <CardHeader
             title={
                !props.rendertitle ?
@@ -65,7 +72,9 @@ const ChronicleCardEditable = (props) => {
                         }
                      }
                      multiline
-                     style={{display: 'flex'}}
+                     style={{
+                        display: 'flex',
+                     }}
                   />
                   :
                   <div style={{display: 'flex', alignItems: 'center'}}>

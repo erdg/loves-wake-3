@@ -20,6 +20,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 
+import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
@@ -133,6 +134,7 @@ class ChronicleAddItemModal extends React.Component {
          fetch( API_ENDPOINT + "!newChronicle", { 
             method: "POST", 
             body: JSON.stringify({ 
+               loginToken: window.sessionStorage.getItem('loginToken'),
                memorialId: this.props.memorialId,
                title: this.state.title,
                location: this.state.location,
@@ -152,6 +154,7 @@ class ChronicleAddItemModal extends React.Component {
          fetch( API_ENDPOINT + "!newChronicle", {
             method: "POST",
             body: JSON.stringify({
+               loginToken: window.sessionStorage.getItem('loginToken'),
                memorialId: this.props.memorialId,
                title: this.state.title,
                location: this.state.location,
@@ -180,12 +183,57 @@ class ChronicleAddItemModal extends React.Component {
                }
             }
             fullScreen={this.props.fullScreen}
-            scroll="body"
          >
-            <DialogTitle>
-               Add an item to Chronicle
+            <DialogTitle
+               disableTypography
+               style={{
+                  background: theme.palette.primary.main,
+                  display: 'flex'
+               }}
+            >
+               <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
+                  <IconButton
+                     onClick={
+                        () => {
+                           this.handleClearFields();
+                           this.props.handleCloseChronicleAddItemModal();
+                        }
+                     }
+                  > <CloseIcon style={{color: 'white'}}/>
+                  </IconButton>
+                  <Typography
+                     variant="title"
+                     component="h2"
+                     style={{
+                        color: 'white',
+                        display: 'inline',
+                        marginLeft: 16 
+                     }}
+                  > Add a Card to Chronicle
+                  </Typography>
+                  <Button
+                     onClick={
+                        () => {
+                           this.newChronicle();
+                        }
+                     }
+                     style={{color: 'white', marginLeft: 'auto'}}
+                  > Submit
+                  </Button>
+               </div>
             </DialogTitle>
-            <DialogContent style={{borderTop: '1px solid #ddd', borderBottom: '1px solid #ddd'}}>
+            <DialogContent >
+               <div style={{margin: '0 auto', marginTop: 16, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <Typography
+                     variant="body1"
+                     style={{
+                        color: theme.palette.error.main,
+                        display: (this.state.error ? 'block' : 'none')
+                     }}
+                  >
+                     Please add media or a memory
+                  </Typography>
+               </div>
                <ChronicleCardEditable
                   title={this.state.title}
                   location={this.state.location}
@@ -381,35 +429,6 @@ class ChronicleAddItemModal extends React.Component {
                */}
 
             </DialogContent>
-            <DialogActions style={{marginLeft: 16, marginRight: 16}}>
-               {this.state.error &&
-                  <Typography
-                     variant="body1"
-                     style={{marginRight: 'auto', color: theme.palette.error.main}}
-                  >
-                     Please add media or a memory
-                  </Typography>
-               }
-               <Button
-                  onClick={
-                     () => {
-                        this.handleClearFields();
-                        this.props.handleCloseChronicleAddItemModal();
-                     }
-                  }
-               > Cancel
-               </Button>
-               <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={
-                     () => {
-                        this.newChronicle();
-                     }
-                  }
-               > Add
-               </Button>
-            </DialogActions>
          </Dialog>
       )
    }
