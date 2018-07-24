@@ -23,6 +23,7 @@ const FileUpload = (props) => {
                flexDirection: 'column',
                justifyContent: 'center',
                alignItems: 'center',
+               position: 'relative'
             }}
          >
             <Dropzone
@@ -79,7 +80,7 @@ const FileUpload = (props) => {
                <Button
                   variant="raised"
                   onClick={props.handleFileDelete}
-                  style={{position: 'absolute', bottom: 72}}
+                  style={{position: 'absolute', bottom: 32}}
                >
                   Clear File
                </Button>
