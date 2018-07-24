@@ -102,7 +102,14 @@ class MemorialTabs extends React.Component {
                   width: '100%',
                }}
             >
-               <div style={{display: 'flex', width: '100%'}}>
+               <div
+                  style={{
+                     display: 'flex',
+                     width: '100%',
+                     maxWidth: 600,
+                     margin: '0 auto'
+                  }}
+               >
                   <MemorialAvatar
                      src={this.props.memorial.avatar}
                      name={this.props.memorial.nm}
