@@ -7,8 +7,8 @@ const Chronicle = (props) => (
       {props.memorial.items.map((item, i) => (
          <LazyLoad 
             key={i}
-            height={400}
-            offset={400}
+            height={200}
+            offset={200}
             once
          >
             <ChronicleCard
