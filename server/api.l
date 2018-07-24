@@ -266,9 +266,11 @@
 #  +Chronicle
 (class +Chronicle +Entity)
 
+(rel id (+Key +Number))
+# created by user
+(rel usr (+Ref +Link) NIL (+User))
 # link back to memorial
 (rel memorial (+Joint) chronicle (+Memorial))  
-(rel id (+Key +Number))
 (rel title (+Idx +String))
 (rel location (+Ref +String))
 (rel date (+Ref +String))
@@ -311,6 +313,7 @@
       (with 
          # new +Chronicle -> 'This' for rest of prg
          [new! '(+Chronicle)
+            'usr       (db 'id '+User (getJWT "sub" "loginToken"))
             'memorial  @  # '@' bound from 'if' statement, see above 
             'id        (genKey 'id '+Chronicle)
             'title     (posted "title")
