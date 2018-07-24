@@ -73,7 +73,7 @@ class ChronicleDeleteItemModal extends React.Component {
             }
          >
             <DialogTitle>
-               Delete Item from Chronicle? {this.props.id}
+               Delete Item from Chronicle?
             </DialogTitle>
             <DialogContent>
                <DialogContentText>
