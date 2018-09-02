@@ -20,6 +20,12 @@ import UserNews from './routes/UserNews';
 import CreateMemorial from './routes/CreateMemorial';
 import Search from './routes/Search';
 import Memorial from './routes/Memorial';
+import Shrine from './routes/Shrine';
+import Chronicle from './routes/Chronicle';
+import Atlas from './routes/Atlas';
+import Moderation from './routes/Moderation';
+
+import DatePickerTest from './routes/DatePickerTest';
 
 class App extends Component {
    render() {
@@ -51,6 +57,10 @@ const AppRouter = () => {
                <Route exact path="/user/news" component={UserNews} />
                <Route exact path="/create-memorial" component={CreateMemorial} />
                <Route path="/memorial/:urlStr/:urlNm" component={Memorial} />
+               <Route path="/memorial/:urlStr/:urlNm/chronicle" component={Chronicle} />
+               <Route path="/memorial/:urlStr/:urlNm/shrine" component={Shrine} />
+               <Route path="/memorial/:urlStr/:urlNm/atlas" component={Atlas} />
+               <Route path="/memorial/:urlStr/:urlNm/moderation" component={Moderation} />
             </Screen>
          </div>
       </Router>
