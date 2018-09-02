@@ -1,4 +1,5 @@
 import React from 'react';
+import marked from 'marked';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +16,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
+
+import DatePicker from 'components/DatePicker';
 
 import theme from 'theme';
 
@@ -52,8 +55,7 @@ const ChronicleCardEditable = (props) => {
    return (
       <Card
          style={{
-            marginTop: 16,
-            marginBottom: 32,
+            marginTop: 24,
          }}
       >
          <CardHeader
@@ -97,7 +99,7 @@ const ChronicleCardEditable = (props) => {
                      flexDirection: 'column'
                   }}
                >
-                  {!props.renderdate ?
+                  {/*!props.renderdate ?
                      <TextField
                         id="date"
                         label="Date"
@@ -123,7 +125,36 @@ const ChronicleCardEditable = (props) => {
                            <EditIcon />
                         </IconButton>
                      </div>
+                  */}
+                  {!props.renderdate ?
+                     <DatePicker
+                        id="date"
+                        label="Date"
+                        name="date"
+                        born={props.born}
+                        died={props.died}
+                        value={props.date}
+                        handleSetDate={props.handleSetDate}
+                        onBlur={
+                           (e) => {
+                              props.date !== "" && props.handleRenderField(e);
+                           }
+                        }
+                     />
+                        :
+                     <div style={{display: 'flex', alignItems: 'center'}}>
+                        <Typography variant="caption">
+                           {props.date}
+                        </Typography>
+                        <IconButton
+                           onClick={() => props.handleEditField("date")}
+                           style={{marginLeft: 'auto'}}
+                        >
+                           <EditIcon />
+                        </IconButton>
+                     </div>
                   }
+
                   {!props.renderlocation ?
                      <TextField
                         id="location"
@@ -219,9 +250,12 @@ const ChronicleCardEditable = (props) => {
                   />
                      :
                   <div style={{display: 'flex', alignItems: 'center'}}>
+                     {/*
                      <Typography variant="body1">
                         {props.txt}
                      </Typography>
+                     */}
+                     <div dangerouslySetInnerHTML={{__html: marked(props.txt)}} />
                      <IconButton
                         onClick={() => props.handleEditField("txt")}
                         style={{marginLeft: 'auto'}}

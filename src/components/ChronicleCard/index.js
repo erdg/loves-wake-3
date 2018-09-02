@@ -1,4 +1,5 @@
 import React from 'react';
+import marked from 'marked';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -27,8 +28,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import ChronicleCardComments from './ChronicleCardComments';
-import ChronicleEditItemModal from 'routes/Memorial/ChronicleEditItemModal';
-import ChronicleDeleteItemModal from 'routes/Memorial/ChronicleDeleteItemModal';
+import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
+import ChronicleDeleteItemModal from 'routes/Chronicle/ChronicleDeleteItemModal';
 
 const comments = [
    { usr: "Bob", text: "I love this picture"},
@@ -144,6 +145,8 @@ class ChronicleCard extends React.Component {
                handleCloseChronicleEditItemModal={this.handleCloseChronicleEditItemModal}
                memorialId={this.props.memorialId} 
                handleCloseMenu={this.handleCloseMenu}
+               born={this.props.born}
+               died={this.props.died}
             />
             <ChronicleDeleteItemModal
                key={Math.random()}
@@ -300,9 +303,12 @@ const ChronicleCardActions = (props) => {
 const ChronicleCardContent = (props) => {
    return (
       <CardContent>
+         {/*
          <Typography variant="body1">
             {props.content}
          </Typography>
+         */}
+         <div dangerouslySetInnerHTML={{__html: marked(props.content.split("^J^J").join("\n"))}} />
       </CardContent>
    )
 }
