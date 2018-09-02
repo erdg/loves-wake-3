@@ -2,19 +2,21 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
-// import MemorialAvatar from 'components/MemorialAvatar';
-import MemorialTabs from './MemorialTabs';
-import Chronicle from './Chronicle';
-import ChronicleFab from './ChronicleFab';
-import ChronicleEditItemModal from './ChronicleEditItemModal';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+
+
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+
+import history from '../../history';
 
 class Memorial extends React.Component {
    state = {
-      view: "C",
-   }
-
-   handleTabChange = (e, val) => {
-      this.setState({ view: val })
    }
 
    render () {
@@ -23,30 +25,79 @@ class Memorial extends React.Component {
       ));
 
       return (
-         <div style={{width: '100%'}}>
-            <MemorialTabs
-               memorial={memorial}
-               handleTabChange={this.handleTabChange}
-               view={this.state.view}
-            />
-            {this.state.view === "S" &&
-               <div>
-                  <Typography variant="title">
-                     {memorial.nm}'s Shrine
+         <div
+            style={{
+               width: '100%',
+            }}
+         >
+            { this.props.match.isExact &&
+               <div
+                  style={{
+                     display: 'flex',
+                     flexDirection: 'column',
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                     margin: 16
+                  }}
+               >
+                  <Avatar
+                     src={memorial.avatar}
+                     alt={memorial.nm}
+                     style={{width: 200, height: 200}}
+                  >{!memorial.avatar ? memorial.nm[0] : ''}
+                  </Avatar>
+                  <Typography variant="title" style={{marginTop: 16, marginBottom: 16}}>
+                     {memorial.nm}
                   </Typography>
-               </div>
-            }
-            {this.state.view === "C" &&
-               <div style={{maxWidth: 600, margin: '0 auto'}}>
-                  <Chronicle memorial={memorial} />
-                  <ChronicleFab memorial={memorial}/>
-               </div>
-            }
-            {this.state.view === "A" &&
-               <div>
-                  <Typography variant="title">
-                     {memorial.nm}'s Atlas
+                  <Typography variant="body1" style={{marginBottom: 16}}>
+                     {memorial.obituaryText}
                   </Typography>
+                  <List>
+                     <ListItem
+                        button
+                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
+                     >
+                        <ListItemText>
+                           Shrine
+                        </ListItemText>
+                        <ListItemSecondaryAction>
+                           <ArrowForwardIcon />
+                        </ListItemSecondaryAction>
+                     </ListItem>
+                     <ListItem
+                        button
+                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
+                     >
+                        <ListItemText>
+                           Chronicle
+                        </ListItemText>
+                        <ListItemSecondaryAction>
+                           <ArrowForwardIcon />
+                        </ListItemSecondaryAction>
+                     </ListItem>
+                     <ListItem
+                        button
+                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
+                     >
+                        <ListItemText>
+                           Atlas
+                        </ListItemText>
+                        <ListItemSecondaryAction>
+                           <ArrowForwardIcon />
+                        </ListItemSecondaryAction>
+                     </ListItem>
+                     <ListItem
+                        button
+                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/moderation")}
+                     >
+                        <ListItemText>
+                           Content Moderation
+                        </ListItemText>
+                        <ListItemSecondaryAction>
+                           <ArrowForwardIcon />
+                        </ListItemSecondaryAction>
+                     </ListItem>
+                  </List>
                </div>
             }
          </div>
@@ -54,4 +105,4 @@ class Memorial extends React.Component {
    }
 }
 
-export default connect('user, secondaryAppHeaderVisible', actions)(Memorial);
+export default connect('user', actions)(Memorial);
