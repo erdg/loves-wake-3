@@ -61,8 +61,6 @@
 (rel usr (+Joint) memorials (+User))   # created by user
 
 (rel id (+Key +Number))                # unique memorial id number
-# (rel canPost (+List +Number))          # list of user id's that can add content
-# (rel canEdit (+List +Number))          # list of user id's that can edit content
 (rel urlStr (+Ref +String))            # 8 char base64 string, e.g. "8bez73Ka"
 (rel urlNm (+Ref +String))             # concatenated name, e.g. "MichaelJFox"
 
@@ -70,6 +68,7 @@
 (rel invite.md (+Blob))                # invitation markdown (for email sending)
 (rel emails (+List +String))           # list of emails (people to invite 
                                        # to contribute to memorial)
+(rel obituary.txt (+Blob))             # obituary for memorial homepage
 
 (rel nm (+Idx +String))                # full name with spaces, e.g. "Michael J Fox"
 (rel nm1 (+Idx +String))               # first name, e.g. "Michael"
@@ -130,6 +129,14 @@
                         (until (eof) 
                            (link (line T)) ) ) ) ) ) )
          (link (cons "invitationText" "You haven't yet written an invitation")) )
+      (if (: obituary.txt) 
+         (link 
+            (cons "obituaryText"
+               (glue "\n\n"
+                  (make 
+                     (in (blob This 'obituary.txt)
+                        (until (eof) 
+                           (link (line T)) ) ) ) ) ) ) )
       (link
          (make (link "items" T)
             (for C (: chronicle)
