@@ -286,6 +286,7 @@
 (rel aud (+Blob))                      # audio
 (rel vid (+Blob))                      # video
 (rel ratio (+String))                  # aspect ratio
+(rel published (+Ref +Bool))           # item published to chronicle?
 
 (dm json> ()
    (make
@@ -293,6 +294,7 @@
       (if (: title) (link (cons "title" @)))
       (if (: location) (link (cons "location" @)))
       (if (: date) (link (cons "date" @)))
+      (link (cons "published" (if (: published) "true" "false")))
       (if (: txt) (link (cons "txt" (glue "\n\n" (make (in (blob This 'txt) (until (eof) (link (line T)))))))))
       (if (: img) (link (cons "imageSrc" (pack *API (blob This 'img)))))
       (if (: ratio) (link (cons "ratio" @)))
@@ -446,6 +448,54 @@
                (out (blob Item 'txt) (prin (posted "txt"))) )
             (respondJson (json> Item)) ) ) ) )
 
+(allow "!publishChronicleItem")
+(de publishChronicleItem ()
+   (let [UserId   (getJWT "sub" "loginToken")
+         User     (db 'id '+User UserId)
+         Memorial (db 'id '+Memorial (posted "memorialId"))
+         Item     (db 'id '+Chronicle (posted "id")) ]
+      (nond
+         # TODO - better error handling
+         (User     (respondJsonError "Bad user"))
+         (Memorial (respondJsonError "Bad memorial"))
+         (Item     (respondJsonError "Bad item"))
+         # if user is NOT the creator of memorial, can't edit
+         # NOTE - this will need to change when functionality is added to allow multiple
+         # admins on a memorial
+         ((= (; Item memorial usr) User)
+            (respondJsonError "No permission to edit item") )
+         # check that chronicle item and memorial match
+         ((= (; Item memorial) Memorial)
+            (respondJsonError "Item not in chronicle") )
+         # all is good, update item
+         (NIL
+            (put!> Item 'published T)
+            (respondJson (json> Item)) ) ) ) )
+            
+(allow "!unpublishChronicleItem")
+(de unpublishChronicleItem ()
+   (let [UserId   (getJWT "sub" "loginToken")
+         User     (db 'id '+User UserId)
+         Memorial (db 'id '+Memorial (posted "memorialId"))
+         Item     (db 'id '+Chronicle (posted "id")) ]
+      (nond
+         # TODO - better error handling
+         (User     (respondJsonError "Bad user"))
+         (Memorial (respondJsonError "Bad memorial"))
+         (Item     (respondJsonError "Bad item"))
+         # if user is NOT the creator of memorial, can't edit
+         # NOTE - this will need to change when functionality is added to allow multiple
+         # admins on a memorial
+         ((= (; Item memorial usr) User)
+            (respondJsonError "No permission to edit item") )
+         # check that chronicle item and memorial match
+         ((= (; Item memorial) Memorial)
+            (respondJsonError "Item not in chronicle") )
+         # all is good, update item
+         (NIL
+            (put!> Item 'published NIL)
+            (respondJson (json> Item)) ) ) ) )
+       
 
 ############
 
