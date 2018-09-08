@@ -1,6 +1,11 @@
 import React from 'react';
 import marked from 'marked';
 
+import { connect } from 'unistore/react';
+import { actions } from 'store';
+
+import { link3 } from 'links';
+
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -16,6 +21,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 
 //icons
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -26,6 +32,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import MessageIcon from '@material-ui/icons/Message';
 import CloseIcon from '@material-ui/icons/Close';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SettingsIcon from '@material-ui/icons/Settings';
+import AtlasIcon from 'components/icons/AtlasIcon';
+import DateIcon from '@material-ui/icons/Event';
+import StoryIcon from '@material-ui/icons/ImportContacts';
 
 import ChronicleCardComments from './ChronicleCardComments';
 import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
@@ -56,6 +66,7 @@ class ChronicleCard extends React.Component {
       liked: false,
       isAdmin: true,
       showMenu: false,
+      showStory: false,
       showChronicleEditItemModal: false,
       showChronicleDeleteItemModal: false,
    }
@@ -66,6 +77,14 @@ class ChronicleCard extends React.Component {
 
    handleExpandClick = () => {
       this.setState({ expanded: !this.state.expanded });
+   }
+
+   handleShowStory = () => {
+      this.setState({ showStory: true });
+   }
+
+   handleHideStory = () => {
+      this.setState({ showStory: false });
    }
 
    handleLikeClick = () => {
@@ -120,13 +139,20 @@ class ChronicleCard extends React.Component {
                   showChronicleDeleteItemModal={this.state.showChronicleDeleteItemModal}
                   handleShowChronicleDeleteItemModal={this.handleShowChronicleDeleteItemModal}
                   handleCloseChronicleDeleteItemModal={this.handleCloseChronicleDeleteItemModal}
+                  publishChronicleItem={this.props.publishChronicleItem}
+                  unpublishChronicleItem={this.props.unpublishChronicleItem}
+                  memorialId={this.props.memorialId} 
                />
                <ChronicleCardMedia
                   item={this.props.item}
                />
-               {this.props.item.txt &&
-                  <ChronicleCardContent content={this.props.item.txt} />
-               }
+               <ChronicleCardContent 
+                  item={this.props.item}
+                  showStory={this.state.showStory}
+                  handleShowStory={this.handleShowStory}
+                  handleHideStory={this.handleHideStory}
+               />
+               {/*
                <ChronicleCardActions
                   liked={this.state.liked}
                   handleLikeClick={this.handleLikeClick}
@@ -136,6 +162,7 @@ class ChronicleCard extends React.Component {
                <ChronicleCardExpandedContent
                   expanded={this.state.expanded}
                />
+               */}
             </Card>
             <ChronicleEditItemModal
                key={Math.random()}
@@ -163,19 +190,40 @@ class ChronicleCard extends React.Component {
    }
 }
 
-export default withStyles(styles)(ChronicleCard);
+export default withStyles(styles)(connect('', actions)(ChronicleCard));
 
 const ChronicleCardHeader = (props) => (
    <CardHeader
-      title={props.item.title}
-      subheader={
-         <div>
-            <Typography variant="caption">
-               {props.item.date}
-            </Typography>
-            <Typography variant="caption">
-               {props.item.location}
-            </Typography>
+      title={
+         <div style={{display: 'flex', alignItems: 'center'}}>
+            {props.item.date ?
+               <Typography
+                  variant="subheading"
+                  style={{
+                     marginLeft: 8
+                  }}
+               >
+                  {props.item.date}
+               </Typography>
+               :
+               <div
+                  style={{display: 'flex', alignItems: 'center'}}
+               >
+                  <DateIcon />
+                  <Typography
+                     variant="caption"
+                     style={{
+                        marginLeft: 8
+                     }}
+                  > No date yet.
+                  </Typography>
+                  <Typography
+                     variant="caption"
+                     style={{color: link3, marginLeft: 6}}
+                  > Add one
+                  </Typography>
+               </div>
+            }
          </div>
       }
       action={
@@ -190,6 +238,9 @@ const ChronicleCardHeader = (props) => (
                showChronicleDeleteItemModal={props.showChronicleDeleteItemModal}
                handleShowChronicleDeleteItemModal={props.handleShowChronicleDeleteItemModal}
                handleCloseChronicleDeleteItemModal={props.handleCloseChronicleDeleteItemModal}
+               publishChronicleItem={props.publishChronicleItem}
+               unpublishChronicleItem={props.unpublishChronicleItem}
+               memorialId={props.memorialId} 
             />
       }
    />
@@ -203,41 +254,55 @@ const ChronicleCardMenu = (props) => {
             style={{marginRight: 4}}
          >
             {props.showMenu ? 
-               <CloseIcon/>
+                  <CloseIcon/>
                   :
-               <MoreVertIcon />
+                  <SettingsIcon />
             }
          </IconButton>
          {props.showMenu &&
-            <Paper
-               elevation={0}
-               style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: -200,
-                  height: document.getElementById(`chronicleCard${props.item.id}`).scrollHeight,
-                  backgroundColor: '#eee'
-               }}
-            >
-               <List>
-                  <ListItem button
-                     onClick={props.handleShowChronicleEditItemModal}
-                  >
-                     <ListItemIcon>
-                        <EditIcon />
-                     </ListItemIcon>
-                     <ListItemText inset primary="Edit item" />
-                  </ListItem>
-                  <ListItem button
-                     onClick={props.handleShowChronicleDeleteItemModal}
-                  >
-                     <ListItemIcon>
-                        <DeleteIcon />
-                     </ListItemIcon>
-                     <ListItemText inset primary="Delete item" />
-                  </ListItem>
-               </List>
-            </Paper>
+               <Paper
+                  elevation={0}
+                  style={{
+                     position: 'absolute',
+                     top: 0,
+                     right: -200,
+                     height: document.getElementById(`chronicleCard${props.item.id}`).scrollHeight,
+                     backgroundColor: '#eee'
+                  }}
+               >
+                  <List>
+                     <ListItem button
+                        disabled={!props.item.date ? true : false}
+                        onClick={
+                           props.item.published === 'true' ?
+                              () => props.unpublishChronicleItem(props.item.id, props.memorialId)
+                              : 
+                              () => props.publishChronicleItem(props.item.id, props.memorialId)
+                        }
+                     >
+                        <ListItemIcon>
+                           <EditIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary={props.item.published === 'true' ? "Unpublish" : "Publish"} />
+                     </ListItem>
+                     <ListItem button
+                        onClick={props.handleShowChronicleEditItemModal}
+                     >
+                        <ListItemIcon>
+                           <EditIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Edit item" />
+                     </ListItem>
+                     <ListItem button
+                        onClick={props.handleShowChronicleDeleteItemModal}
+                     >
+                        <ListItemIcon>
+                           <DeleteIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Delete item" />
+                     </ListItem>
+                  </List>
+               </Paper>
          }
       </div>
    )
@@ -247,27 +312,27 @@ const ChronicleCardMedia = (props) => {
    return (
       <div>
          {props.item.imageSrc &&
-            <CardMedia
-               image={props.item.imageSrc}
-               style={{
-                  height: 0,
-                  paddingTop: (100 / parseFloat(props.item.ratio)).toString() + "%"
-               }}
-            />
+               <CardMedia
+                  image={props.item.imageSrc}
+                  style={{
+                     height: 0,
+                     paddingTop: (100 / parseFloat(props.item.ratio)).toString() + "%"
+                  }}
+               />
          }
          {props.item.audioSrc &&
-            <CardMedia
-               component="audio"
-               src={props.item.audioSrc}
-               controls
-            />
+               <CardMedia
+                  component="audio"
+                  src={props.item.audioSrc}
+                  controls
+               />
          }
          {props.item.videoSrc &&
-            <CardMedia
-               component="video"
-               src={props.item.videoSrc}
-               controls
-            />
+               <CardMedia
+                  component="video"
+                  src={props.item.videoSrc}
+                  controls
+               />
          }
       </div>
    )
@@ -308,8 +373,100 @@ const ChronicleCardContent = (props) => {
             {props.content}
          </Typography>
          */}
-         <div dangerouslySetInnerHTML={{__html: marked(props.content.split("^J^J").join("\n"))}} />
+         <div style={{display: 'flex', alignItems: 'center'}}>
+            <AtlasIcon  fill="rgba(0,0,0,0.54)" />
+            {props.item.location ?
+                  <Typography
+                     variant="caption"
+                     style={{
+                        marginLeft: 8
+                     }}
+                  >
+                     {props.item.location}
+                  </Typography>
+                  :
+                  <div
+                     style={{display: 'flex', alignItems: 'center'}}
+                  >
+                     <Typography
+                        variant="caption"
+                        style={{
+                           marginLeft: 8
+                        }}
+                     > No location yet.
+                     </Typography>
+                     <Typography
+                        variant="caption"
+                        style={{color: link3, marginLeft: 6}}
+                     > Add one
+                     </Typography>
+                  </div>
+            }
+         </div>
+         <ChronicleCardStory
+            item={props.item}
+            showStory={props.showStory}
+            handleShowStory={props.handleShowStory}
+            handleHideStory={props.handleHideStory}
+         />
       </CardContent>
+   )
+}
+
+
+const ChronicleCardStory = (props) => {
+   return (
+         <Collapse in={true} unmountOnExit >
+            {props.item.txt ?
+               <div style={{display: 'flex', alignItems: 'center'}}>
+                  <StoryIcon style={{marginRight: 8, alignSelf: 'flex-start', marginTop: 12, color: 'rgba(0,0,0,0.54)'}} />
+                  {props.showStory ? 
+                     <div>
+                        <Typography
+                           variant="body1"
+                           dangerouslySetInnerHTML={{__html: marked(props.item.txt.split("^J^J").join("\n"))}}
+                        />
+                        <Typography
+                           variant="caption"
+                           style={{marginLeft: 6, color: link3, cursor: 'pointer'}}
+                           onClick={props.handleHideStory}
+                        > Read less
+                        </Typography>
+                     </div>
+                        :
+                     <div style={{display: 'flex', alignItems: 'center'}}>
+                        <Typography
+                           variant="body1"
+                           dangerouslySetInnerHTML={{
+                              __html: (props.item.txt.length > 46 ?
+                                 `${marked(props.item.txt.split("^J^J").join("\n")).substring(0, 40)}...`
+                                    :
+                                 marked(props.item.txt.split("^J^J").join("\n"))
+                              )
+                           }}
+                           style={{alignSelf: 'flex-start'}}
+                        />
+                        <Typography
+                           variant="caption"
+                           style={{marginLeft: 6, color: link3, cursor: 'pointer'}}
+                           onClick={props.handleShowStory}
+                        > Read more
+                        </Typography>
+                     </div>
+                  }
+               </div>
+                  :
+               <div style={{display: 'flex', alignItems: 'center'}}>
+                  <StoryIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
+                  <Typography variant="caption" style={{marginLeft: 8}}>
+                     No story yet.
+                  </Typography>
+                  <Typography variant="caption" style={{color: link3, marginLeft: 6}}>
+                     Add one 
+                  </Typography>
+               </div>
+            }
+         </Collapse>
    )
 }
 
