@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
+import LimboContentList from './LimboContentList';
 
-class Moderation extends React.Component {
+class Limbo extends React.Component {
    state = {
    }
 
@@ -17,9 +18,12 @@ class Moderation extends React.Component {
             <Typography variant="title">
                {memorial.nm}'s Content Moderation Station
             </Typography>
+            <div style={{maxWidth: 600, margin: '0 auto'}}>
+               <LimboContentList memorial={memorial} />
+            </div>
          </div>
       )
    }
 }
 
-export default connect('user, secondaryAppHeaderVisible', actions)(Moderation);
+export default connect('user', actions)(Limbo);
