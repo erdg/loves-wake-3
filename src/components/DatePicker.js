@@ -21,6 +21,7 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Divider from '@material-ui/core/Divider';
 
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
+import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
 
@@ -219,9 +220,10 @@ class AppDatePicker extends React.Component {
             inputRef={(ele) => { this.dateInput = ele; }}
             inputProps={{onFocus: () => this.dateInput.blur()}}
             InputProps={{
-               endAdornment: <InputAdornment position="end"><CalendarIcon /></InputAdornment>,
+               endAdornment: <InputAdornment position="end" style={{marginRight: 8}}><CalendarIcon /></InputAdornment>,
                readOnly: true
             }}
+            style={{width: '100%'}}
          />
          <Dialog
             open={this.state.showDatePicker}
@@ -373,7 +375,8 @@ class DatePickerYear extends React.Component {
    }
 
    render () {
-      let dates = Array.from(new Array(2018 - this.props.born + 1), (x, i) => i + this.props.born);
+      // array of dates from birth - present, e.g. [1956, 1957, ... 2017, 2018]
+      let dates = Array.from(new Array(new Date().getFullYear() - this.props.born + 1), (x, i) => i + this.props.born);
       return (
          <div>
             <Paper elevation={4}>
@@ -612,13 +615,13 @@ class DatePickerDay extends React.Component {
                  display: 'none'
               }}
            >
-               <MuiPickersUtilsProvider utils={DateFnsUtils}>
+               <MuiPickersUtilsProvider utils={LuxonUtils}>
                   <DatePicker
                      id="exact-date"
                      key={Math.random()}
                      ref={(node) => { this.picker = node; }}
                      value={this.state.calendarDate}
-                     format="MMMM DD, YYYY"
+                     format="DDD"
                      onChange={this.handleDateChange}
                      leftArrowIcon={<LeftArrowIcon />}
                      rightArrowIcon={<RightArrowIcon />}
@@ -655,4 +658,4 @@ class DatePickerConfirm extends React.Component {
    }
 }
 
-export default withMobileDialog()(AppDatePicker);
+export default AppDatePicker;
