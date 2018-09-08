@@ -23,7 +23,7 @@ import Memorial from './routes/Memorial';
 import Shrine from './routes/Shrine';
 import Chronicle from './routes/Chronicle';
 import Atlas from './routes/Atlas';
-import Moderation from './routes/Moderation';
+import Limbo from './routes/Limbo';
 
 import DatePickerTest from './routes/DatePickerTest';
 
@@ -60,7 +60,7 @@ const AppRouter = () => {
                <Route path="/memorial/:urlStr/:urlNm/chronicle" component={Chronicle} />
                <Route path="/memorial/:urlStr/:urlNm/shrine" component={Shrine} />
                <Route path="/memorial/:urlStr/:urlNm/atlas" component={Atlas} />
-               <Route path="/memorial/:urlStr/:urlNm/moderation" component={Moderation} />
+               <Route path="/memorial/:urlStr/:urlNm/limbo" component={Limbo} />
             </Screen>
          </div>
       </Router>
