@@ -153,7 +153,57 @@ let actions = store => ({
       setTimeout(() => {
          store.setState({ loading: false });
       }, 1000)
-   }
+   },
+
+   publishChronicleItem (state, itemId, memorialId) {
+      fetch(API_ENDPOINT + "!publishChronicleItem", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            id: itemId,
+            memorialId: memorialId
+         })
+      })
+      .then((res) => res.json())
+      .then((newItem) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+                  items: items => update(items, {
+                     [items.findIndex((itm) => itm.id === newItem.id)]: item => update(item, {$set: newItem})
+                  })
+               })
+            })
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
+   unpublishChronicleItem (state, itemId, memorialId) {
+      fetch(API_ENDPOINT + "!unpublishChronicleItem", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            id: itemId,
+            memorialId: memorialId
+         })
+      })
+      .then((res) => res.json())
+      .then((newItem) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+                  items: items => update(items, {
+                     [items.findIndex((itm) => itm.id === newItem.id)]: item => update(item, {$set: newItem})
+                  })
+               })
+            })
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
 
 })
 
