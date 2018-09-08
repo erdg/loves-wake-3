@@ -39,7 +39,6 @@ class Chronicle extends React.Component {
             {this.state.view === "C" &&
                <div style={{maxWidth: 600, margin: '0 auto'}}>
                   <ChronicleContentList memorial={memorial} />
-                  <ChronicleFab memorial={memorial}/>
                </div>
             }
             {this.state.view === "A" &&
@@ -54,4 +53,4 @@ class Chronicle extends React.Component {
    }
 }
 
-export default connect('user, secondaryAppHeaderVisible', actions)(Chronicle);
+export default connect('user', actions)(Chronicle);

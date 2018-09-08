@@ -16,6 +16,8 @@ import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
+import ChronicleFab from './ChronicleFab';
+
 import history from '../../history';
 
 class MemorialTabs extends React.Component {
@@ -121,6 +123,10 @@ class MemorialTabs extends React.Component {
                   >
                      <ArrowBackIcon />
                   </IconButton>
+                  <Typography variant="subheading" style={{paddingLeft: 16}}>
+                     Chronicle
+                  </Typography>
+                  {/*
                   <MemorialAvatar
                      src={this.props.memorial.avatar}
                      name={`${this.props.memorial.nm1}'s Chronicle`}
@@ -128,17 +134,14 @@ class MemorialTabs extends React.Component {
                         paddingLeft: 16
                      }}
                   />
-                  {/*
+                  */}
+                  <div style={{marginLeft: 'auto'}}>
+                     <ChronicleFab memorial={this.props.memorial}/>
+                  </div>
                   <IconButton
                      onClick={this.handleSettingsMenuClick}
-                     style={{
-                        marginLeft: 'auto',
-                        marginRight: 4,
-                     }}
-                  >
-                     {this.state.showSettingsMenu ? <CloseIcon /> : <SettingsIcon/>}
+                  > {this.state.showSettingsMenu ? <CloseIcon /> : <SettingsIcon/>}
                   </IconButton>
-                  */}
                </div>
                {/*
                <Collapse in={this.state.showSettingsMenu} style={{margin: 8}}>
