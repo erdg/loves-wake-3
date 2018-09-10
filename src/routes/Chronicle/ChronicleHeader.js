@@ -16,11 +16,12 @@ import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
+import ChronicleIcon from 'components/icons/ChronicleIcon';
 import ChronicleFab from './ChronicleFab';
 
 import history from '../../history';
 
-class MemorialTabs extends React.Component {
+class ChronicleHeader extends React.Component {
    state = {
       showSettingsMenu: false,
       visible: true,
@@ -123,7 +124,10 @@ class MemorialTabs extends React.Component {
                   >
                      <ArrowBackIcon />
                   </IconButton>
-                  <Typography variant="subheading" style={{paddingLeft: 16}}>
+                  <div style={{marginLeft: 16, paddingTop: 3}}>
+                     <ChronicleIcon fill='rgba(0,0,0,0.54)' />
+                  </div>
+                  <Typography variant="subheading" style={{paddingLeft: 8}}>
                      Chronicle
                   </Typography>
                   {/*
@@ -175,4 +179,4 @@ class MemorialTabs extends React.Component {
    }
 }
 
-export default connect('secondaryAppHeaderVisible', actions)(MemorialTabs);
+export default connect('secondaryAppHeaderVisible', actions)(ChronicleHeader);
