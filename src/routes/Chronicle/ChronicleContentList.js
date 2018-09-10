@@ -25,7 +25,7 @@ const ChronicleContentList = (props) => {
                <LazyLoad 
                   key={i}
                   height={200}
-                  offset={200}
+                  offset={600}
                   once
                >
                   <ChronicleCard
