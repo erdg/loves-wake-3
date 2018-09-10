@@ -80,7 +80,7 @@ class Memorial extends React.Component {
                            </ListItemText>
                            <ListItemSecondaryAction
                               onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
-                              style={{cursor: 'pointer'}}
+                              style={{cursor: 'pointer', marginRight: 8}}
                            >
                               <ArrowForwardIcon />
                            </ListItemSecondaryAction>
@@ -97,7 +97,7 @@ class Memorial extends React.Component {
                            </ListItemText>
                            <ListItemSecondaryAction
                               onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
-                              style={{cursor: 'pointer'}}
+                              style={{cursor: 'pointer', marginRight: 8}}
                            >
                               <ArrowForwardIcon />
                            </ListItemSecondaryAction>
@@ -114,7 +114,7 @@ class Memorial extends React.Component {
                            </ListItemText>
                            <ListItemSecondaryAction
                               onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
-                              style={{cursor: 'pointer'}}
+                              style={{cursor: 'pointer', marginRight: 8}}
                            >
                               <ArrowForwardIcon />
                            </ListItemSecondaryAction>
@@ -131,7 +131,7 @@ class Memorial extends React.Component {
                            </ListItemText>
                            <ListItemSecondaryAction
                               onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/limbo")}
-                              style={{cursor: 'pointer'}}
+                              style={{cursor: 'pointer', marginRight: 8}}
                            >
                               <ArrowForwardIcon />
                            </ListItemSecondaryAction>
