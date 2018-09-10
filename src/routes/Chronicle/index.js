@@ -3,7 +3,7 @@ import { connect } from 'unistore/react';
 import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
 // import MemorialAvatar from 'components/MemorialAvatar';
-import MemorialTabs from './MemorialTabs';
+import ChronicleHeader from './ChronicleHeader';
 import ChronicleContentList from './ChronicleContentList';
 import ChronicleFab from './ChronicleFab';
 import ChronicleEditItemModal from './ChronicleEditItemModal';
@@ -24,7 +24,7 @@ class Chronicle extends React.Component {
 
       return (
          <div style={{width: '100%'}}>
-            <MemorialTabs
+            <ChronicleHeader
                memorial={memorial}
                handleTabChange={this.handleTabChange}
                view={this.state.view}
