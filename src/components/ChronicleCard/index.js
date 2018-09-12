@@ -22,6 +22,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 //icons
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -123,7 +125,6 @@ class ChronicleCard extends React.Component {
                id={`chronicleCard${this.props.item.id}`}
                className={
                   classes.card
-                  + (this.state.showMenu ? " " + classes.edit : "")
                }
                      
                style={{overflow: 'visible'}}
@@ -252,14 +253,11 @@ const ChronicleCardMenu = (props) => {
          <IconButton
             onClick={props.handleMenuClick}
             style={{marginRight: 4}}
+            id={`chronicleCardMenuButton${props.item.id}`}
          >
-            {props.showMenu ? 
-                  <CloseIcon/>
-                  :
-                  <SettingsIcon />
-            }
+            <SettingsIcon />
          </IconButton>
-         {props.showMenu &&
+         {/*props.showMenu &&
                <Paper
                   elevation={0}
                   style={{
@@ -270,12 +268,20 @@ const ChronicleCardMenu = (props) => {
                      backgroundColor: '#eee'
                   }}
                >
-                  <List>
-                     <ListItem button
+         */}
+         <Menu
+            open={props.showMenu}
+            onClose={props.handleMenuClick}
+            anchorEl={() => document.getElementById(`chronicleCardMenuButton${props.item.id}`)}
+         >
+                     <MenuItem button
                         disabled={!props.item.date ? true : false}
                         onClick={
                            props.item.published === 'true' ?
-                              () => props.unpublishChronicleItem(props.item.id, props.memorialId)
+                              () => {
+                                 props.unpublishChronicleItem(props.item.id, props.memorialId);
+                                 props.handleMenuClick();
+                              }
                               : 
                               () => props.publishChronicleItem(props.item.id, props.memorialId)
                         }
@@ -284,26 +290,24 @@ const ChronicleCardMenu = (props) => {
                            <EditIcon />
                         </ListItemIcon>
                         <ListItemText inset primary={props.item.published === 'true' ? "Unpublish" : "Publish"} />
-                     </ListItem>
-                     <ListItem button
+                     </MenuItem>
+                     <MenuItem button
                         onClick={props.handleShowChronicleEditItemModal}
                      >
                         <ListItemIcon>
                            <EditIcon />
                         </ListItemIcon>
                         <ListItemText inset primary="Edit item" />
-                     </ListItem>
-                     <ListItem button
+                     </MenuItem>
+                     <MenuItem button
                         onClick={props.handleShowChronicleDeleteItemModal}
                      >
                         <ListItemIcon>
                            <DeleteIcon />
                         </ListItemIcon>
                         <ListItemText inset primary="Delete item" />
-                     </ListItem>
-                  </List>
-               </Paper>
-         }
+                     </MenuItem>
+                  </Menu>
       </div>
    )
 }
