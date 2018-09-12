@@ -57,8 +57,8 @@ const seasons = [
 ]
 
 const holidays = [
-   "New Years Day",
-   "Easter and Passover",
+   "New Year's Day",
+   "Easter",
    "Mother's Day",
    "Memorial Day",
    "Father's Day",
