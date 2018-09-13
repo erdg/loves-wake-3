@@ -12,36 +12,25 @@ import Zoom from '@material-ui/core/Zoom';
 import Headroom from 'react-headroom';
 
 const AppHeader = (props) => (
-   <Headroom id="AppHeader">
-      <AppBar position="static">
-         <Toolbar>
-            <IconButton
-               onClick={props.toggleMenu}
-               color="inherit"
-               aria-label="Menu"
-               style={{
-                  marginLeft: -12
-               }}
-            > <MenuIcon />
-            </IconButton>
-            {!props.user.email &&
-               <div style={{marginLeft: 'auto'}}>
-                  <Button
+   <div>
+      {props.user.email &&
+         <Headroom id="AppHeader">
+            <AppBar position="static">
+               <Toolbar>
+                  <IconButton
+                     onClick={props.toggleMenu}
                      color="inherit"
-                     onClick={() => history.push("/signup")}
-                     style={{ marginLeft: 'auto' }}
-                  > Sign Up
-                  </Button>
-                  <Button
-                     color="inherit"
-                     onClick={() => history.push("/login")}
-                  > Log In
-                  </Button>
-               </div>
-            }
-        </Toolbar>
-     </AppBar>
-  </Headroom>
+                     aria-label="Menu"
+                     style={{
+                        marginLeft: -12
+                     }}
+                  > <MenuIcon />
+                  </IconButton>
+              </Toolbar>
+           </AppBar>
+        </Headroom>
+      }
+   </div>
 )
 
 export default connect('user', actions)(AppHeader);
