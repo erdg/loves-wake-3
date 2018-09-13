@@ -130,8 +130,7 @@ const ChronicleCardEditable = (props) => {
                         </IconButton>
                      </div>
                   }
-
-                                 </div>
+               </div>
             }
          />
          {!props.renderMediaThumbnail ?
