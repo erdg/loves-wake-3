@@ -140,7 +140,7 @@ const ChronicleContentList = (props) => {
 
    let sorted = contentList.sort(
       (a, b) => {
-         return (isNaN(a) ? dateObjFromStr(a.date) : new Date(a, 0)) > (isNaN(b) ? dateObjFromStr(b.date) : new Date(b, 0));
+         return (isNaN(a) ? dateObjFromStr(a.date) : new Date(a, 0)) - (isNaN(b) ? dateObjFromStr(b.date) : new Date(b, 0));
       }
    );
 

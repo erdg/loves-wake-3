@@ -102,10 +102,12 @@ class LimboHeader extends React.Component {
             <Paper
                id="MemorialHeader"
                elevation={4}
+               square
                style={{
                   position: (this.state.positionToggled ? 'fixed' : 'relative'),
                   zIndex: 1,
                   width: '100%',
+                  marginTop: (this.state.positionToggled ? -16 : 'unset')
                }}
             >
                <div

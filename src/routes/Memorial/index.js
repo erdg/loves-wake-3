@@ -27,10 +27,18 @@ class Memorial extends React.Component {
    state = {
    }
 
+   componentDidMount () {
+      !this.props.user.email && this.props.getUserData();
+   }
+
    render () {
-      let memorial = this.props.user.memorials.find((m) => (
-         m.urlStr === this.props.match.params.urlStr && m.urlNm === this.props.match.params.urlNm
-      ));
+      let memorial =
+         this.props.user.memorials ?
+            this.props.user.memorials.find((m) => (
+               m.urlStr === this.props.match.params.urlStr && m.urlNm === this.props.match.params.urlNm
+            )) 
+         : 
+         {};
 
       return (
          <div
@@ -40,107 +48,119 @@ class Memorial extends React.Component {
          >
             { this.props.match.isExact &&
                <div
-                  style={{
-                     display: 'flex',
-                     flexDirection: 'column',
-                     justifyContent: 'center',
-                     alignItems: 'center',
-                     margin: 16
-                  }}
                >
-                  <Avatar
-                     src={memorial.avatar}
-                     alt={memorial.nm}
-                     style={{width: 160, height: 160}}
-                  >{!memorial.avatar ? memorial.nm[0] : ''}
-                  </Avatar>
-                  <Typography variant="title" style={{marginTop: 24, marginBottom: 24}}>
-                     {memorial.nm}
-                  </Typography>
-                  <Typography variant="subheading" style={{marginBottom: 24}}>
-                     {memorial.died ? `${memorial.born.split(/[^\d]/).find(n => n.length === 4)} - ${memorial.died.split(/[^\d]/).find(n => n.length === 4)}` : ''}
-                  </Typography>
-                  <Paper
-                     elevation={2}
-                     style={{
-                        width: '100%',
-                     }}
-                  >
-                     <List
+                  {memorial.nm &&
+                     <div
+                        style={{
+                           display: 'flex',
+                           flexDirection: 'column',
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           margin: 16
+                        }}
                      >
-                        <ListItem
-                           button
-                           onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
+                        <Avatar
+                           src={memorial.avatar}
+                           alt={memorial.nm}
+                           style={{width: 160, height: 160}}
+                        >{!memorial.avatar ? memorial.nm[0] : ''}
+                        </Avatar>
+                        <Typography variant="title" style={{marginTop: 24, marginBottom: 24}}>
+                           {memorial.nm}
+                        </Typography>
+                        <Typography variant="subheading" style={{marginBottom: 24}}>
+                           {/* e.g. 1956 - 2015 */}
+                           {memorial.died ? 
+                              `${memorial.born.split(/[^\d]/).find(n => n.length === 4)}
+                              -
+                              ${memorial.died.split(/[^\d]/).find(n => n.length === 4)}`
+                              : 
+                              ''
+                           }
+                        </Typography>
+                        <Paper
+                           elevation={2}
+                           style={{
+                              width: '100%',
+                           }}
                         >
-                           <ListItemIcon>
-                              <ShrineIcon />
-                           </ListItemIcon>
-                           <ListItemText>
-                              Shrine
-                           </ListItemText>
-                           <ListItemSecondaryAction
-                              onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
-                              style={{cursor: 'pointer', marginRight: 8}}
+                           <List
                            >
-                              <ArrowForwardIcon />
-                           </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                           button
-                           onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
-                        >
-                           <ListItemIcon>
-                              <ChronicleIcon />
-                           </ListItemIcon>
-                           <ListItemText>
-                              Chronicle
-                           </ListItemText>
-                           <ListItemSecondaryAction
-                              onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
-                              style={{cursor: 'pointer', marginRight: 8}}
-                           >
-                              <ArrowForwardIcon />
-                           </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                           button
-                           onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
-                        >
-                           <ListItemIcon>
-                              <AtlasIcon />
-                           </ListItemIcon>
-                           <ListItemText>
-                              Atlas
-                           </ListItemText>
-                           <ListItemSecondaryAction
-                              onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
-                              style={{cursor: 'pointer', marginRight: 8}}
-                           >
-                              <ArrowForwardIcon />
-                           </ListItemSecondaryAction>
-                        </ListItem>
-                        <ListItem
-                           button
-                           onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/limbo")}
-                        >
-                           <ListItemIcon>
-                              <LimboIcon />
-                           </ListItemIcon>
-                           <ListItemText>
-                              Limbo
-                           </ListItemText>
-                           <ListItemSecondaryAction
-                              onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/limbo")}
-                              style={{cursor: 'pointer', marginRight: 8}}
-                           >
-                              <ArrowForwardIcon />
-                           </ListItemSecondaryAction>
-                        </ListItem>
-                     </List>
-                  </Paper>
-                  <Typography variant="body1" style={{marginTop: 24}}>
-                     {memorial.obituaryText}
-                  </Typography>
+                              <ListItem
+                                 button
+                                 onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
+                              >
+                                 <ListItemIcon>
+                                    <ShrineIcon />
+                                 </ListItemIcon>
+                                 <ListItemText>
+                                    Shrine
+                                 </ListItemText>
+                                 <ListItemSecondaryAction
+                                    onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
+                                    style={{cursor: 'pointer', marginRight: 8}}
+                                 >
+                                    <ArrowForwardIcon />
+                                 </ListItemSecondaryAction>
+                              </ListItem>
+                              <ListItem
+                                 button
+                                 onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
+                              >
+                                 <ListItemIcon>
+                                    <ChronicleIcon />
+                                 </ListItemIcon>
+                                 <ListItemText>
+                                    Chronicle
+                                 </ListItemText>
+                                 <ListItemSecondaryAction
+                                    onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
+                                    style={{cursor: 'pointer', marginRight: 8}}
+                                 >
+                                    <ArrowForwardIcon />
+                                 </ListItemSecondaryAction>
+                              </ListItem>
+                              <ListItem
+                                 button
+                                 onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
+                              >
+                                 <ListItemIcon>
+                                    <AtlasIcon />
+                                 </ListItemIcon>
+                                 <ListItemText>
+                                    Atlas
+                                 </ListItemText>
+                                 <ListItemSecondaryAction
+                                    onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
+                                    style={{cursor: 'pointer', marginRight: 8}}
+                                 >
+                                    <ArrowForwardIcon />
+                                 </ListItemSecondaryAction>
+                              </ListItem>
+                              <ListItem
+                                 button
+                                 onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/limbo")}
+                              >
+                                 <ListItemIcon>
+                                    <LimboIcon />
+                                 </ListItemIcon>
+                                 <ListItemText>
+                                    Limbo
+                                 </ListItemText>
+                                 <ListItemSecondaryAction
+                                    onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/limbo")}
+                                    style={{cursor: 'pointer', marginRight: 8}}
+                                 >
+                                    <ArrowForwardIcon />
+                                 </ListItemSecondaryAction>
+                              </ListItem>
+                           </List>
+                        </Paper>
+                        <Typography variant="body1" style={{marginTop: 24}}>
+                           {memorial.obituaryText}
+                        </Typography>
+                     </div>
+                  }
                </div>
             }
          </div>
@@ -148,4 +168,4 @@ class Memorial extends React.Component {
    }
 }
 
-export default connect('user', actions)(Memorial);
+export default connect('user, loading', actions)(Memorial);

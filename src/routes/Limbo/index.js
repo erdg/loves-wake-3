@@ -10,18 +10,26 @@ class Limbo extends React.Component {
    }
 
    render () {
-      let memorial = this.props.user.memorials.find((m) => (
-         m.urlStr === this.props.match.params.urlStr && m.urlNm === this.props.match.params.urlNm
-      ));
+      let memorial =
+         this.props.user.memorials ?
+            this.props.user.memorials.find((m) => (
+               m.urlStr === this.props.match.params.urlStr && m.urlNm === this.props.match.params.urlNm
+            )) 
+         : 
+         {};
 
       return (
          <div style={{width: '100%'}}>
-            <LimboHeader
-               memorial={memorial}
-            />
-            <div style={{maxWidth: 600, margin: '0 auto'}}>
-               <LimboContentList memorial={memorial} />
-            </div>
+            { memorial.nm &&
+               <div>
+                  <LimboHeader
+                     memorial={memorial}
+                  />
+                  <div style={{maxWidth: 600, margin: '0 auto'}}>
+                     <LimboContentList memorial={memorial} />
+                  </div>
+               </div>
+            }
          </div>
       )
    }

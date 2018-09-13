@@ -16,12 +16,11 @@ import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import ChronicleIcon from 'components/icons/ChronicleIcon';
-import ChronicleFab from './ChronicleFab';
+import ShrineIcon from 'components/icons/ShrineIcon';
 
 import history from '../../history';
 
-class ChronicleHeader extends React.Component {
+class ShrineHeader extends React.Component {
    state = {
       showSettingsMenu: false,
       visible: true,
@@ -127,10 +126,10 @@ class ChronicleHeader extends React.Component {
                      <ArrowBackIcon />
                   </IconButton>
                   <div style={{marginLeft: 16, paddingTop: 3}}>
-                     <ChronicleIcon fill='rgba(0,0,0,0.54)' />
+                     <ShrineIcon fill='rgba(0,0,0,0.54)' />
                   </div>
                   <Typography variant="subheading" style={{paddingLeft: 8}}>
-                     Chronicle
+                     Shrine
                   </Typography>
                   {/*
                   <MemorialAvatar
@@ -141,11 +140,9 @@ class ChronicleHeader extends React.Component {
                      }}
                   />
                   */}
-                  <div style={{marginLeft: 'auto'}}>
-                     <ChronicleFab memorial={this.props.memorial}/>
-                  </div>
                   <IconButton
                      onClick={this.handleSettingsMenuClick}
+                     style={{marginLeft: 'auto'}}
                   > {this.state.showSettingsMenu ? <CloseIcon /> : <SettingsIcon/>}
                   </IconButton>
                </div>
@@ -181,4 +178,4 @@ class ChronicleHeader extends React.Component {
    }
 }
 
-export default connect('secondaryAppHeaderVisible', actions)(ChronicleHeader);
+export default connect('secondaryAppHeaderVisible', actions)(ShrineHeader);
