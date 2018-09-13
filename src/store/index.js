@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 
 // API
 // development
-// const API_ENDPOINT = "http://192.168.0.48:8887/";
+const API_ENDPOINT = "http://192.168.0.48:8887/";
 
 // kathleen's house
 // const API_ENDPOINT = "http://192.168.0.23:8887/";
@@ -15,10 +15,10 @@ import update from 'immutability-helper';
 
 // production
 // const API_ENDPOINT = "https://erikdgustafson.com/api/";
-const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
+// const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
 
-// let store = devtools(createStore({
-let store = createStore({
+let store = devtools(createStore({
+// let store = createStore({
 
    // loading state toggle for store actions
    loading: null,
@@ -31,8 +31,8 @@ let store = createStore({
    // TODO - refactor this nested mess!
    user: {},
 
-// }))
-})
+}))
+// })
 
 let actions = store => ({
 
@@ -118,6 +118,7 @@ let actions = store => ({
             });
             // store login token in sessionStorage
             window.sessionStorage.setItem('loginToken', json.loginToken);
+            history.push("/user");
             // call getUserData
             this.getUserData(state);
             console.log('JWT: ', json.loginToken);
@@ -137,6 +138,7 @@ let actions = store => ({
          if (!res.ok) {
             alert('You need to login to access this page.');
             store.setState({ loading: false });
+            history.push("/login");
             return;
          } else {
             return res.json();
@@ -144,7 +146,6 @@ let actions = store => ({
       })
       .then((json) => {
          store.setState({ user: json.user, loading: false })
-         history.push("/user");
       });
    },
 
