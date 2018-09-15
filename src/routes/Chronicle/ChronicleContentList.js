@@ -192,7 +192,7 @@ const ChronicleContentList = (props) => {
                   style={{
                      display: 'flex',
                      alignItems: 'center',
-                     margin: '2px 16px'
+                     padding: '0px 16px',
                   }}
                >
                   <Typography variant="caption">

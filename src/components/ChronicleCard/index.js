@@ -35,7 +35,7 @@ import MessageIcon from '@material-ui/icons/Message';
 import CloseIcon from '@material-ui/icons/Close';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SettingsIcon from '@material-ui/icons/Settings';
-import AtlasIcon from 'components/icons/AtlasIcon';
+import AtlasIcon from '@material-ui/icons/Public';
 import DateIcon from '@material-ui/icons/Event';
 import StoryIcon from '@material-ui/icons/ImportContacts';
 
@@ -51,7 +51,7 @@ const comments = [
 
 const styles = {
    card: {
-      margin: 16,
+      margin: '0px 0px',
       transform: 'translate(0px,0)',
       transition: '0.2s ease-in-out'
       // maxWidth: 400
@@ -126,7 +126,8 @@ class ChronicleCard extends React.Component {
                className={
                   classes.card
                }
-                     
+               square={true}
+               elevation={0}
                style={{overflow: 'visible'}}
             >
                <ChronicleCardHeader 
@@ -195,13 +196,13 @@ export default withStyles(styles)(connect('', actions)(ChronicleCard));
 
 const ChronicleCardHeader = (props) => (
    <CardHeader
+      style={{paddingBottom: 0}}
       title={
          <div style={{display: 'flex', alignItems: 'center'}}>
             {props.item.date ?
                <Typography
                   variant="subheading"
                   style={{
-                     marginLeft: 8
                   }}
                >
                   {props.item.date}
@@ -252,7 +253,6 @@ const ChronicleCardMenu = (props) => {
       <div>
          <IconButton
             onClick={props.handleMenuClick}
-            style={{marginRight: 4}}
             id={`chronicleCardMenuButton${props.item.id}`}
          >
             <SettingsIcon />
@@ -378,7 +378,7 @@ const ChronicleCardContent = (props) => {
          </Typography>
          */}
          <div style={{display: 'flex', alignItems: 'center'}}>
-            <AtlasIcon  fill="rgba(0,0,0,0.54)" />
+            <AtlasIcon  style={{color: "rgba(0,0,0,0.54)"}} />
             {props.item.location ?
                   <Typography
                      variant="caption"
