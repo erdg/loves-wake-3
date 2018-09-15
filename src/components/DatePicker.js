@@ -24,6 +24,8 @@ import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
+import BasePicker from 'material-ui-pickers/_shared/BasePicker';
+import Calendar from 'material-ui-pickers/DatePicker/components/Calendar';
 
 import LeftArrowIcon from '@material-ui/icons/KeyboardArrowLeft';
 import RightArrowIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -134,6 +136,7 @@ class AppDatePicker extends React.Component {
 
    handleCloseDatePicker = () => {
       this.setState({ showDatePicker: false });
+      setTimeout(() => this.handleReset(), 50);
    }
 
    handleReturnDate = () => {
@@ -149,8 +152,8 @@ class AppDatePicker extends React.Component {
                // else return year '~year'
                `~${this.state.year}`
       );
-      this.handleReset();
       this.handleCloseDatePicker();
+      this.handleReset();
    }
 
    handleReset = () => {
@@ -227,6 +230,7 @@ class AppDatePicker extends React.Component {
          />
          <Dialog
             open={this.state.showDatePicker}
+            onClose={this.handleCloseDatePicker}
             fullScreen={this.props.fullScreen}
          >
             <DialogTitle
@@ -247,24 +251,26 @@ class AppDatePicker extends React.Component {
                         </Typography>
                      </div>
                      :
-                     <Typography variant="display1" style={{color: 'white'}}>
-                        { this.state.date ?
-                           this.state.date
-                           :
-                           this.state.month || this.state.season || this.state.holiday ?
-                              `${this.state.month ? this.state.month + ", " : ""}
-                              ${this.state.season ? this.state.season + ", " : ""}
-                              ${this.state.holiday ? this.state.holiday + ", " : ""}
-                              ${this.state.year}`
+                     <div>
+                        <Typography variant="display1" style={{color: 'white'}}>
+                           { this.state.date ?
+                              this.state.date
                               :
-                              `~${this.state.year}`
-                        }
-                     </Typography>
+                              this.state.month || this.state.season || this.state.holiday ?
+                                 `${this.state.month ? this.state.month + ", " : ""}
+                                 ${this.state.season ? this.state.season + ", " : ""}
+                                 ${this.state.holiday ? this.state.holiday + ", " : ""}
+                                 ${this.state.year}`
+                                 :
+                                 `~${this.state.year}`
+                           }
+                        </Typography>
+                     </div>
                   }
                </div>
             </DialogTitle>
             <DialogContent>
-               <Stepper activeStep={activeStep} orientation="vertical" style={{padding: '16px 16px', maxWidth: 360}}>
+               <Stepper activeStep={activeStep} style={{margin: 0, padding: '16px 0px'}} orientation="vertical">
                 {steps.map((label, index) => {
                   return (
                     <Step key={label}>
@@ -292,10 +298,10 @@ class AppDatePicker extends React.Component {
                              >
                                 {label}
                              </div>
-                             {index > 0 && index < 2 &&
+                             {index > 0 && index < 3 &&
                                  <Button
                                     size="small"
-                                    onClick={index === 1 ? () => this.gotoStep(3) : () => this.handleNext}
+                                    onClick={index === 1 ? () => this.gotoStep(3) : () => this.handleNext()}
                                     style={{
                                        display: (this.state.activeStep !== index ? 'none' : 'unset'),
                                        color: link3
@@ -392,6 +398,7 @@ class DatePickerYear extends React.Component {
             <div
                style={{
                   maxHeight: 200,
+                  width: 246,
                   overflowY: 'scroll'
                }}
             >
@@ -604,12 +611,7 @@ class DatePickerDay extends React.Component {
 
    render () {
       return (
-         <div>
-            <Button
-               color="primary"
-               onClick={() => {this.picker.open()}}
-            > Open calendar <CalendarIcon style={{marginLeft: 16}}/>
-            </Button>
+         <div style={{padding: '0px 4px'}}>
            <div className="picker"
               style={{
                  display: 'none'
@@ -628,6 +630,35 @@ class DatePickerDay extends React.Component {
                   />
                </MuiPickersUtilsProvider>
             </div>
+            <MuiPickersUtilsProvider utils={LuxonUtils}>
+               <BasePicker
+                  id="exact-date"
+                  value={this.state.calendarDate}
+                  onChange={this.handleDateChange}
+               >
+                  {
+                     ({
+                        date,
+                        handleAccept,
+                        handleChange,
+                        handleClear,
+                        handleDismiss,
+                     }) => (
+                        <div>
+                           <Calendar
+                              key={Math.random()}
+                              ref={(node) => { this.picker = node; }}
+                              date={date}
+                              format="DDD"
+                              onChange={this.handleDateChange}
+                              leftArrowIcon={<LeftArrowIcon />}
+                              rightArrowIcon={<RightArrowIcon />}
+                           />
+                        </div>
+                     )
+                  }
+               </BasePicker>
+            </MuiPickersUtilsProvider>
          </div>
       )
    }
