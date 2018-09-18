@@ -42,6 +42,7 @@ import StoryIcon from '@material-ui/icons/ImportContacts';
 import ChronicleCardComments from './ChronicleCardComments';
 import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
 import ChronicleDeleteItemModal from 'routes/Chronicle/ChronicleDeleteItemModal';
+import ChronicleUpdateLocationModal from 'routes/Chronicle/ChronicleUpdateLocationModal';
 
 const comments = [
    { usr: "Bob", text: "I love this picture"},
@@ -71,6 +72,7 @@ class ChronicleCard extends React.Component {
       showStory: false,
       showChronicleEditItemModal: false,
       showChronicleDeleteItemModal: false,
+      showChronicleUpdateLocationModal: false,
    }
 
    // toggleAdmin = () => {
@@ -117,6 +119,14 @@ class ChronicleCard extends React.Component {
       this.setState({ showChronicleDeleteItemModal: false })
    }
 
+   handleShowChronicleUpdateLocationModal = () => {
+      this.setState({ showChronicleUpdateLocationModal: true })
+   }
+
+   handleCloseChronicleUpdateLocationModal = () => {
+      this.setState({ showChronicleUpdateLocationModal: false })
+   }
+
    render () {
       const { classes } = this.props;
       return (
@@ -153,6 +163,7 @@ class ChronicleCard extends React.Component {
                   showStory={this.state.showStory}
                   handleShowStory={this.handleShowStory}
                   handleHideStory={this.handleHideStory}
+                  handleShowChronicleUpdateLocationModal={this.handleShowChronicleUpdateLocationModal}
                />
                {/*
                <ChronicleCardActions
@@ -186,6 +197,14 @@ class ChronicleCard extends React.Component {
                handleCloseChronicleDeleteItemModal={this.handleCloseChronicleDeleteItemModal}
                handleCloseMenu={this.handleCloseMenu}
                handleDeleted={this.handleDeleted}
+            />
+            <ChronicleUpdateLocationModal
+               key={Math.random()}
+               id={this.props.item.id}
+               memorialId={this.props.memorialId} 
+               showChronicleUpdateLocationModal={this.state.showChronicleUpdateLocationModal}
+               handleShowChronicleUpdateLocationModal={this.handleShowChronicleUpdateLocationModal}
+               handleCloseChronicleUpdateLocationModal={this.handleCloseChronicleUpdateLocationModal}
             />
          </div>
       )
@@ -221,7 +240,10 @@ const ChronicleCardHeader = (props) => (
                   </Typography>
                   <Typography
                      variant="caption"
-                     style={{color: link3, marginLeft: 6}}
+                     style={{
+                        color: link3, marginLeft: 6,
+                        cursor: 'pointer'
+                     }}
                   > Add one
                   </Typography>
                </div>
@@ -378,7 +400,7 @@ const ChronicleCardContent = (props) => {
          </Typography>
          */}
          <div style={{display: 'flex', alignItems: 'center'}}>
-            <AtlasIcon  style={{color: "rgba(0,0,0,0.54)"}} />
+            <AtlasIcon  style={{color: (props.item.location ? 'black' : 'rgba(0,0,0,0.54)')}} />
             {props.item.location ?
                   <Typography
                      variant="caption"
@@ -401,7 +423,11 @@ const ChronicleCardContent = (props) => {
                      </Typography>
                      <Typography
                         variant="caption"
-                        style={{color: link3, marginLeft: 6}}
+                        style={{
+                           color: link3, marginLeft: 6,
+                           cursor: 'pointer'
+                        }}
+                        onClick={props.handleShowChronicleUpdateLocationModal}
                      > Add one
                      </Typography>
                   </div>
@@ -423,7 +449,14 @@ const ChronicleCardStory = (props) => {
          <Collapse in={true} unmountOnExit >
             {props.item.txt ?
                <div style={{display: 'flex', alignItems: 'center'}}>
-                  <StoryIcon style={{marginRight: 8, alignSelf: 'flex-start', marginTop: 12, color: 'rgba(0,0,0,0.54)'}} />
+                  <StoryIcon
+                     style={{
+                        marginRight: 8,
+                        alignSelf: 'flex-start',
+                        marginTop: 12,
+                        color: (props.item.txt ? 'black' : 'rgba(0,0,0,0.54)')
+                     }}
+                  />
                   {props.showStory ? 
                      <div>
                         <Typography
@@ -465,7 +498,13 @@ const ChronicleCardStory = (props) => {
                   <Typography variant="caption" style={{marginLeft: 8}}>
                      No story yet.
                   </Typography>
-                  <Typography variant="caption" style={{color: link3, marginLeft: 6}}>
+                  <Typography 
+                     variant="caption"
+                     style={{
+                        color: link3, marginLeft: 6,
+                        cursor: 'pointer'
+                     }}
+                  >
                      Add one 
                   </Typography>
                </div>
