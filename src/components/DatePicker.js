@@ -207,7 +207,7 @@ class AppDatePicker extends React.Component {
       this.setState({
          date: exactDate,
       });
-      this.handleNext();
+      // this.handleNext();
    }
 
   render() {
@@ -399,7 +399,8 @@ class DatePickerYear extends React.Component {
                style={{
                   maxHeight: 200,
                   width: 246,
-                  overflowY: 'scroll'
+                  overflowY: 'scroll',
+                  margin: '0 auto'
                }}
             >
                {this.state.value === 0 && dates.map((date, i) => (
@@ -689,4 +690,4 @@ class DatePickerConfirm extends React.Component {
    }
 }
 
-export default AppDatePicker;
+export default withMobileDialog()(AppDatePicker);
