@@ -207,8 +207,6 @@ const ChronicleContentList = (props) => {
                      }}
                   >
                      <Divider />
-                     <Divider />
-                     <Divider />
                   </div>
                </div>
    ))}
