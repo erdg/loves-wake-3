@@ -14,47 +14,50 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+
 // import Card from '@material-ui/core/Card';
 // import CardHeader from '@material-ui/core/CardHeader';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import CardContent from '@material-ui/core/CardContent';
 // import CardActions from '@material-ui/core/CardActions';
 
-class ChronicleUpdateLocationModal extends React.Component {
+class ChronicleUpdateStoryModal extends React.Component {
    state = {
       id: this.props.id,
-      location: this.props.location || '',
-   }
-
-   updChronicleCardLocation = () => {
-      // call fn from store
-      this.props.updChronicleCardLocation(this.props.id, this.props.memorialId, this.state.location);
+      story: (this.props.item.txt ? this.props.item.txt.split("^J^J").join('\n') : ''),
    }
 
    handleChange = (e) => {
-      this.setState({ location: e.target.value })
+      this.setState({ story: e.target.value })
+   }
+
+   updChronicleCardStory = () => {
+      this.props.updChronicleCardStory(this.props.id, this.props.memorialId, this.state.story);
    }
 
    render () {
       return (
          <Dialog
-            open={this.props.showChronicleUpdateLocationModal}
+            open={this.props.showChronicleUpdateStoryModal}
             onClose={
                () => {
-                  this.props.handleCloseChronicleUpdateLocationModal();
+                  this.props.handleCloseChronicleUpdateStoryModal();
                }
             }
          >
             <DialogTitle>
-               Add/Edit Location
+               Add/Edit Story
             </DialogTitle>
             <DialogContent>
                <TextField
-                  label="Location"
+                  label="Story"
                   autoFocus
                   variant="outlined"
                   margin="normal"
-                  value={this.state.location}
+                  multiline
+                  rows={6}
+                  value={this.state.story}
                   onChange={this.handleChange}
                />
             </DialogContent>
@@ -62,7 +65,7 @@ class ChronicleUpdateLocationModal extends React.Component {
                <Button
                   onClick={
                      () => {
-                        this.props.handleCloseChronicleUpdateLocationModal();
+                        this.props.handleCloseChronicleUpdateStoryModal();
                      }
                   }
                > Cancel
@@ -72,8 +75,8 @@ class ChronicleUpdateLocationModal extends React.Component {
                   variant="contained"
                   onClick={
                      () => {
-                        this.updChronicleCardLocation();
-                        this.props.handleCloseChronicleUpdateLocationModal();
+                        this.updChronicleCardStory()
+                        this.props.handleCloseChronicleUpdateStoryModal();
                      }
                   }
                > Ok
@@ -84,4 +87,4 @@ class ChronicleUpdateLocationModal extends React.Component {
    }
 }
 
-export default connect('', actions)(ChronicleUpdateLocationModal);
+export default connect('', actions)(withMobileDialog()(ChronicleUpdateStoryModal));

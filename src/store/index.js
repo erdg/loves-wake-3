@@ -206,6 +206,84 @@ let actions = store => ({
       })
    },
 
+   updChronicleCardLocation (state, itemId, memorialId, location) {
+      fetch(API_ENDPOINT + "!updChronicleCardLocation", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            id: itemId,
+            memorialId: memorialId,
+            location: location
+         })
+      })
+      .then((res) => res.json())
+      .then((newItem) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+                  items: items => update(items, {
+                     [items.findIndex((itm) => itm.id === newItem.id)]: item => update(item, {$set: newItem})
+                  })
+               })
+            })
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
+   updChronicleCardDate (state, itemId, memorialId, date) {
+      fetch(API_ENDPOINT + "!updChronicleCardDate", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            id: itemId,
+            memorialId: memorialId,
+            date: date
+         })
+      })
+      .then((res) => res.json())
+      .then((newItem) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+                  items: items => update(items, {
+                     [items.findIndex((itm) => itm.id === newItem.id)]: item => update(item, {$set: newItem})
+                  })
+               })
+            })
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
+   updChronicleCardStory (state, itemId, memorialId, story) {
+      fetch(API_ENDPOINT + "!updChronicleCardStory", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            id: itemId,
+            memorialId: memorialId,
+            story: story
+         })
+      })
+      .then((res) => res.json())
+      .then((newItem) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+                  items: items => update(items, {
+                     [items.findIndex((itm) => itm.id === newItem.id)]: item => update(item, {$set: newItem})
+                  })
+               })
+            })
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
 })
 
 export { store, actions, API_ENDPOINT };

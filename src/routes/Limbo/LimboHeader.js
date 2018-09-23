@@ -107,7 +107,6 @@ class LimboHeader extends React.Component {
                   position: (this.state.positionToggled ? 'fixed' : 'relative'),
                   zIndex: 1,
                   width: '100%',
-                  marginTop: (this.state.positionToggled ? -16 : 'unset')
                }}
             >
                <div

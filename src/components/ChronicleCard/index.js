@@ -43,6 +43,7 @@ import ChronicleCardComments from './ChronicleCardComments';
 import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
 import ChronicleDeleteItemModal from 'routes/Chronicle/ChronicleDeleteItemModal';
 import ChronicleUpdateLocationModal from 'routes/Chronicle/ChronicleUpdateLocationModal';
+import ChronicleUpdateStoryModal from 'routes/Chronicle/ChronicleUpdateStoryModal';
 
 const comments = [
    { usr: "Bob", text: "I love this picture"},
@@ -73,6 +74,7 @@ class ChronicleCard extends React.Component {
       showChronicleEditItemModal: false,
       showChronicleDeleteItemModal: false,
       showChronicleUpdateLocationModal: false,
+      showChronicleUpdateStoryModal: false,
    }
 
    // toggleAdmin = () => {
@@ -127,6 +129,14 @@ class ChronicleCard extends React.Component {
       this.setState({ showChronicleUpdateLocationModal: false })
    }
 
+   handleShowChronicleUpdateStoryModal = () => {
+      this.setState({ showChronicleUpdateStoryModal: true })
+   }
+
+   handleCloseChronicleUpdateStoryModal = () => {
+      this.setState({ showChronicleUpdateStoryModal: false })
+   }
+
    render () {
       const { classes } = this.props;
       return (
@@ -164,6 +174,7 @@ class ChronicleCard extends React.Component {
                   handleShowStory={this.handleShowStory}
                   handleHideStory={this.handleHideStory}
                   handleShowChronicleUpdateLocationModal={this.handleShowChronicleUpdateLocationModal}
+                  handleShowChronicleUpdateStoryModal={this.handleShowChronicleUpdateStoryModal}
                />
                {/*
                <ChronicleCardActions
@@ -205,6 +216,15 @@ class ChronicleCard extends React.Component {
                showChronicleUpdateLocationModal={this.state.showChronicleUpdateLocationModal}
                handleShowChronicleUpdateLocationModal={this.handleShowChronicleUpdateLocationModal}
                handleCloseChronicleUpdateLocationModal={this.handleCloseChronicleUpdateLocationModal}
+            />
+            <ChronicleUpdateStoryModal
+               key={Math.random()}
+               id={this.props.item.id}
+               item={this.props.item}
+               memorialId={this.props.memorialId} 
+               showChronicleUpdateStoryModal={this.state.showChronicleUpdateStoryModal}
+               handleShowChronicleUpdateStoryModal={this.handleShowChronicleUpdateStoryModal}
+               handleCloseChronicleUpdateStoryModal={this.handleCloseChronicleUpdateStoryModal}
             />
          </div>
       )
@@ -438,6 +458,9 @@ const ChronicleCardContent = (props) => {
             showStory={props.showStory}
             handleShowStory={props.handleShowStory}
             handleHideStory={props.handleHideStory}
+            showChronicleUpdateStoryModal={props.showChronicleUpdateStoryModal}
+            handleShowChronicleUpdateStoryModal={props.handleShowChronicleUpdateStoryModal}
+            handleCloseChronicleUpdateStoryModal={props.handleCloseChronicleUpdateStoryModal}
          />
       </CardContent>
    )
@@ -465,13 +488,13 @@ const ChronicleCardStory = (props) => {
                         />
                         <Typography
                            variant="caption"
-                           style={{marginLeft: 6, color: link3, cursor: 'pointer'}}
+                           style={{color: link3, cursor: 'pointer'}}
                            onClick={props.handleHideStory}
                         > Read less
                         </Typography>
                      </div>
                         :
-                     <div style={{display: 'flex', alignItems: 'center'}}>
+                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         <Typography
                            variant="body1"
                            dangerouslySetInnerHTML={{
@@ -483,12 +506,14 @@ const ChronicleCardStory = (props) => {
                            }}
                            style={{alignSelf: 'flex-start'}}
                         />
-                        <Typography
-                           variant="caption"
-                           style={{marginLeft: 6, color: link3, cursor: 'pointer'}}
-                           onClick={props.handleShowStory}
-                        > Read more
-                        </Typography>
+                        {props.item.txt.length > 46 &&
+                           <Typography
+                              variant="caption"
+                              style={{color: link3, cursor: 'pointer'}}
+                              onClick={props.handleShowStory}
+                           > Read more
+                           </Typography>
+                        }
                      </div>
                   }
                </div>
@@ -500,6 +525,7 @@ const ChronicleCardStory = (props) => {
                   </Typography>
                   <Typography 
                      variant="caption"
+                     onClick={props.handleShowChronicleUpdateStoryModal}
                      style={{
                         color: link3, marginLeft: 6,
                         cursor: 'pointer'

@@ -144,29 +144,29 @@ const ChronicleContentList = (props) => {
       }
    );
 
-   let dat = "~1992";
-   let dat2 = "January, 1993";
-   let dat3 = "January 24, 1989";
-   let dat4 = "Christmas, 2006";
-   let dat5 = "Mother's Day, 2012";
-   let dat6 = "Father's Day, 1956";
-   let dat7 = "Fourth of July, 1998";
-   let dat8 = "Easter, 1992";
-   let dat9 = "Thanksgiving, 1973";
-   let dat10 = "New Year's Day, 1977";
-   let dat11 = "November, 1938";
+//    let dat = "~1992";
+//    let dat2 = "January, 1993";
+//    let dat3 = "January 24, 1989";
+//    let dat4 = "Christmas, 2006";
+//    let dat5 = "Mother's Day, 2012";
+//    let dat6 = "Father's Day, 1956";
+//    let dat7 = "Fourth of July, 1998";
+//    let dat8 = "Easter, 1992";
+//    let dat9 = "Thanksgiving, 1973";
+//    let dat10 = "New Year's Day, 1977";
+//    let dat11 = "November, 1938";
 
 
-   console.log(dat, dateObjFromStr(dat));
-   console.log(dat2, dateObjFromStr(dat2));
-   console.log(dat3, dateObjFromStr(dat3));
-   console.log(dat4, dateObjFromStr(dat4));
-   console.log(dat5, dateObjFromStr(dat5));
-   console.log(dat6, dateObjFromStr(dat6));
-   console.log(dat7, dateObjFromStr(dat7));
-   console.log(dat8, dateObjFromStr(dat8));
-   console.log(dat9, dateObjFromStr(dat9));
-   console.log(dat11, dateObjFromStr(dat11));
+//    console.log(dat, dateObjFromStr(dat));
+//    console.log(dat2, dateObjFromStr(dat2));
+//    console.log(dat3, dateObjFromStr(dat3));
+//    console.log(dat4, dateObjFromStr(dat4));
+//    console.log(dat5, dateObjFromStr(dat5));
+//    console.log(dat6, dateObjFromStr(dat6));
+//    console.log(dat7, dateObjFromStr(dat7));
+//    console.log(dat8, dateObjFromStr(dat8));
+//    console.log(dat9, dateObjFromStr(dat9));
+//    console.log(dat11, dateObjFromStr(dat11));
 
    // console.log("sorted: ", sorted);
    return (
@@ -209,7 +209,7 @@ const ChronicleContentList = (props) => {
                      <Divider />
                   </div>
                </div>
-   ))}
+         ))}
       </div>
    )
 }
