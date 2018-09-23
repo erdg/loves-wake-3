@@ -40,6 +40,7 @@ class ChronicleUpdateStoryModal extends React.Component {
       return (
          <Dialog
             open={this.props.showChronicleUpdateStoryModal}
+            fullScreen={this.props.fullScreen}
             onClose={
                () => {
                   this.props.handleCloseChronicleUpdateStoryModal();
@@ -56,9 +57,10 @@ class ChronicleUpdateStoryModal extends React.Component {
                   variant="outlined"
                   margin="normal"
                   multiline
-                  rows={6}
+                  rows={12}
                   value={this.state.story}
                   onChange={this.handleChange}
+                  style={{width: '100%'}}
                />
             </DialogContent>
             <DialogActions style={{marginLeft: 16, marginRight: 16}}>
