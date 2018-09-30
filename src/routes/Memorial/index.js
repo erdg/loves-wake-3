@@ -31,6 +31,21 @@ class Memorial extends React.Component {
       !this.props.user.email && this.props.getUserData();
    }
 
+   componentDidUpdate () {
+      let memorial =
+         this.props.user.memorials ?
+            this.props.user.memorials.find((m) => (
+               m.urlStr === this.props.match.params.urlStr && m.urlNm === this.props.match.params.urlNm
+            )) 
+         : 
+         {};
+
+      // if memorial is not in user data, fetch (as guest) from DB
+      if (!memorial) {
+         this.props.getMemorial(this.props.match.params.urlStr, this.props.match.params.urlNm); 
+      }
+   }
+
    render () {
       let memorial =
          this.props.user.memorials ?
@@ -40,6 +55,7 @@ class Memorial extends React.Component {
          : 
          {};
 
+      if (memorial) {
       return (
          <div
             style={{
@@ -165,6 +181,10 @@ class Memorial extends React.Component {
             }
          </div>
       )
+      }
+      else {
+         return <div>Loading</div>
+      }
    }
 }
 
