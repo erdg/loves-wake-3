@@ -1,15 +1,6 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Zoom from '@material-ui/core/Zoom';
-import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 
-import AddIcon from '@material-ui/icons/Add';
-import ClearIcon from '@material-ui/icons/Clear';
-import PhotoIcon from '@material-ui/icons/Photo';
-import VideoIcon from '@material-ui/icons/Videocam';
-import AudioIcon from '@material-ui/icons/Audiotrack';
-import EmailIcon from '@material-ui/icons/Email';
 import AddCardIcon from '@material-ui/icons/LibraryAdd';
 
 import ChronicleAddItemModal from './ChronicleAddItemModal';

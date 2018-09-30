@@ -11,7 +11,6 @@ import AppNav from './components/AppNav';
 // import ChronicleCard from 'components/ChronicleCard';
 
 // routes
-
 import Home from './routes/Home/';
 import LogIn from './routes/LogIn';
 import SignUp from './routes/SignUp';
@@ -24,8 +23,6 @@ import Shrine from './routes/Shrine';
 import Chronicle from './routes/Chronicle';
 import Atlas from './routes/Atlas';
 import Limbo from './routes/Limbo';
-
-import DatePickerTest from './routes/DatePickerTest';
 
 class App extends Component {
    render() {

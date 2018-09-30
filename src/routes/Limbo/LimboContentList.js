@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
-import ChronicleCard from 'components/ChronicleCard';
 import UnpublishedCard from './UnpublishedCard';
 import LazyLoad from 'react-lazyload';
 import Button from '@material-ui/core/Button';
@@ -14,8 +13,7 @@ import CardContent from '@material-ui/core/CardContent';
 class LimboContentList extends React.Component {
    render () {
       // only chronicle items that have been 'published'
-      let unpublishedItems = this.props.memorial.items.filter(itm => itm.published === "false");
-      // console.log("filtered: ", filtered);
+      // let unpublishedItems = this.props.memorial.items.filter(itm => itm.published === "false");
       return (
          <div>
             {this.props.memorial.items.map((item, i) => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import LimboHeader from './LimboHeader';
 import LimboContentList from './LimboContentList';
 

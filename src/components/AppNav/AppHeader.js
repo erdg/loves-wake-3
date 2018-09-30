@@ -1,14 +1,13 @@
 import React from 'react';
-import history from '../../history';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
-import Zoom from '@material-ui/core/Zoom';
+// import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+// import Zoom from '@material-ui/core/Zoom';
 import Headroom from 'react-headroom';
 
 const AppHeader = (props) => (

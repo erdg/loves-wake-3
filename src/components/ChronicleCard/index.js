@@ -12,44 +12,40 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 //icons
-import FavoriteIcon from '@material-ui/icons/Favorite';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import MessageIcon from '@material-ui/icons/Message';
-import CloseIcon from '@material-ui/icons/Close';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import MessageIcon from '@material-ui/icons/Message';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AtlasIcon from '@material-ui/icons/Public';
 import DateIcon from '@material-ui/icons/Event';
 import StoryIcon from '@material-ui/icons/ImportContacts';
 
-import ChronicleCardComments from './ChronicleCardComments';
+// import ChronicleCardComments from './ChronicleCardComments';
 import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
 import ChronicleDeleteItemModal from 'routes/Chronicle/ChronicleDeleteItemModal';
 import ChronicleUpdateLocationModal from 'routes/Chronicle/ChronicleUpdateLocationModal';
 import ChronicleUpdateStoryModal from 'routes/Chronicle/ChronicleUpdateStoryModal';
 
-const comments = [
-   { usr: "Bob", text: "I love this picture"},
-   { usr: "Ted", text: "I love this picture too!"},
-   { usr: "Ralph", text: "I love it more than you."}
-]
+// const comments = [
+//    { usr: "Bob", text: "I love this picture"},
+//    { usr: "Ted", text: "I love this picture too!"},
+//    { usr: "Ralph", text: "I love it more than you."}
+// ]
 
 const styles = {
    card: {
@@ -384,32 +380,32 @@ const ChronicleCardMedia = (props) => {
    )
 }
 
-const ChronicleCardActions = (props) => {
-   return (
-      <CardActions
-         disableActionSpacing
-         style={{display: 'flex'}}
-      >
-         <IconButton onClick={props.handleLikeClick}>
-            <FavoriteIcon
-               color={props.liked ? "secondary" : "inherit"}
-            />
-         </IconButton>
-         <Typography variant="caption" style={{marginRight: 16}}>
-            {props.liked ? 7 : 6}
-         </Typography>
-         <IconButton onClick={props.handleExpandClick}>
-            <MessageIcon />
-         </IconButton>
-         <Typography variant="caption">
-            {comments.length} comments
-         </Typography>
-         <IconButton style={{marginLeft: 'auto'}} onClick={props.handleExpandClick}>
-            {props.expanded ? <ExpandLess /> : <ExpandMore />}
-         </IconButton>
-      </CardActions>
-   )
-}
+// const ChronicleCardActions = (props) => {
+//    return (
+//       <CardActions
+//          disableActionSpacing
+//          style={{display: 'flex'}}
+//       >
+//          <IconButton onClick={props.handleLikeClick}>
+//             <FavoriteIcon
+//                color={props.liked ? "secondary" : "inherit"}
+//             />
+//          </IconButton>
+//          <Typography variant="caption" style={{marginRight: 16}}>
+//             {props.liked ? 7 : 6}
+//          </Typography>
+//          <IconButton onClick={props.handleExpandClick}>
+//             <MessageIcon />
+//          </IconButton>
+//          <Typography variant="caption">
+//             {comments.length} comments
+//          </Typography>
+//          <IconButton style={{marginLeft: 'auto'}} onClick={props.handleExpandClick}>
+//             {props.expanded ? <ExpandLess /> : <ExpandMore />}
+//          </IconButton>
+//       </CardActions>
+//    )
+// }
 
 const ChronicleCardContent = (props) => {
    return (
@@ -539,15 +535,15 @@ const ChronicleCardStory = (props) => {
    )
 }
 
-const ChronicleCardExpandedContent = (props) => {
-   return (
-      <Collapse in={props.expanded} unmountOnExit >
-         <CardContent>
-            <ChronicleCardComments 
-               comments={comments}
-            />
-         </CardContent>
-      </Collapse>
-   )
-}
+// const ChronicleCardExpandedContent = (props) => {
+//    return (
+//       <Collapse in={props.expanded} unmountOnExit >
+//          <CardContent>
+//             <ChronicleCardComments 
+//                comments={comments}
+//             />
+//          </CardContent>
+//       </Collapse>
+//    )
+// }
 

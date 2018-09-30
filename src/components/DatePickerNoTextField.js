@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -9,8 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -20,7 +17,6 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import Divider from '@material-ui/core/Divider';
 
-import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
@@ -37,15 +33,11 @@ import AppsIcon from '@material-ui/icons/Apps';
 
 import theme from 'theme';
 
-import { link1 } from 'links';
 import { link3 } from 'links';
 
 function getSteps() {
    return ['Year', 'Month / Season / Holiday', 'Day'];
 }
-
-const born = 1956;
-const died = 2015;
 
 const months = [
    'January', 'February', 'March',
@@ -93,8 +85,8 @@ class AppDatePickerNoTextField extends React.Component {
          case 0:
             return (
                <DatePickerYear
-                  born={parseInt(this.props.born)}
-                  died={parseInt(this.props.died)}
+                  born={parseInt(this.props.born, 10)}
+                  died={parseInt(this.props.died, 10)}
                   handleNext={this.handleNext}
                   handleSetYear={this.handleSetYear}
                />
@@ -325,37 +317,37 @@ class AppDatePickerNoTextField extends React.Component {
   }
 }
 
-const DatePickerCertainty = (props) => (
-   <div
-      style={{
-         display: 'flex',
-         flexDirection: 'column'
-      }}
-   >
-      <Button
-         variant="raised"
-         color="primary"
-         onClick={
-            () => {
-               props.handleShowExactPicker();
-               props.handleSetExact();
-            }}
-         style={{marginBottom: 16}}
-      > Exact
-      </Button>
-      <Button
-         variant="raised"
-         color="primary"
-         onClick={
-            () => {
-               props.handleSetRough();
-               props.handleNext();
-            }
-         }
-      > Rough
-      </Button>
-   </div>
-)
+// const DatePickerCertainty = (props) => (
+//    <div
+//       style={{
+//          display: 'flex',
+//          flexDirection: 'column'
+//       }}
+//    >
+//       <Button
+//          variant="raised"
+//          color="primary"
+//          onClick={
+//             () => {
+//                props.handleShowExactPicker();
+//                props.handleSetExact();
+//             }}
+//          style={{marginBottom: 16}}
+//       > Exact
+//       </Button>
+//       <Button
+//          variant="raised"
+//          color="primary"
+//          onClick={
+//             () => {
+//                props.handleSetRough();
+//                props.handleNext();
+//             }
+//          }
+//       > Rough
+//       </Button>
+//    </div>
+// )
 
 class DatePickerYear extends React.Component {
    state = {
@@ -651,29 +643,29 @@ class DatePickerDay extends React.Component {
    }
 }
 
-class DatePickerConfirm extends React.Component {
-   state = {
-   }
-
-   render () {
-      return (
-         <div>
-            <Button
-               variant="outlined"
-               onClick={this.props.handleReset}
-               style={{marginRight: 16}}
-            > Reset
-            </Button>
-            <Button
-               variant="contained"
-               color="primary"
-               onClick={this.props.handleReturnDate}
-            >
-               Confirm Date
-            </Button>
-         </div>
-      )
-   }
-}
+// class DatePickerConfirm extends React.Component {
+//    state = {
+//    }
+//
+//    render () {
+//       return (
+//          <div>
+//             <Button
+//                variant="outlined"
+//                onClick={this.props.handleReset}
+//                style={{marginRight: 16}}
+//             > Reset
+//             </Button>
+//             <Button
+//                variant="contained"
+//                color="primary"
+//                onClick={this.props.handleReturnDate}
+//             >
+//                Confirm Date
+//             </Button>
+//          </div>
+//       )
+//    }
+// }
 
 export default withMobileDialog()(AppDatePickerNoTextField);

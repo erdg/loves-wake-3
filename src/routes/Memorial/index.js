@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 
 import Paper from '@material-ui/core/Paper';
@@ -16,8 +16,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import AtlasIcon from 'components/icons/AtlasIcon';
 import ChronicleIcon from 'components/icons/ChronicleIcon';
 import ShrineIcon from 'components/icons/ShrineIcon';
-import LogoMultiColor from 'components/icons/LogoMultiColor';
-import LogoSingleColor from 'components/icons/LogoSingleColor';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import LimboIcon from '@material-ui/icons/Flip';
 

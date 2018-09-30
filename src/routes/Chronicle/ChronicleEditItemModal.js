@@ -11,27 +11,23 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+// import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 
-import WarningIcon from '@material-ui/icons/Warning';
+// import WarningIcon from '@material-ui/icons/Warning';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-
-import ChronicleCardEditable from 'components/ChronicleCardEditable';
 import ErrorSnackbar from 'components/ErrorSnackbar';
 import DatePicker from 'components/DatePicker';
 
@@ -320,8 +316,8 @@ class ChronicleEditItemModal extends React.Component {
                                <DatePicker
                                   id="date"
                                   label="Date"
-                                  born={parseInt(this.props.born)}
-                                  died={parseInt(this.props.died)}
+                                  born={parseInt(this.props.born, 10)}
+                                  died={parseInt(this.props.died, 10)}
                                   value={this.state.date}
                                   handleSetDate={this.handleSetDate}
                                   onBlur={

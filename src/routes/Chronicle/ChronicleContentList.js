@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 const ChronicleContentList = (props) => {
    // only chronicle items that have been 'published'
    let publishedItems = props.memorial.items.filter(itm => itm.published === "true");
-   let born = parseInt(props.memorial.born.split(/[^\d]/).find((n) => n.length === 4));
+   let born = parseInt(props.memorial.born.split(/[^\d]/).find((n) => n.length === 4), 10);
    // list of years (birth - present)
    let years = Array.from(new Array(new Date().getFullYear() - born + 1), (x, i) => i + born);
    // concat
@@ -25,17 +25,15 @@ const ChronicleContentList = (props) => {
          case 1:  // year only, e.g. "~1992"
             // create Date obj from year, e.g. new Date("1992")
             return new Date(str[0].split(/[^\d]/).find((n) => n.length === 4), 0, 1, 2);
-            break;
-         case 2: // month || month/day || season || holiday
+         default: // month || month/day || season || holiday
             let str1 = str[0].split(' ');
             switch (str1.length) {
                case 1:
                   // date from month, season or holiday
                   return dateObjFromMonthSeasonHoliday(str);
-                  break;
                case 2:
                   // could be exact date (e.g. "January 12, 1982") or multi-word holiday (e.g. "Mother's Day")
-                  let day = parseInt(str1[1]);
+                  let day = parseInt(str1[1], 10);
                   // console.log(day);
                   // if exact date
                   if (!isNaN(day)) {
@@ -44,11 +42,9 @@ const ChronicleContentList = (props) => {
                   // else holiday
                   return dateObjFromMonthSeasonHoliday(str);
                   }
-                  break;
                default: 
                   return dateObjFromMonthSeasonHoliday(str);
             }
-            break;
       }
    }
 
@@ -58,80 +54,56 @@ const ChronicleContentList = (props) => {
          // months
          case "January":
             return new Date(arr[1], 0);
-            break;
          case "February":
             return new Date(arr[1], 1);
-            break;
          case "March":
             return new Date(arr[1], 2);
-            break;
          case "April":
             return new Date(arr[1], 3);
-            break;
          case "May":
             return new Date(arr[1], 4);
-            break;
          case "June":
             return new Date(arr[1], 5);
-            break;
          case "July":
             return new Date(arr[1], 6);
-            break;
          case "August":
             return new Date(arr[1], 7);
-            break;
          case "September":
             return new Date(arr[1], 8);
-            break;
          case "October":
             return new Date(arr[1], 9);
-            break;
          case "November":
             return new Date(arr[1], 10);
-            break;
          case "December":
             return new Date(arr[1], 11);
-            break;
          // seasons
          case "Winter":
             return new Date(arr[1], 1, 1);
-            break;
          case "Spring":
             return new Date(arr[1], 2, 20);
-            break;
          case "Summer":
             return new Date(arr[1], 5, 20);
-            break;
          case "Autumn":
             return new Date(arr[1], 8, 22);
-            break;
          // holidays
          case "New Year's Day":
             return new Date(arr[1], 0, 1, 1);
-            break;
          case "Easter":
             return new Date(arr[1], 3, 5);
          case "Mother's Day":
             return new Date(arr[1], 4, 11);
-            break;
          case "Memorial Day":
             return new Date(arr[1], 4, 28);
-            break;
          case "Father's Day":
             return new Date(arr[1], 5, 18);
-            break;
          case "Fourth of July":
             return new Date(arr[1], 6, 4);
-            break;
          case "Halloween":
             return new Date(arr[1], 9, 31);
-            break;
          case "Thanksgiving":
             return new Date(arr[1], 10, 25);
-            break;
          case "Christmas":
             return new Date(arr[1], 11, 25);
-            break;
          // unknown -> today's date (placed at bottom of chronicle)
          default:
             return new Date();

@@ -1,17 +1,13 @@
 import React from 'react';
-import { actions, API_ENDPOINT } from 'store';
+import { actions } from 'store';
 import { connect } from 'unistore/react';
-import update from 'immutability-helper'
 
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // import Card from '@material-ui/core/Card';

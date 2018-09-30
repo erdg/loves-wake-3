@@ -5,8 +5,6 @@ import Typography from '@material-ui/core/Typography';
 // import MemorialAvatar from 'components/MemorialAvatar';
 import ChronicleHeader from './ChronicleHeader';
 import ChronicleContentList from './ChronicleContentList';
-import ChronicleFab from './ChronicleFab';
-import ChronicleEditItemModal from './ChronicleEditItemModal';
 
 class Chronicle extends React.Component {
    state = {

@@ -2,17 +2,16 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 import Paper from '@material-ui/core/Paper';
-import MemorialAvatar from 'components/MemorialAvatar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import Divider from '@material-ui/core/Divider';
 import Slide from '@material-ui/core/Slide';
-import Collapse from '@material-ui/core/Collapse';
+// import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
-import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
+// import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
