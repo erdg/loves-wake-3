@@ -9,6 +9,19 @@ class Limbo extends React.Component {
    state = {
    }
 
+   componentDidUpdate () {
+      let memorial =
+         this.props.user.memorials ?
+            this.props.user.memorials.find((m) => (
+               m.urlStr === this.props.match.params.urlStr && m.urlNm === this.props.match.params.urlNm
+            )) 
+         : 
+         {};
+      if (memorial.id && !memorial.events) {
+         this.props.getMemorialEvents(memorial.id);
+      }
+   }
+
    render () {
       let memorial =
          this.props.user.memorials ?

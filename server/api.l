@@ -15,6 +15,9 @@
 
 # list of memorials created by user
 (rel memorials (+List +Joint) usr (+Memorial))
+# history (add/edit, publish/unpublish, suggestions, etc.)
+(rel events (+List +Joint) usr (+MemorialEvent))
+
 
 (rel img (+Blob))                # avatar image
 
@@ -35,7 +38,7 @@
             (link
                (make (link "memorials" T)
                   (for M (: memorials)
-                     (link (jsonAll> M)) ) ) ) ) ) ) )
+                     (link (json> M)) ) ) ) ) ) ) )
 
 
 (allow "!updUserAvatar")
@@ -81,6 +84,11 @@
 # links to chronicle data
 # a chronicle is simply a list of '+Chronicle's
 (rel chronicle (+List +Joint) memorial (+Chronicle))
+
+# history
+(rel events (+List +Joint) memorial (+MemorialEvent))
+
+########
 
 # generates a random 8 character string, with no bad words in it ;)
 (de genUrlStr ()
@@ -145,6 +153,7 @@
 # only gathers chronicle entries with title/date
 (dm json> (Flag)  # flag to display +Chronicle
    (make
+      (link (cons "id" (: id)))
       (link (cons "urlNm" (: urlNm)))
       (link (cons "urlStr" (: urlStr)))
       (link (cons "nm" (: nm)))
@@ -154,12 +163,10 @@
       (if (: born) (link (cons "born" @)))
       (if (: died) (link (cons "died" @)))
       (if (: img) (link (cons "avatar" (pack *API (blob This 'img)))))
-      (if Flag
-         (link
-            (make (link "items" T)
-               (for C (: chronicle)
-                  (when (and (; C title) (; C date)) 
-                     (link (json> C)) ) ) ) ) ) ) )
+      (link
+         (make (link "items" T)
+            (for C (: chronicle)
+               (link (json> C)) ) ) ) ) )
 
 (allow "!newMemorial")
 (de newMemorial ()
@@ -260,14 +267,153 @@
       (prin (in (blob Memorial 'invite.md) (till NIL T)) ) ) )
 
 (allow "!getMemorial")
-(de getMemorial (UrlNm)
-   (let Mem (db 'urlNm '+Memorial UrlNm)
-      # if memorial exists and belongs to user
-      (if Mem
-         (respondJson (json> @))
-         (respondJsonError "sorry") ) ) )
+(de getMemorial ()
+   (let [UrlNm  (posted "urlNm")
+         UrlStr (posted "urlStr") ]
+      (if
+         (solve
+            (quote
+               @UrlNm  UrlNm
+               @UrlStr UrlStr
+               (select (@Memorial)
+                  ((urlNm +Memorial @UrlNm) (urlStr +Memorial @UrlStr))
+                  (same @UrlNm @Memorial urlNm)
+                  (same @UrlStr @Memorial urlStr) ) )
+            @Memorial )
+         (respondJson (json> (car @)))
+         (respondJsonError "Memorial does not exist") ) ) )
 
-##########
+(allow "!getMemorialEvents")
+(de getMemorialEvents ()
+   (let [UserId   (getJWT "sub" "loginToken")
+         User     (db 'id '+User UserId)
+         Memorial (db 'id '+Memorial (posted "memorialId")) ]
+      (nond
+         (User     (respondJsonError "Bad user"))
+         (Memorial (respondJsonError "Bad memorial"))
+         # if user is not the creator of memorial (admin), no events for you!
+         ((member (; Item memorial) (; User memorials))
+            (respondJson (jsonifyMemorialEvents NIL)) )
+         # all is good, get event history
+         (NIL
+            (respondJson (jsonifyMemorialEvents (filter '((This) (not (= (: usr) User))) (; Memorial events)))) ) ) ) )
+
+(de jsonifyMemorialEvents (Lst)
+   (list
+      (cons "events" T
+         (make
+            (for L Lst
+               (link (json> L)) ) ) ) ) )
+
+##############################
+# +MemorialEvent
+#
+# Memorial history data (add/edit items, publish/unpublish, suggestions, etc.)
+#
+(class +MemorialEvent +Entity)
+(rel id (+Key +Number))
+(rel stamp (+Ref +String))
+(rel memorial (+Joint) events (+Memorial))
+(rel usr (+Joint) events (+User))
+(rel typ (+Ref +String))
+(rel txt (+String))
+# (rel seen (+List +Link) NIL (+User))      # List of +User's that has seen the event
+
+(class +ChronicleCardEvent +MemorialEvent)
+(rel itm (+Joint) events (+Chronicle))
+
+(dm json> ()
+   (list
+      (cons "id" (: id))
+      (cons "stamp" (: stamp))
+      (cons "itemId" (: itm id))
+      (cons "userId" (: usr id))
+      (cons "type" (: typ))
+      (cons "text" (: txt)) ) )
+         
+
+
+(de newChronicleCardAddEvent (Memorial Usr Itm)
+   (new! '(+ChronicleCardEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'typ "Add Chronicle Card"
+      'txt (text "'@1' added a card to Chronicle" (; Usr em)) ) )
+
+(de newChronicleCardEditEvent (Memorial Usr Itm)
+   (new! '(+ChronicleCardEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'typ "Edit Chronicle Card"
+      'txt (text "'@1' edited a card" (; Usr em)) ) )
+
+(class +ChronicleCardEditDateEvent +ChronicleCardEvent)
+(rel date (+String))
+
+(de newChronicleCardEditDateEvent (Memorial Usr Itm Date)
+   (new! '(+ChronicleCardEditDateEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'date Date
+      'typ "Edit Chronicle Card Date"
+      'txt (text "'@1' edited a card" (; Usr em)) ) )
+
+(class +ChronicleCardEditLocationEvent +ChronicleCardEvent)
+(rel location (+String))
+
+(de newChronicleCardEditLocationEvent (Memorial Usr Itm Location)
+   (new! '(+ChronicleCardEditLocationEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'location Location
+      'typ "Edit Chronicle Card Location"
+      'txt (text "'@1' edited a card" (; Usr em)) ) )
+
+(class +ChronicleCardEditStoryEvent +ChronicleCardEvent)
+(rel story (+String))
+
+(de newChronicleCardEditStoryEvent (Memorial Usr Itm Story)
+   (new! '(+ChronicleCardEditStoryEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'story Story
+      'typ "Edit Chronicle Card Story"
+      'txt (text "'@1' edited a card" (; Usr em)) ) )
+
+(de newChronicleCardPublishEvent (Memorial Usr Itm)
+   (new! '(+ChronicleCardEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'typ "Publish Chronicle Card"
+      'txt (text "'@1' published a card to Chronicle" (; Usr em)) ) )
+
+(de newChronicleCardUnpublishEvent (Memorial Usr Itm)
+   (new! '(+ChronicleCardEvent)
+      'id (genKey 'id '+MemorialEvent)
+      'stamp (stamp)
+      'memorial Memorial
+      'usr Usr
+      'itm Itm
+      'typ "Unpublish Chronicle Card"
+      'txt (text "'@1' unpublished a card" (; Usr em)) ) )
 
 ########################
 #  +Chronicle
@@ -287,6 +433,11 @@
 (rel vid (+Blob))                      # video
 (rel ratio (+String))                  # aspect ratio
 (rel published (+Ref +Bool))           # item published to chronicle?
+(rel events (+List +Joint) itm (+ChronicleCardEvent))
+
+(dm lose!> ()
+   (mapc 'lose!> (: events))
+   (super) )
 
 (dm json> ()
    (make
@@ -305,7 +456,7 @@
 (allow "!getChronicle")
 (de getChronicle (UrlStr UrlNm)
    (if (db 'urlNm '+Memorial UrlNm 'urlStr UrlStr)
-      (respondJson (json> @ T))
+      (respondJson (json> @))
       (respondJsonError "This memorial does not exist") ) )
 
 # API/!newChronicle
@@ -328,6 +479,7 @@
             'title     (posted "title")
             'location  (posted "location")
             'date      (posted "date") ]
+         (newChronicleCardAddEvent (: memorial) (: usr) This)
          (cond 
             ((posted "image")  # '@' now contains base64 data URL
                (put!> This 'img T)
@@ -470,6 +622,7 @@
          # all is good, update item
          (NIL
             (put!> Item 'published T)
+            (newChronicleCardPublishEvent Memorial User Item)
             (respondJson (json> Item)) ) ) ) )
 
 (allow "!unpublishChronicleItem")
@@ -494,6 +647,7 @@
          # all is good, update item
          (NIL
             (put!> Item 'published NIL)
+            (newChronicleCardUnpublishEvent Memorial User Item)
             (respondJson (json> Item)) ) ) ) )
        
 (allow "!updChronicleCardLocation")
@@ -519,6 +673,7 @@
          # all is good, update item
          (NIL
             (put!> Item 'location Location)
+            (newChronicleCardEditLocationEvent Memorial User Item Location)
             (respondJson (json> Item)) ) ) ) )
 
 (allow "!updChronicleCardDate")
@@ -544,6 +699,7 @@
          # all is good, update item
          (NIL
             (put!> Item 'date Date)
+            (newChronicleCardEditDateEvent Memorial User Item Date)
             (respondJson (json> Item)) ) ) ) )
 
 (allow "!updChronicleCardStory")
@@ -571,6 +727,7 @@
             (when Story
                (or (; Item txt) (put!> Item 'txt T))
                (out (blob Item 'txt) (prin Story)) )
+            (newChronicleCardEditStoryEvent Memorial User Item Story)
             (respondJson (json> Item)) ) ) ) )
 
 

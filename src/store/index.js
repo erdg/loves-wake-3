@@ -7,6 +7,9 @@ import update from 'immutability-helper';
 // development
 const API_ENDPOINT = "http://192.168.0.48:8887/";
 
+// christine's house
+// const API_ENDPOINT = "http://192.168.1.23:8887/";
+
 // kathleen's house
 // const API_ENDPOINT = "http://192.168.0.23:8887/";
 
@@ -278,6 +281,50 @@ let actions = store => ({
                   })
                })
             })
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
+   getMemorial (state, urlStr, urlNm) {
+      fetch(API_ENDPOINT + "!getMemorial", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            urlStr: urlStr,
+            urlNm: urlNm
+         })
+      })
+      .then((res) => res.json())
+      .then((memorial) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {$push: [memorial]})
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
+   getMemorialEvents (state, memorialId) {
+      console.log('getting memorial events');
+      fetch(API_ENDPOINT + "!getMemorialEvents", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            memorialId: memorialId
+         })
+      })
+      .then((res) => res.json())
+      .then((events) => {
+         console.log(events);
+         console.log(memorialId);
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial,
+                  {$merge: events}
+               )
+            }) 
          });
          console.log({ newState });
          store.setState({ user: newState });

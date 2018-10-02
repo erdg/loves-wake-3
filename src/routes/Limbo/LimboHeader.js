@@ -4,25 +4,33 @@ import { actions } from 'store';
 import Paper from '@material-ui/core/Paper';
 // import Tabs from '@material-ui/core/Tabs';
 // import Tab from '@material-ui/core/Tab';
+import Badge from '@material-ui/core/Badge';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Slide from '@material-ui/core/Slide';
-// import Collapse from '@material-ui/core/Collapse';
+import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
 // import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
-import CloseIcon from '@material-ui/icons/Close';
+// import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
 
 import LimboIcon from '@material-ui/icons/Flip';
 import ChronicleFab from 'routes/Chronicle/ChronicleFab';
+import EventsIcon from '@material-ui/icons/Assignment';
 
 import history from '../../history';
 
 class LimboHeader extends React.Component {
    state = {
       showSettingsMenu: false,
+      showEvents: false,
       visible: true,
       positionToggled: false
    }
@@ -90,6 +98,10 @@ class LimboHeader extends React.Component {
    //    this.setState({ showSettingsMenu: !this.state.showSettingsMenu })
    // }
 
+   handleEventsClick = () => {
+      this.setState({ showEvents: !this.state.showEvents })
+   }
+
    render () {
       return (
          <Slide
@@ -143,21 +155,59 @@ class LimboHeader extends React.Component {
                      <ChronicleFab memorial={this.props.memorial}/>
                   </div>
                   <IconButton
-                     onClick={this.handleSettingsMenuClick}
-                  > {this.state.showSettingsMenu ? <CloseIcon /> : <SettingsIcon/>}
+                     onClick={this.handleEventsClick}
+                     style={{marginRight: 4}}
+                  >
+                     {this.props.memorial.events && this.props.memorial.events.length > 0 ? 
+                        <Badge badgeContent={this.props.memorial.events.length} color="secondary">
+                           <EventsIcon />
+                        </Badge>
+                           :
+                        <EventsIcon />
+                     }
                   </IconButton>
                </div>
-               {/*
-               <Collapse in={this.state.showSettingsMenu} style={{margin: 8}}>
-                  <Typography variant="subheading">
-                     Memorial Settings
-                  </Typography>
-                  <Typography variant="body1">
-                     This will be a small settings menu, with a link to the
-                     full memorial settings page
-                  </Typography>
+               <Collapse in={this.state.showEvents}>
+                  <Divider />
+                  <div
+                     style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        maxWidth: 600,
+                        padding: 8,
+                        margin: '0 auto',
+                     }}
+                  >
+                     {this.props.memorial.events && this.props.memorial.events.length > 0 ?
+                        <List>
+                           {this.props.memorial.events.map((event, i) => (
+                              <ListItem
+                                 key={i}
+                                 button
+                                 onClick={
+                                    () => {
+                                       document.getElementById(`chronicleCard${event.itemId}`).scrollIntoView({
+                                          behavior: 'smooth',
+                                          block: 'center'
+                                       })
+                                    }
+                                 }
+                              >
+                                 <ListItemIcon>
+                                    <NewReleasesIcon />
+                                 </ListItemIcon>
+                                 <ListItemText primary={event.text} />
+                              </ListItem>
+                           ))}
+                        </List>
+                           :
+                        <Typography variant="subheading">
+                           Nothing to review
+                        </Typography>
+                     }
+                  </div>
                </Collapse>
-               */}
                {/*
                <Tabs
                   value={this.props.view}
