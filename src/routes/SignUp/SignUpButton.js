@@ -9,7 +9,7 @@ const SignUpButton = (props) => {
          color="primary"
          onClick={props.handleSignUp}
          style={{
-            marginTop: 24
+            marginTop: 16 
          }}
       > Sign Up
       </Button>

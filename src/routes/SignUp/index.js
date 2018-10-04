@@ -28,7 +28,7 @@ class SignUp extends React.Component {
 
    render () {
       return (
-         <div>
+         <div style={{margin: '0 auto'}}>
             { this.props.loading ?
                <CircularProgress
                   color="primary"
@@ -40,16 +40,19 @@ class SignUp extends React.Component {
                      variant="headline"
                      component="h3"
                      color="primary"
+                     style={{margin: '16px 0px'}}
                   > Sign Up
                   </Typography>
-                  <EmailInput
-                     em={this.state.em}
-                     handleChange={this.handleChange}
-                  />
-                  <PasswordInput
-                     pw={this.state.pw}
-                     handleChange={this.handleChange}
-                  />
+                     <EmailInput
+                        em={this.state.em}
+                        handleChange={this.handleChange}
+                     />
+                  <div style={{margin: '8px 0px'}}>
+                     <PasswordInput
+                        pw={this.state.pw}
+                        handleChange={this.handleChange}
+                     />
+                  </div>
                   <SignUpButton
                      handleSignUp={this.handleSignUp}
                   > Sign Up
