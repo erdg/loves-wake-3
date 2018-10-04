@@ -32,7 +32,7 @@ const FileUpload = (props) => {
                style={{
                   border: '1px dashed rgba(0,0,0,0.54)',
                   borderRadius: '2px',
-                  width: 256,
+                  width: (props.width ? props.width : 256),
                   height: 256,
                   textAlign: 'center',
                   marginTop: 16
