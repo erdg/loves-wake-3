@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EmailInput from 'components/EmailInput';
@@ -61,48 +62,67 @@ class LogIn extends React.Component {
 
    render () {
       return (
-         <div>
+         <div style={{margin: '0 auto'}}>
             { this.props.loading ?
                <CircularProgress
                   color="primary"
                   size={60}
                />
                   :
-               <div style={{display: 'flex', flexDirection: 'column', width: 300}}>
+               <div style={{display: 'flex', flexDirection: 'column', width: 300, alignItems: 'stretch'}}>
                   <Typography
                      variant="headline"
                      component="h3"
                      color="primary"
-                  > Log In
+                     style={{margin: '16px 0px'}}
+                  > Login
                   </Typography>
                   { this.props.error &&
-                     <div style={{backgroundColor: theme.palette.error.main}}>
+                     <Paper
+                        elevation={0}
+                        style={{
+                           color: 'white',
+                           backgroundColor: theme.palette.error.main,
+                           marginBottom: 16,
+                           padding: 8
+                        }}
+                     >
                         {this.props.error}
-                     </div>
+                     </Paper>
                   }
-                  <EmailInput
-                     em={this.state.em}
-                     error={this.state.emError}
-                     handleChange={this.handleChange}
-                  />
-                  <PasswordInput
-                     pw={this.state.pw}
-                     handleChange={this.handleChange}
-                  />
-                  <div 
-                     style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        marginTop: 24 
-                     }}
+                  <form
+                     onSubmit={this.handleLogIn}
+                     style={{display: 'flex', flexDirection: 'column'}}
                   >
-                     <RecoverAccountButton
-                        handleRecover={this.handleRecover}
+                     <EmailInput
+                        em={this.state.em}
+                        error={this.state.emError}
+                        handleChange={this.handleChange}
                      />
-                     <LogInButton
-                        handleLogin={this.handleLogIn}
-                     />
-                  </div>
+                     <div
+                        style={{margin: '8px 0px'}}
+                     >
+                        <PasswordInput
+                           pw={this.state.pw}
+                           handleChange={this.handleChange}
+                        />
+                     </div>
+                     <div 
+                        style={{
+                           display: 'flex',
+                           flexDirection: 'row',
+                           justifyContent: 'space-around',
+                           marginTop: 16 
+                        }}
+                     >
+                        <RecoverAccountButton
+                           handleRecover={this.handleRecover}
+                        />
+                        <LogInButton
+                           handleLogin={this.handleLogIn}
+                        />
+                     </div>
+                  </form>
                </div>
             }
          </div>
