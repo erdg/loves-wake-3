@@ -76,7 +76,7 @@ class ChronicleEditItemModal extends React.Component {
 
    handleEditField = (name) => {
       this.setState({ [`render${name}`]: false });
-      // setTimeout(() => {document.getElementById(name).focus()}, 25);
+      setTimeout(() => {document.getElementById(name).focus()}, 25);
    }
 
    handleFileChange = (files) => {
@@ -261,12 +261,15 @@ class ChronicleEditItemModal extends React.Component {
                   </Button>
                </div>
             </DialogTitle>
-            <DialogContent style={{borderTop: '1px solid #ddd', borderBottom: '1px solid #ddd'}}>
+            <DialogContent style={{padding: 0}}>
                <ErrorSnackbar
                   message="Nothing has changed"
                   open={this.state.error}
                />
-                <Card style={{marginTop: 24}}>
+               <Card
+                  style={{marginTop: 8, width: '100%'}}
+                  elevation={0}
+               >
                    <CardHeader
                       title={
                          <div>
@@ -352,6 +355,7 @@ class ChronicleEditItemModal extends React.Component {
                          handleFileDelete={this.handleFileDelete}
                          uploading={this.state.uploading}
                          uploadSuccess={this.state.uploadSuccess}
+                         width="100%"
                       />
                          :
                       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -394,12 +398,16 @@ class ChronicleEditItemModal extends React.Component {
                       >
                         {!this.state.renderlocation ?
                             <TextField
+                               variant="outlined"
                                id="location"
                                label="Location"
                                name="location"
                                type="text"
                                value={this.state.location}
                                onChange={this.handleChange}
+                               style={{
+                                  margin: '16px 0px'
+                               }}
                                onBlur={
                                   (e) => {
                                      this.state.location !== "" && this.handleRenderField(e);
@@ -423,6 +431,7 @@ class ChronicleEditItemModal extends React.Component {
                          }
                          {!this.state.rendertxt ?
                             <TextField
+                               variant="outlined"
                                multiline
                                id="txt"
                                label="Story, memory or caption..."
@@ -441,7 +450,10 @@ class ChronicleEditItemModal extends React.Component {
                                style={{display: 'flex', alignItems: 'center'}}
                                onClick={() => this.handleEditField("txt")}
                             >
-                               <div dangerouslySetInnerHTML={{__html: marked(this.state.txt)}} />
+                               <Typography
+                                  variant="body1"
+                                  dangerouslySetInnerHTML={{__html: marked(this.state.txt)}}
+                               />
                                <IconButton
                                   style={{marginLeft: 'auto'}}
                                >

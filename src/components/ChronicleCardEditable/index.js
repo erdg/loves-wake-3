@@ -54,8 +54,9 @@ import DatePicker from 'components/DatePicker';
 const ChronicleCardEditable = (props) => {
    return (
       <Card
+         elevation={0}
          style={{
-            marginTop: 24,
+            marginTop: 8,
          }}
       >
          <CardHeader
@@ -141,6 +142,7 @@ const ChronicleCardEditable = (props) => {
                handleFileDelete={props.handleFileDelete}
                uploading={props.uploading}
                uploadSuccess={props.uploadSuccess}
+               width="100%"
             />
                :
             <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -176,12 +178,16 @@ const ChronicleCardEditable = (props) => {
             >
                {!props.renderlocation ?
                   <TextField
+                     variant="outlined"
                      id="location"
                      label="Location"
                      name="location"
                      type="text"
                      value={props.location}
                      onChange={props.handleChange}
+                     style={{
+                        margin: '16px 0px'
+                     }}
                      onBlur={
                         (e) => {
                            props.location !== "" && props.handleRenderField(e);
@@ -206,6 +212,7 @@ const ChronicleCardEditable = (props) => {
 
                {!props.rendertxt ?
                   <TextField
+                     variant="outlined"
                      multiline
                      id="txt"
                      label="Story, memory or caption"
@@ -224,12 +231,10 @@ const ChronicleCardEditable = (props) => {
                      style={{display: 'flex', alignItems: 'center'}}
                      onClick={() => props.handleEditField("txt")}
                   >
-                     {/*
-                     <Typography variant="body1">
-                        {props.txt}
-                     </Typography>
-                     */}
-                     <div dangerouslySetInnerHTML={{__html: marked(props.txt)}} />
+                     <Typography
+                        variant="body1"
+                        dangerouslySetInnerHTML={{__html: marked(props.txt)}}
+                     />
                      <IconButton
                         style={{marginLeft: 'auto'}}
                      >

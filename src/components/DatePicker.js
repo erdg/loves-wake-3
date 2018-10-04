@@ -212,6 +212,7 @@ class AppDatePicker extends React.Component {
     return (
       <div>
          <TextField
+            variant="outlined"
             label={this.props.label}
             onClick={this.handleShowDatePicker}
             value={this.props.value}

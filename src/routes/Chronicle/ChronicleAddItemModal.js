@@ -227,7 +227,7 @@ class ChronicleAddItemModal extends React.Component {
                   </Button>
                </div>
             </DialogTitle>
-            <DialogContent >
+            <DialogContent style={{padding: 0}}>
                <ErrorSnackbar
                   message="Nothing to submit"
                   open={this.state.error}
