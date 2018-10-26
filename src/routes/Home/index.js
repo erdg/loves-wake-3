@@ -55,6 +55,7 @@ const Home = (props) => {
                   right: 0,
                   marginLeft: 'auto',
                   marginRight: 'auto',
+                  width: 100,
                   color: 'white'
                }}
             > Login
@@ -68,6 +69,7 @@ const Home = (props) => {
                   right: 0,
                   marginLeft: 'auto',
                   marginRight: 'auto',
+                  width: 100,
                   color: 'white'
                }}
             > Sign up
