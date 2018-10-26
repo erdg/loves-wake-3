@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import ShrineHeader from './ShrineHeader';
+import Iframe from 'components/Iframe';
 
 class Shrine extends React.Component {
    state = {
@@ -24,9 +25,19 @@ class Shrine extends React.Component {
                   <ShrineHeader
                      memorial={memorial}
                   />
-                  <Typography variant="display1" align="center" style={{marginTop: 48}}>
-                     Coming Soon!
-                  </Typography>
+                  <Iframe
+                     title="ShrineIframe"
+                     src="https://u0lddk.axshare.com/#g=1&p=shrine"
+                     style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        width: '99%',
+                        height: '99%'
+                     }}
+                  />
                </div>
             }
          </div>
