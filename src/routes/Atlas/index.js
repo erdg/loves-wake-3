@@ -28,7 +28,7 @@ class Atlas extends React.Component {
                   <div style={{maxWidth: 600, margin: '0 auto'}}>
                   <Iframe
                      title="AtlasIframe"
-                     src="https://u0lddk.axshare.com/#g=1&p=atlas"
+                     src="https://u0lddk.axshare.com/atlas.html"
                      style={{
                         position: 'absolute',
                         top: 0,

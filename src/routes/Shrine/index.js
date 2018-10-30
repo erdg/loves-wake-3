@@ -27,7 +27,7 @@ class Shrine extends React.Component {
                   />
                   <Iframe
                      title="ShrineIframe"
-                     src="https://u0lddk.axshare.com/#g=1&p=shrine"
+                     src="https://u0lddk.axshare.com/shrine.html"
                      style={{
                         position: 'absolute',
                         top: 0,
