@@ -6,6 +6,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -25,7 +26,7 @@ class PasswordInput extends React.Component {
 
    render () {
       return (
-         <FormControl variant="outlined">
+         <FormControl variant="outlined" error={this.props.error ? true : false}>
             <InputLabel
                htmlFor="pw"
                ref={ref => {
@@ -46,11 +47,16 @@ class PasswordInput extends React.Component {
                         aria-label="Toggle password visibility"
                         onClick={this.handleClick}
                      >
-                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {!this.state.showPassword ? <VisibilityOff /> : <Visibility />}
                      </IconButton>
                   </InputAdornment>
                }
             />
+            { this.props.error &&
+               <FormHelperText id="password-error">
+                  Every account needs a password...
+               </FormHelperText>
+            }
          </FormControl>
       )
    }
