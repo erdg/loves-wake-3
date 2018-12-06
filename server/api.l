@@ -163,6 +163,14 @@
       (if (: born) (link (cons "born" @)))
       (if (: died) (link (cons "died" @)))
       (if (: img) (link (cons "avatar" (pack *API (blob This 'img)))))
+      (if (: obituary.txt) 
+         (link 
+            (cons "obituaryText"
+               (glue "\n\n"
+                  (make 
+                     (in (blob This 'obituary.txt)
+                        (until (eof) 
+                           (link (line T)) ) ) ) ) ) ) )
       (link
          (make (link "items" T)
             (for C (: chronicle)
@@ -170,7 +178,8 @@
 
 (allow "!newMemorial")
 (de newMemorial ()
-   (let [Nm1  (posted "nm1")
+   (let [Nm (posted "nm")
+         Nm1  (posted "nm1")
          Nm2  (posted "nm2")
          Nm3  (posted "nm3")
          Born (posted "born")
@@ -181,8 +190,8 @@
             [new! '(+Memorial)
               'id (genKey 'id '+Memorial)
               'urlStr (genUrlStr)
-              'urlNm (pack Nm1 Nm2 Nm3)
-              'nm (glue " " (filter '((S) (not (= NIL S))) (list Nm1 Nm2 Nm3)))
+              'urlNm (pack (split (chop Nm) " "))
+              'nm  Nm
               'nm1 Nm1
               'nm2 Nm2
               'nm3 Nm3
@@ -198,19 +207,42 @@
                  # write decoded image to db blob file
                  (out (blob This 'img) (echo) ) ) )
             # +Chronicle entry for birth
-            (new! '(+Chronicle)
-              'id (genKey 'id '+Chronicle)
-              'memorial This
-              'title (pack Nm1 " was born")
-              'date Born )
+            # (new! '(+Chronicle)
+            #   'id (genKey 'id '+Chronicle)
+            #   'memorial This
+            #   'title (pack Nm1 " was born")
+            #   'date Born )
             # +Chronicle entry for death
-            (if Died
-               (new! '(+Chronicle) 
-                 'id (genKey 'id '+Chronicle)
-                 'memorial This
-                 'title (pack Nm1 " passed away")
-                 'date Died ) )
+            # (if Died
+            #    (new! '(+Chronicle) 
+            #      'id (genKey 'id '+Chronicle)
+            #      'memorial This
+            #      'title (pack Nm1 " passed away")
+            #      'date Died ) )
             (respondJson (json> This)) ) ) ) )
+
+
+(allow "!updMemorialObituary")
+(de updMemorialObituary ()
+   (let [UserId   (getJWT "sub" "loginToken")
+         User     (db 'id '+User UserId)
+         Memorial (db 'id '+Memorial (posted "memorialId"))
+         Obituary (posted "obituary") ]
+      (nond
+         # TODO - better error handling
+         (User     (respondJsonError "Bad user"))
+         (Memorial (respondJsonError "Bad memorial"))
+         # if user is NOT the creator of memorial, can't edit
+         # NOTE - this will need to change when functionality is added to allow multiple
+         # admins on a memorial
+         ((= (; Memorial usr) User)
+            (respondJsonError "No permission to edit obituary") )
+         # all is good, update item
+         (NIL
+            (when Obituary
+               (or (; Memorial obituary.txt) (put!> Memorial 'obituary.txt T))
+               (out (blob Memorial 'obituary.txt) (prin Obituary)) )
+            (respondJson (list (cons "obituary" Obituary))) ) ) ) )
 
 (allow "!updInvitation")
 (de updInvitation ()
@@ -745,7 +777,7 @@
 # /api/!newUser
 (allow "!newUser")
 (de newUser ()  # email, password
-   (let [Em (posted "email")  Pw (posted "password")]
+   (let [Em (posted "em")  Pw (posted "pw")]
       ## if email exists in db
       (if (db 'em '+User Em)
          ## respond with error
@@ -784,16 +816,16 @@
 (de sendConfirmationEmail (Email Num)
    (mail "localhost" 25 *Email Email
       # subject
-      "LovesWake - Please confirm your email address."
+      "Love's Wake - Please confirm your email address."
       # attachments
       NIL
       # body
-      "Thanks for signing up for LovesWake! Please use the six-digit number below to confirm your account:"
+      "Thanks for signing up for Love's Wake! Please use the six-digit number below to confirm your account:"
       NIL
       Num
       NIL
       "Thanks,"
-      "LovesWake" ) )
+      "Love's Wake" ) )
 
 # /api/!confirmUser
 # TODO - should use a JWT

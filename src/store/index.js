@@ -86,7 +86,7 @@ let actions = store => ({
    },
 
    loginUser (state, em, pw) {
-      store.setState({ loading: true });
+      store.setState({ loading: true, error: '' });
       fetch(API_ENDPOINT + "!loginUser", {
          method: "POST",
          body: JSON.stringify({
@@ -152,11 +152,76 @@ let actions = store => ({
       });
    },
 
-   signup (state) {
-      store.setState({ loading: true })
-      setTimeout(() => {
-         store.setState({ loading: false });
-      }, 1000)
+   signup (state, em, pw) {
+      store.setState({ loading: true, error: '' })
+      fetch(API_ENDPOINT + "!newUser", {
+         method: "POST",
+         body: JSON.stringify({
+            // on the server...
+            //
+            // (let [Em (posted "em")  Pw (posted "pw") ]
+            //    ... )
+            //
+            em: em,
+            pw: pw
+         })
+      })
+      .then((res) => {
+         if (res.ok) {
+            return res.json();
+         }
+         throw new Error("Hmm, something is wrong with the network. Please try again.");
+      })
+      .then((json) => {
+         // if server error
+         if (json.error) {
+            store.setState({ 
+               // display errors and remove loading spinner
+               error: json.error, 
+               loading: false
+            });
+         } else {
+            // remove loading spinner
+            store.setState({
+               loading: false,
+               loginToken: json.loginToken
+            });
+            // store login token in sessionStorage
+            window.sessionStorage.setItem('loginToken', json.loginToken);
+            history.push("/user");
+            // call getUserData
+            this.getUserData(state);
+            console.log('JWT: ', json.loginToken);
+         }
+      })
+      .catch((error) => store.setState({ error: error.message, loading: false }))
+   },
+
+   confirmUser (state, code) {
+      store.setState({ loading: true });
+      fetch(API_ENDPOINT + '!confirmUser', {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            code: code
+         })
+      })
+      .then(res => res.json())
+      .then(json => { 
+         if (json.error) {
+            store.setState({
+               // display errors and remove loading spinner
+               error: json.error,
+               loading: false
+         });
+         } else if (json.loginToken) {
+            // remove loading spinner
+            store.setState({ loading: false});
+            window.sessionStorage.setItem('loginToken', json.loginToken);
+            // call getUserData
+            this.getUserData(state);
+         }
+      })
    },
 
    publishChronicleItem (state, itemId, memorialId) {
@@ -325,6 +390,60 @@ let actions = store => ({
                   {$merge: events}
                )
             }) 
+         });
+         console.log({ newState });
+         store.setState({ user: newState });
+      })
+   },
+
+   newMemorial (state, nm, born, died, img) {
+      let loginToken = window.sessionStorage.getItem("loginToken");
+      store.setState({ loading: true });
+      fetch(API_ENDPOINT + "!newMemorial",
+         {
+            method: "POST",
+            body: JSON.stringify({
+               nm: nm,
+               // nm1: this.state.firstName,
+               // nm2: this.state.middleName,
+               // nm3: this.state.lastName,
+               born: born,
+               died: died,
+               // strip leading "data:image/${mime};base64," so PL can
+               // send it to "base64 -d" without having to 'chop' it.
+               img: img,
+               loginToken: loginToken
+            })
+         }
+      )
+      .then(res => res.json())
+      .then(json => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {$push: [json]})
+         });
+         console.log({ newState });
+         store.setState({ user: newState, loading: false });
+         history.push("/user");
+      })
+   },
+
+   updMemorialObituary (state, memorialId, obituary) {
+      fetch(API_ENDPOINT + "!updMemorialObituary", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            memorialId: memorialId,
+            obituary: obituary
+         })
+      })
+      .then((res) => res.json())
+      .then((json) => {
+         let newState = update(state.user, {
+            memorials: memorials => update(memorials, {
+               [memorials.findIndex((m) => m.id === memorialId)]: memorial => update(memorial, {
+                  obituaryText: obituaryText => update(obituaryText, {$set: json.obituary.split('^J').join('\n')})
+                  })
+               })
          });
          console.log({ newState });
          store.setState({ user: newState });
