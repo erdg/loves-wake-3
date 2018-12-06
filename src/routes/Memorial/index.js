@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 // import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -24,6 +24,8 @@ import LimboIcon from '@material-ui/icons/Waves';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import FourPointStarIcon from 'components/icons/FourPointStar';
+
+import Obituary from './Obituary';
 
 import { link3 } from 'links';
 import history from '../../history';
@@ -83,7 +85,10 @@ class Memorial extends React.Component {
                               flexDirection: 'column',
                               justifyContent: 'center',
                               alignItems: 'center',
-                              margin: '16px 0px'
+                              margin: '0 auto',
+                              marginTop: 16,
+                              marginBottom: 16,
+                              width: '88%'
                            }}
                         >
                            <Avatar
@@ -92,7 +97,7 @@ class Memorial extends React.Component {
                               style={{width: 160, height: 160}}
                            >{!memorial.avatar ? memorial.nm[0] : ''}
                            </Avatar>
-                           <Typography variant="title" style={{marginTop: 16, marginBottom: 16}}>
+                           <Typography variant="headline" style={{marginTop: 16, marginBottom: 16}} align="center">
                               {memorial.nm}
                            </Typography>
                            <Typography variant="subheading" style={{marginBottom: 8}}>
@@ -127,11 +132,14 @@ class Memorial extends React.Component {
                               <Button
                                  variant="outlined"
                                  size="large"
-                                 style={{borderColor: link3, color: link3}}
+                                 style={{
+                                    borderColor: link3,
+                                    color: link3,
+                                 }}
                                  onClick={() => this.handleSubscribeClick()}
                               >
-                                       <AddCircleIcon style={{marginRight: 4}}/>
-                                       Subscribe
+                                 <AddCircleIcon style={{marginRight: 4}}/>
+                                    Subscribe
                               </Button>
                            }
                         </div>
@@ -160,7 +168,7 @@ class Memorial extends React.Component {
                                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/shrine")}
                                        style={{cursor: 'pointer', marginRight: 8}}
                                     >
-                                       <ArrowForwardIcon />
+                                       <ArrowForwardIcon style={{color: 'rgba(0, 0, 0, 0.54)'}}/>
                                     </ListItemSecondaryAction>
                                  </ListItem>
                                  <ListItem
@@ -179,7 +187,7 @@ class Memorial extends React.Component {
                                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/chronicle")}
                                        style={{cursor: 'pointer', marginRight: 8}}
                                     >
-                                       <ArrowForwardIcon />
+                                       <ArrowForwardIcon style={{color: 'rgba(0, 0, 0, 0.54)'}}/>
                                     </ListItemSecondaryAction>
                                  </ListItem>
                                  <ListItem
@@ -198,7 +206,7 @@ class Memorial extends React.Component {
                                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/atlas")}
                                        style={{cursor: 'pointer', marginRight: 8}}
                                     >
-                                       <ArrowForwardIcon />
+                                       <ArrowForwardIcon style={{color: 'rgba(0, 0, 0, 0.54)'}}/>
                                     </ListItemSecondaryAction>
                                  </ListItem>
                               </List>
@@ -223,7 +231,7 @@ class Memorial extends React.Component {
                                           badgeContent={memorial.items.filter(item => item.published === "false").length}
                                           color="secondary"
                                        >
-                                          <LimboIcon />
+                                          <LimboIcon style={{color: 'rgba(0, 0, 0, 0.54)'}}/>
                                        </Badge>
                                     </ListItemIcon>
                                     <ListItemText disableTypography >
@@ -235,7 +243,7 @@ class Memorial extends React.Component {
                                        onClick={() => history.push("/memorial/" + memorial.urlStr + "/" + memorial.urlNm + "/limbo")}
                                        style={{cursor: 'pointer', marginRight: 8}}
                                     >
-                                       <ArrowForwardIcon />
+                                       <ArrowForwardIcon style={{color: 'rgba(0, 0, 0, 0.54)'}}/>
                                     </ListItemSecondaryAction>
                                  </ListItem>
                               </List>
@@ -245,11 +253,13 @@ class Memorial extends React.Component {
                               {memorial.obituaryText}
                            </Typography>
                            */}
+                           <Obituary 
+                              name={memorial.nm}
+                              memorialId={memorial.id}
+                              obituary={memorial.obituaryText}
+                           />
                         <div style={{margin: 16}}>
-                           <Typography variant="subheading" style={{marginTop: 24}} paragraph align="left">
-                              Obituary
-                           </Typography>
-
+                           {/*
                            <Typography variant="body1" paragraph >
                               After being diagnosed with cancer just 5 months ago, Karen was called to heaven on February 7th.  She is survived by husband, Bill Fox; children, Kara Galvin (Dan), Nick and Chris Fox; grandchildren Luca and Milo Galvin; mother, Anne Olson; and sisters, Susan Johnson, Sharon Stomberg, and Debbi Manley.
                            </Typography>
@@ -265,6 +275,7 @@ class Memorial extends React.Component {
                            <Typography variant="body1" >
                               Memorials to Special Olympics Minnesota.
                            </Typography>
+                           */}
                         </div>
                      </div>
                   }
