@@ -21,7 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 
-import LimboIcon from '@material-ui/icons/Flip';
+import LimboIcon from '@material-ui/icons/Waves';
 import ChronicleFab from 'routes/Chronicle/ChronicleFab';
 import EventsIcon from '@material-ui/icons/Assignment';
 
