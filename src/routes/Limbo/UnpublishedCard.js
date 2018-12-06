@@ -26,12 +26,14 @@ import Divider from '@material-ui/core/Divider';
 //icons
 // import FavoriteIcon from '@material-ui/icons/Favorite';
 import EditIcon from '@material-ui/icons/Edit';
+import LimboIcon from '@material-ui/icons/Waves';
+import ChronicleIcon from 'components/icons/ChronicleIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 // import ExpandMore from '@material-ui/icons/ExpandMore';
 // import ExpandLess from '@material-ui/icons/ExpandLess';
 // import MessageIcon from '@material-ui/icons/Message';
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SettingsIcon from '@material-ui/icons/Settings';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import SettingsIcon from '@material-ui/icons/Settings';
 import AtlasIcon from '@material-ui/icons/Public';
 import DateIcon from '@material-ui/icons/Event';
 import StoryIcon from '@material-ui/icons/ImportContacts';
@@ -336,7 +338,7 @@ const ChronicleCardMenu = (props) => {
             id={`chronicleCardMenuButton${props.item.id}`}
             style={{marginLeft: 'auto'}}
          >
-            <SettingsIcon />
+            <MoreVertIcon />
          </IconButton>
          {/*props.showMenu &&
                <Paper
@@ -368,9 +370,17 @@ const ChronicleCardMenu = (props) => {
                         }
                      >
                         <ListItemIcon>
-                           <EditIcon />
+                           {props.item.published === 'true' ?
+                                 <LimboIcon />
+                                 :
+                                 <ChronicleIcon style={{marginTop: 4, marginLeft: 2}} fill={'rgba(0,0,0,0.54)'}/>
+                           }
                         </ListItemIcon>
-                        <ListItemText inset primary={props.item.published === 'true' ? "Unpublish" : "Publish"} />
+                        <ListItemText
+                           inset
+                           primary={props.item.published === 'true' ? "Unpublish" : "Publish"}
+                           style={{marginLeft: 1}}
+                        />
                      </MenuItem>
                      <MenuItem button
                         onClick={props.handleShowChronicleEditItemModal}
