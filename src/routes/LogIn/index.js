@@ -87,7 +87,9 @@ class LogIn extends React.Component {
                            padding: 8
                         }}
                      >
-                        {this.props.error}
+                        <Typography variant="body1" style={{color: 'white'}}>
+                           {this.props.error}
+                        </Typography>
                      </Paper>
                   }
                   <form
@@ -104,6 +106,7 @@ class LogIn extends React.Component {
                      >
                         <PasswordInput
                            pw={this.state.pw}
+                           error={this.state.pwError}
                            handleChange={this.handleChange}
                         />
                      </div>
