@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'unistore/react';
+import { actions } from 'store';
 // import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -15,18 +17,111 @@ import MemorialAvatar from 'components/MemorialAvatar';
 import CreateMemorialName from './CreateMemorialName';
 import CreateMemorialPhoto from './CreateMemorialPhoto';
 import CreateMemorialBasicInfo from './CreateMemorialBasicInfo';
-import CreateMemorialChooseInvitation from './CreateMemorialChooseInvitation';
-import CreateMemorialCustomizeInvitation from './CreateMemorialCustomizeInvitation';
-import CreateMemorialSendInvitations from './CreateMemorialSendInvitations';
+// import CreateMemorialChooseInvitation from './CreateMemorialChooseInvitation';
+// import CreateMemorialCustomizeInvitation from './CreateMemorialCustomizeInvitation';
+// import CreateMemorialSendInvitations from './CreateMemorialSendInvitations';
+//
+//
+
+const dateObjFromStr = (string) => {
+   let str = string.split(', ');
+   switch (str.length) {
+      case 1:  // year only, e.g. "~1992"
+         // create Date obj from year, e.g. new Date("1992")
+         return new Date(str[0].split(/[^\d]/).find((n) => n.length === 4), 0, 1, 2);
+      default: // month || month/day || season || holiday
+         let str1 = str[0].split(' ');
+         switch (str1.length) {
+            case 1:
+               // date from month, season or holiday
+               return dateObjFromMonthSeasonHoliday(str);
+            case 2:
+               // could be exact date (e.g. "January 12, 1982") or multi-word holiday (e.g. "Mother's Day")
+               let day = parseInt(str1[1], 10);
+               // console.log(day);
+               // if exact date
+               if (!isNaN(day)) {
+                  return new Date(string);
+               } else {
+               // else holiday
+               return dateObjFromMonthSeasonHoliday(str);
+               }
+            default: 
+               return dateObjFromMonthSeasonHoliday(str);
+         }
+   }
+}
+
+const dateObjFromMonthSeasonHoliday = (arr) => {
+   // console.log(arr);
+   switch (arr[0]) {
+      // months
+      case "January":
+         return new Date(arr[1], 0);
+      case "February":
+         return new Date(arr[1], 1);
+      case "March":
+         return new Date(arr[1], 2);
+      case "April":
+         return new Date(arr[1], 3);
+      case "May":
+         return new Date(arr[1], 4);
+      case "June":
+         return new Date(arr[1], 5);
+      case "July":
+         return new Date(arr[1], 6);
+      case "August":
+         return new Date(arr[1], 7);
+      case "September":
+         return new Date(arr[1], 8);
+      case "October":
+         return new Date(arr[1], 9);
+      case "November":
+         return new Date(arr[1], 10);
+      case "December":
+         return new Date(arr[1], 11);
+      // seasons
+      case "Winter":
+         return new Date(arr[1], 1, 1);
+      case "Spring":
+         return new Date(arr[1], 2, 20);
+      case "Summer":
+         return new Date(arr[1], 5, 20);
+      case "Autumn":
+         return new Date(arr[1], 8, 22);
+      // holidays
+      case "New Year's Day":
+         return new Date(arr[1], 0, 1, 1);
+      case "Easter":
+         return new Date(arr[1], 3, 5);
+      case "Mother's Day":
+         return new Date(arr[1], 4, 11);
+      case "Memorial Day":
+         return new Date(arr[1], 4, 28);
+      case "Father's Day":
+         return new Date(arr[1], 5, 18);
+      case "Fourth of July":
+         return new Date(arr[1], 6, 4);
+      case "Halloween":
+         return new Date(arr[1], 9, 31);
+      case "Thanksgiving":
+         return new Date(arr[1], 10, 25);
+      case "Christmas":
+         return new Date(arr[1], 11, 25);
+      // unknown -> today's date (placed at bottom of chronicle)
+      default:
+         return new Date();
+   }
+}
 
 function getSteps() {
    return [
       'Who are you honoring?',
       'Add a photo',
       'Basic Memorial Info',
-      'Choose Invitation Template',
-      'Customize Invitation',
-      'Send Invitations'
+      // 'Choose Invitation Template',
+      // 'Customize Invitation',
+      // 'Send Invitations'
    ];
 }
 
@@ -50,6 +145,10 @@ class CreateMemorial extends React.Component {
       uploadSuccess: false,
 
    };
+
+   componentDidMount () {
+      !this.props.user.email && this.props.getUserData();
+   }
 
    handleChange = (e) => {
       this.setState({ [e.target.name]: e.target.value });
@@ -94,6 +193,20 @@ class CreateMemorial extends React.Component {
       this.setState({ emails: emails });
    }
 
+   handleSetBorn = (selectedDate) => {
+      this.setState({ born: selectedDate });
+      // if (!this.state.edited) {
+      //    this.setState({ edited: true })
+      // }
+   }
+
+   handleSetDied = (selectedDate) => {
+      this.setState({ died: selectedDate });
+      // if (!this.state.edited) {
+      //    this.setState({ edited: true })
+      // }
+   }
+
    getStepContent = (step) => {
       switch (step) {
          case 0:
@@ -116,35 +229,36 @@ class CreateMemorial extends React.Component {
          case 2:
             return (
                <CreateMemorialBasicInfo
-                  handleChange={this.handleChange}
+                  handleSetBorn={this.handleSetBorn}
+                  handleSetDied={this.handleSetDied}
                   born={this.state.born}
                   died={this.state.died}
                />
             );
-         case 3:
-            return (
-               <CreateMemorialChooseInvitation
-                  handleChange={this.handleChange}
-                  name={this.state.name}
-                  invitation={this.state.invitation}
-               />
-            );
-         case 4:
-            return (
-               <CreateMemorialCustomizeInvitation
-                  handleChange={this.handleChange}
-                  name={this.state.name}
-                  invitation={this.state.invitation}
-               />
-            );
-         case 5:
-            return (
-               <CreateMemorialSendInvitations
-                  emails={this.state.emails}
-                  handleEmailAdd={this.handleEmailAdd}
-                  handleEmailDelete={this.handleEmailDelete}
-               />
-            );
+         // case 3:
+         //    return (
+         //       <CreateMemorialChooseInvitation
+         //          handleChange={this.handleChange}
+         //          name={this.state.name}
+         //          invitation={this.state.invitation}
+         //       />
+         //    );
+         // case 4:
+         //    return (
+         //       <CreateMemorialCustomizeInvitation
+         //          handleChange={this.handleChange}
+         //          name={this.state.name}
+         //          invitation={this.state.invitation}
+         //       />
+         //    );
+         // case 5:
+         //    return (
+         //       <CreateMemorialSendInvitations
+         //          emails={this.state.emails}
+         //          handleEmailAdd={this.handleEmailAdd}
+         //          handleEmailDelete={this.handleEmailDelete}
+         //       />
+         //    );
          default:
             return 'Unknown step';
       }
@@ -197,11 +311,15 @@ class CreateMemorial extends React.Component {
       setTimeout(() => {this.setState({activeStepVisible: true})}, 0);
    };
 
-   handleReset = () => {
-      this.setState({
-         activeStep: 0,
-      });
-   };
+   handleCreateMemorial = () => {
+      // alert("Memorial Created")
+      this.props.newMemorial(
+         this.state.name,
+         this.state.born,
+         this.state.died,
+         this.state.fileURL.split(",")[1],
+      )
+   }
 
    render() {
       // const { classes } = this.props;
@@ -209,9 +327,9 @@ class CreateMemorial extends React.Component {
       const { activeStep } = this.state;
 
       return (
-         <div >
-            <Typography variant="title">
-               Create a New Memorial
+         <div style={{width: '92%', margin: '0 auto', marginTop: 16}}>
+            <Typography variant="headline">
+               Create A New Memorial
             </Typography>
             <Stepper activeStep={activeStep} orientation="vertical">
                {steps.map((label, index) => {
@@ -228,16 +346,6 @@ class CreateMemorial extends React.Component {
                         <StepLabel {...labelProps}>{label}</StepLabel>
                         <Fade in={this.state.activeStepVisible}>
                            <StepContent>
-                              {activeStep === steps.length ? (
-                                 <div>
-                                    <Typography >
-                                       All steps completed - you&quot;re finished
-                                    </Typography>
-                                    <Button onClick={this.handleReset} >
-                                       Reset
-                                    </Button>
-                                 </div>
-                              ) : (
                                  <div>
                                     { this.state.activeStep > 0 &&
                                        <div>
@@ -281,6 +389,13 @@ class CreateMemorial extends React.Component {
                                        </div>
                                     }
                                     {this.getStepContent(activeStep)}
+                                    {this.state.activeStep === 2 && 
+                                       (dateObjFromStr(this.state.born) > dateObjFromStr(this.state.died))
+                                          &&
+                                       <Typography variant="caption" color="error" align="center">
+                                          Date of Birth cannot be after Date of Death
+                                       </Typography>
+                                    }
                                     <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 32}}>
                                        <Button
                                           disabled={activeStep === 0}
@@ -293,19 +408,30 @@ class CreateMemorial extends React.Component {
                                              variant="outlined"
                                              onClick={this.handleSkip}
                                              style={{margin: 2}}
+                                             disabled={this.state.activeStep === 1 && this.state.fileURL}
                                           > Skip
                                           </Button>
                                        )}
                                        <Button
                                           variant="contained"
                                           color="primary"
-                                          onClick={this.handleNext}
+                                          onClick={this.state.activeStep === 2 ? this.handleCreateMemorial : this.handleNext}
+                                          disabled={
+                                             (this.state.activeStep === 0 && !this.state.name)
+                                                ||
+                                             (this.state.activeStep === 1 && !this.state.uploadSuccess)
+                                                ||
+                                             (this.state.activeStep === 2 && (
+                                                (!this.state.born || !this.state.died)
+                                                   || 
+                                                (dateObjFromStr(this.state.born) > dateObjFromStr(this.state.died))
+                                             ))
+                                          }
                                           style={{margin: 2}}
                                        > {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                        </Button>
                                     </div>
                                  </div>
-                              )}
                            </StepContent>
                         </Fade>
                      </Step>
@@ -317,4 +443,4 @@ class CreateMemorial extends React.Component {
    }
 }
 
-export default CreateMemorial;
+export default connect("user", actions)(CreateMemorial);

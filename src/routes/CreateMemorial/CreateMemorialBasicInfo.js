@@ -1,24 +1,37 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import CreateMemorialDatePicker from './CreateMemorialDatePicker';
 
 const CreateMemorialBasicInfo = (props) => {
    return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-         <TextField
-            id="born"
-            name="born"
-            label="Born"
-            value={props.born}
-            onChange={props.handleChange}
+         <div style={{margin: 8}}>
+         <CreateMemorialDatePicker
+             id="born"
+             label="Born"
+             start={1900}
+             value={props.born}
+             handleSetDate={props.handleSetBorn}
+             onBlur={
+                (e) => {
+                   this.state.date !== "" && this.handleRenderField(e);
+                }
+             }
          />
-         
-         <TextField
-            id="died"
-            name="died"
-            label="Died"
-            value={props.died}
-            onChange={props.handleChange}
+         </div>
+         <div style={{margin: 8}}>
+         <CreateMemorialDatePicker
+             id="died"
+             label="Died"
+             start={parseInt(props.born.split(/[^\d]/).find((n) => n.length === 4), 10)}
+             value={props.died}
+             handleSetDate={props.handleSetDied}
+             onBlur={
+                (e) => {
+                   this.state.date !== "" && this.handleRenderField(e);
+                }
+             }
          />
+         </div>
       </div>
    )
 }
