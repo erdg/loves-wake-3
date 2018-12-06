@@ -1,8 +1,7 @@
 import React from 'react';
-
+import isEmail from 'validator/lib/isEmail';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
-
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EmailInput from 'components/EmailInput';
@@ -12,7 +11,9 @@ import SignUpButton from './SignUpButton';
 class SignUp extends React.Component {
    state = {
       em: '',
-      pw: ''
+      emError: '',
+      pw: '',
+      pwError: '',
    }
 
    handleChange = (e) => {
@@ -20,10 +21,23 @@ class SignUp extends React.Component {
    }
 
    handleSignUp = () => {
-      // client-side error checking
-      // ...
+      // if not valid email address
+      if ( !(isEmail(this.state.em)) ) {
+         // throw email error, don't submit
+         this.setState({ emError: true });
+         return
+      } else {
+         this.setState({ emError: false });
+      }
+      // make sure there's a password
+      if (!this.state.pw) {
+         this.setState({ pwError: true });
+         return
+      } else { 
+         this.setState({ pwError: false }); 
+      }
       // call store action
-      this.props.signup();
+      this.props.signup(this.state.em, this.state.pw);
    }
 
    render () {
@@ -45,11 +59,13 @@ class SignUp extends React.Component {
                   </Typography>
                      <EmailInput
                         em={this.state.em}
+                        error={this.state.emError}
                         handleChange={this.handleChange}
                      />
                   <div style={{margin: '8px 0px'}}>
                      <PasswordInput
                         pw={this.state.pw}
+                        error={this.state.pwError}
                         handleChange={this.handleChange}
                      />
                   </div>
