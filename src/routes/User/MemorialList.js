@@ -7,32 +7,28 @@ import ListItem from '@material-ui/core/ListItem';
 import MemorialAvatar from 'components/MemorialAvatar';
 
 const MemorialList = (props) => (
-   <div>
-      <Typography variant="title">
-         Memorials
-      </Typography>
-      {props.memorials.length === 0 ?
+   <div 
+      style={{
+         minHeight: 24,
+         alignSelf: 'flex-start',
+      }}
+   >
+      {props.memorials.length > 0 &&
          <div>
-            <Typography variant="body1">
-               You have not created a memorial yet.
+            <Typography variant="title" style={{marginTop: 24}}>
+               My Memorials
             </Typography>
-            <Button
-               onClick={() => history.push("/create-memorial")}
-            > Create a memorial
-            </Button>
+            <List style={{marginLeft: -14}}>
+               {props.memorials.map((m, i) => (
+                  <ListItem key={i}
+                     button
+                     onClick={() => history.push("/memorial/" + m.urlStr + "/" + m.urlNm)}
+                  >
+                     <MemorialAvatar src={m.avatar} name={m.nm} variant="subheading" />
+                  </ListItem>
+               ))}
+            </List>
          </div>
-            :
-         <List>
-            {props.memorials.map((m, i) => (
-               <ListItem key={i}
-                  dense
-                  button
-                  onClick={() => history.push("/memorial/" + m.urlStr + "/" + m.urlNm)}
-               >
-                  <MemorialAvatar src={m.avatar} name={m.nm} variant="subheading" />
-               </ListItem>
-            ))}
-         </List>
       }
    </div>
 )
