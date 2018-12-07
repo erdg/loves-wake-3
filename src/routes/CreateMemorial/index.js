@@ -343,7 +343,57 @@ class CreateMemorial extends React.Component {
                   }
                   return (
                      <Step key={label} {...props} style={{width: 320}}>
-                        <StepLabel {...labelProps}>{label}</StepLabel>
+                        <StepLabel {...labelProps}>
+                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                              {label}
+                              <div style={{alignSelf: 'flex-end'}}>
+                                 {activeStep === index &&
+                                    <div>
+                                       {activeStep > 0 &&
+                                          <Button
+                                             disabled={activeStep === 0}
+                                             onClick={this.handleBack}
+                                             size="small"
+                                             style={{margin: 2}}
+                                          > Back
+                                          </Button>
+                                       }
+                                       {(this.isStepOptional(activeStep) && !this.state.uploadSuccess) &&
+                                          <Button
+                                             variant="outlined"
+                                             onClick={this.handleSkip}
+                                             style={{margin: 2}}
+                                             size="small"
+                                             disabled={this.state.activeStep === 1 && this.state.fileURL}
+                                          > Skip
+                                          </Button>
+                                       }
+                                       {(activeStep === 1 && !this.state.uploadSuccess) ||
+                                       <Button
+                                          variant="contained"
+                                          color="primary"
+                                          size="small"
+                                          onClick={this.state.activeStep === 2 ? this.handleCreateMemorial : this.handleNext}
+                                          disabled={
+                                             (this.state.activeStep === 0 && !this.state.name)
+                                                ||
+                                             (this.state.activeStep === 1 && !this.state.uploadSuccess)
+                                                ||
+                                             (this.state.activeStep === 2 && (
+                                                (!this.state.born || !this.state.died)
+                                                   || 
+                                                (dateObjFromStr(this.state.born) > dateObjFromStr(this.state.died))
+                                             ))
+                                          }
+                                          style={{margin: 2}}
+                                       > {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                       </Button>
+                                       }
+                                    </div>
+                                 }
+                              </div>
+                           </div>
+                        </StepLabel>
                         <Fade in={this.state.activeStepVisible}>
                            <StepContent>
                                  <div>
@@ -396,6 +446,7 @@ class CreateMemorial extends React.Component {
                                           Date of Birth cannot be after Date of Death
                                        </Typography>
                                     }
+                                    {/*
                                     <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 32}}>
                                        <Button
                                           disabled={activeStep === 0}
@@ -431,6 +482,7 @@ class CreateMemorial extends React.Component {
                                        > {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                        </Button>
                                     </div>
+                                    */}
                                  </div>
                            </StepContent>
                         </Fade>
