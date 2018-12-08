@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import theme from 'theme';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 // import Card from '@material-ui/core/Card';
 // import CardHeader from '@material-ui/core/CardHeader';
@@ -41,6 +42,7 @@ class UpdatePasswordDialog extends React.Component {
       return (
          <Dialog
             open={this.props.open}
+            fullScreen={this.props.fullScreen}
             onClose={
                () => {
                   this.props.hideUpdatePasswordDialog();
@@ -50,7 +52,7 @@ class UpdatePasswordDialog extends React.Component {
             <DialogTitle>
                Update Password
             </DialogTitle>
-            <DialogContent style={{width: 300}}>
+            <DialogContent>
                { this.props.loading ?
                   <CircularProgress
                      color="primary"
@@ -147,4 +149,4 @@ class UpdatePasswordDialog extends React.Component {
    }
 }
 
-export default connect('loading, error, success', actions)(UpdatePasswordDialog);
+export default connect('loading, error, success', actions)(withMobileDialog()(UpdatePasswordDialog));
