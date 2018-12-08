@@ -10,6 +10,7 @@ import EmailInput from 'components/EmailInput';
 import PasswordInput from 'components/PasswordInput';
 import RecoverAccountButton from './RecoverAccountButton';
 import LogInButton from './LogInButton';
+import RecoverUserAccountSuccessDialog from './RecoverUserAccountSuccessDialog';
 
 import theme from 'theme';
 
@@ -57,7 +58,12 @@ class LogIn extends React.Component {
    }
 
    handleRecover = () => {
-      alert("Account Recovered");
+      if (!(isEmail(this.state.em))) {
+         this.setState({ emError: true });
+         return;
+      }
+      this.setState({ emError: false });
+      this.props.recoverUserAccount(this.state.em);
    }
 
    render () {
@@ -70,6 +76,7 @@ class LogIn extends React.Component {
                />
                   :
                <div style={{display: 'flex', flexDirection: 'column', width: 300, alignItems: 'stretch'}}>
+                  <RecoverUserAccountSuccessDialog />
                   <Typography
                      variant="headline"
                      component="h3"

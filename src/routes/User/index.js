@@ -15,6 +15,8 @@ import HeartIcon from '@material-ui/icons/Favorite';
 import SearchIcon from '@material-ui/icons/Search';
 import GroupIcon from '@material-ui/icons/Group';
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Divider from '@material-ui/core/Divider';
 
 class User extends React.Component {
    state = {
@@ -95,6 +97,20 @@ class User extends React.Component {
                      <ListItemText disableTypography >
                         <Typography variant="subheading" >
                            Search for a Memorial
+                        </Typography>
+                     </ListItemText>
+                  </ListItem>
+                  <Divider />
+                  <ListItem
+                     button
+                     onClick={() => history.push("/user/settings")}
+                  >
+                     <ListItemIcon>
+                        <SettingsIcon />
+                     </ListItemIcon>
+                     <ListItemText disableTypography >
+                        <Typography variant="subheading" >
+                           Account Settings
                         </Typography>
                      </ListItemText>
                   </ListItem>

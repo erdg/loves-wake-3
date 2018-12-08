@@ -16,6 +16,7 @@ import LogIn from './routes/LogIn';
 import SignUp from './routes/SignUp';
 import User from './routes/User';
 import UserNews from './routes/UserNews';
+import UserSettings from './routes/UserSettings';
 import CreateMemorial from './routes/CreateMemorial';
 import Search from './routes/Search';
 import Memorial from './routes/Memorial';
@@ -52,6 +53,7 @@ const AppRouter = () => {
                <Route exact path="/search" component={Search} />
                <Route exact path="/user" component={User} />
                <Route exact path="/user/news" component={UserNews} />
+               <Route exact path="/user/settings" component={UserSettings} />
                <Route exact path="/create-memorial" component={CreateMemorial} />
                <Route path="/memorial/:urlStr/:urlNm" component={Memorial} />
                <Route path="/memorial/:urlStr/:urlNm/chronicle" component={Chronicle} />

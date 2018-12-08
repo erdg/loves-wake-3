@@ -24,9 +24,13 @@ let store = devtools(createStore({
 // let store = createStore({
 
    // loading state toggle for store actions
-   loading: null,
-   // server error
-   error: null,
+   loading: false,
+   // server error message
+   error: '',
+   // server success message
+   success: '',
+
+   recoverUserAccountSuccess: false,
    // user session token
    // NOTE - need to sync with local/sessionStorage
    loginToken: null,
@@ -152,7 +156,7 @@ let actions = store => ({
       });
    },
 
-   signup (state, em, pw) {
+   newUser (state, em, pw) {
       store.setState({ loading: true, error: '' })
       fetch(API_ENDPOINT + "!newUser", {
          method: "POST",
@@ -170,7 +174,6 @@ let actions = store => ({
          if (res.ok) {
             return res.json();
          }
-         throw new Error("Hmm, something is wrong with the network. Please try again.");
       })
       .then((json) => {
          // if server error
@@ -449,6 +452,76 @@ let actions = store => ({
          store.setState({ user: newState });
       })
    },
+
+   recoverUserAccount (state, em) {
+      store.setState({ loading: true });
+      fetch(API_ENDPOINT + "!recoverUserAccount", {
+         method: "POST",
+         body: JSON.stringify({
+            em: em
+         })
+
+      })
+      .then(r => r.json())
+      .then(json => {
+         if (json.error) {
+            store.setState({ 
+               // display errors
+               error: json.error, 
+               loading: false
+            });
+         } else if (json.ok) {
+            // handle recover success
+            store.setState({
+               loading: false,
+               recoverUserAccountSuccess: true,
+               error: ''
+            })
+         }
+      })
+   },
+
+   hideRecoverUserAccountSuccessDialog (state) {
+      store.setState({ recoverUserAccountSuccess: false });
+   },
+
+   updUserPassword (state, pw) {
+      console.log(pw);
+      store.setState({ loading: true });
+      fetch(API_ENDPOINT + "!updUserPassword", {
+         method: "POST",
+         body: JSON.stringify({
+            loginToken: window.sessionStorage.getItem('loginToken'),
+            pw: pw
+         })
+      })
+      .then(r => r.json())
+      .then(json => {
+         if (json.error) {
+            store.setState({ 
+               // display errors
+               error: json.error, 
+               loading: false
+            });
+         } else if (json.ok) {
+            // handle recover success
+            store.setState({
+               loading: false,
+               error: '',
+               success: json.ok
+            })
+         }
+      })
+   },
+
+   clearSuccess (state) {
+      store.setState({ success: '' })
+   },
+
+   clearError (state) {
+      store.setState({ error: '' })
+   },
+
 
 })
 
