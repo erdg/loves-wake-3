@@ -26,17 +26,21 @@ class PasswordInput extends React.Component {
 
    render () {
       return (
-         <FormControl variant="outlined" error={this.props.error ? true : false}>
+         <FormControl
+            variant="outlined"
+            error={this.props.error ? true : false}
+            style={this.props.style}
+         >
             <InputLabel
                htmlFor="pw"
                ref={ref => {
                   this.labelRef = ReactDOM.findDOMNode(ref);
                }}
-            > Password
+            > {this.props.label || "Password"}
             </InputLabel>
             <OutlinedInput
                id="pw"
-               name="pw"
+               name={this.props.name || "pw"}
                type={this.state.showPassword ? "text" : "password"}
                value={this.props.pw}
                onChange={this.props.handleChange}
