@@ -3,10 +3,12 @@ import isEmail from 'validator/lib/isEmail';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EmailInput from 'components/EmailInput';
 import PasswordInput from 'components/PasswordInput';
 import SignUpButton from './SignUpButton';
+import theme from 'theme';
 
 class SignUp extends React.Component {
    state = {
@@ -37,7 +39,7 @@ class SignUp extends React.Component {
          this.setState({ pwError: false }); 
       }
       // call store action
-      this.props.signup(this.state.em, this.state.pw);
+      this.props.newUser(this.state.em, this.state.pw);
    }
 
    render () {
@@ -49,7 +51,7 @@ class SignUp extends React.Component {
                   size={60}
                />
                   :
-               <div style={{display: 'flex', flexDirection: 'column'}}>
+               <div style={{display: 'flex', flexDirection: 'column', width: 300}}>
                   <Typography
                      variant="headline"
                      component="h3"
@@ -57,11 +59,26 @@ class SignUp extends React.Component {
                      style={{margin: '16px 0px'}}
                   > Sign Up
                   </Typography>
-                     <EmailInput
-                        em={this.state.em}
-                        error={this.state.emError}
-                        handleChange={this.handleChange}
-                     />
+                  { this.props.error &&
+                     <Paper
+                        elevation={0}
+                        style={{
+                           color: 'white',
+                           backgroundColor: theme.palette.error.main,
+                           marginBottom: 16,
+                           padding: 8
+                        }}
+                     >
+                        <Typography variant="body1" style={{color: 'white'}}>
+                           {this.props.error}
+                        </Typography>
+                     </Paper>
+                  }
+                  <EmailInput
+                     em={this.state.em}
+                     error={this.state.emError}
+                     handleChange={this.handleChange}
+                  />
                   <div style={{margin: '8px 0px'}}>
                      <PasswordInput
                         pw={this.state.pw}
@@ -80,4 +97,4 @@ class SignUp extends React.Component {
    }
 }
 
-export default connect('loading', actions)(SignUp);
+export default connect('loading, error', actions)(SignUp);
