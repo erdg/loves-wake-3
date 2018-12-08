@@ -1,7 +1,7 @@
 import React from 'react';
 import history from '../../history';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import MemorialAvatar from 'components/MemorialAvatar';

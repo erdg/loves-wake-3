@@ -4,7 +4,7 @@ import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
 import MemorialList from './MemorialList';
 import ConfirmAccountModal from './ConfirmAccountModal';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import history from '../../history';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -14,7 +14,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HeartIcon from '@material-ui/icons/Favorite';
 import SearchIcon from '@material-ui/icons/Search';
 import GroupIcon from '@material-ui/icons/Group';
-import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
+// import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Divider from '@material-ui/core/Divider';
 
