@@ -71,7 +71,14 @@ class UpdatePasswordDialog extends React.Component {
                            {this.props.success}
                         </Typography>
                            :
-                        <div>
+                        <div
+                           style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              margin: '8px 0px',
+                              maxWidth: 300
+                           }}
+                        >
                            { this.props.error &&
                               <Paper
                                  elevation={0}
