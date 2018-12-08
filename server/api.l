@@ -1,5 +1,8 @@
 # api.l - api endpoints and data structures
 
+# seed the random number generator
+(seed (in "/dev/urandom" (rd 8)))
+
 #####################
 # user
 (class +User +Entity)
@@ -178,6 +181,7 @@
 
 (allow "!newMemorial")
 (de newMemorial ()
+   (seed (in "/dev/urandom" (rd 8)))
    (let [Nm (posted "nm")
          Nm1  (posted "nm1")
          Nm2  (posted "nm2")
@@ -771,12 +775,11 @@
 # list in *Posted. 'posted' maybe used to get values from the assoc
 # list.
 
-# seed the random number generator
-(seed (in "/dev/urandom" (rd 8)))
 
 # /api/!newUser
 (allow "!newUser")
 (de newUser ()  # email, password
+   (seed (in "/dev/urandom" (rd 8)))
    (let [Em (posted "em")  Pw (posted "pw")]
       ## if email exists in db
       (if (db 'em '+User Em)
@@ -880,28 +883,31 @@
          (respondJson (json> @) ) ) ) )
 
 # /api/!recoverUserAccount
-# FIXME - THIS FUNCTION IS NOT WORKING
 # begins the user account recovery process.
-# sends email with six-digit number, which can be used to reset
-# the account password.
+# resets user password to a temporary 8-character code (with 'genUrlStr)
+# sends email with that code, which can be used to login to account.
+# after login, user can go to 'account settings' and reset their password
 (allow "!recoverUserAccount")
-(de recoverUserAccount (Email)
-   # find user in DB
-   (ifn (db 'em '+User Email)
-      # if no, return error
-      (respondJson
-         (list 
-            (cons "error" 
-               (pack 
-                  "We couldn't find an account associated with this email address. "
-                  "Check for typos and try again." )) ) )
-      (let Num (rand 100000 999999)
-         (put!> (db 'em '+User Email) 'recoverAccountNumber Num)
-         (sendRecoverAccountEmail Email Num)
+(de recoverUserAccount ()
+   (seed (in "/dev/urandom" (rd 8)))
+   (let [Em (posted "em")]
+      # find user in DB
+      (ifn (db 'em '+User Em)
+         # if no, return error
          (respondJson
-            (list (cons "email" Email)) ) ) ) )
+            (list 
+               (cons "error" 
+                  (pack 
+                     "We couldn't find an account associated with this email address. "
+                     "Check for typos and try again." )) ) )
+         (let Code (genUrlStr)
+            (put!> (db 'em '+User Em) 'pw (bcrypt~hashpw Code 14) )
+            (msg "!recoverUserAccount - email: " Em " temporary password: " Code)
+            (sendRecoverAccountEmail Em Code)
+            (respondJson
+               (list (cons "ok" "password reset with temporary code")) ) ) ) ) )
 
-(de sendRecoverAccountEmail (Email Num)
+(de sendRecoverAccountEmail (Email Code)
    (mail-html "localhost" 25 *Email Email
       # subject
       "LovesWake - Account Recovery"
@@ -909,47 +915,24 @@
       NIL
       # body
       (<p> NIL
-         "Please use the following six-digit number to reset the password on your account:" )
+         "Use the following code to login to your account:" )
       (<br>)
-      (<strong> NIL Num) ) )
+      (<strong> NIL Code)
+      (<p> NIL
+         "After logging in, reset your password in account settings." ) ) )
 
-# /api/!confirmRecoverAccountNumber
-# checks the six-digit number that was set in the 'recoverUserAccount'
-# function. if the number is correct, sends data to client to prompt for
-# password reset.
-# FIXME - THIS FUNCTION IS NOT WORKING
-(allow "!confirmRecoverAccountNumber")
-(de confirmRecoverAccountNumber (Email Num)
-   (let User (db 'em '+User Email)
-      (ifn (= (; User recoverAccountNumber) Num)
+# TODO - fixme
+# /api/!updUserPassword
+(allow "!updUserPassword")
+(de updUserPassword ()
+   (let [User (db 'id '+User (getJWT "sub" "loginToken"))
+         Pw (posted "pw") ]
+      (ifn User
          (respondJson
-            (list 
-               (cons "error" 
-                  (pack 
-                     "The six-digit account recovery number is not correct. " 
-                     "Please check your email and try again.")) ) )
-         (put!> User
-            'canResetPassword T )
-         (put!> User
-            'recoverAccountNumber NIL )
+            (list (cons "error" "Not authorized to reset password")) )
+         (put!> User 'pw (bcrypt~hashpw Pw 14) )
          (respondJson
-            (list (cons "canResetPassword" "true")) ) ) ) )
-
-# /api/!resetUserPassword
-(allow "!resetUserPassword")
-(de resetUserPassword (Email Password)
-   (let User (db 'em '+User Email)
-      (ifn (; User canResetPassword)
-         (respondJson
-            (list (cons "error" "Not authorized to reset password.")) )
-         (put!> User
-            'pw (bcrypt~hashpw Password 14) )
-         (put!> User
-            'canResetPassword NIL )
-         (respondJson
-            (list 
-               (cons "user" (; User em))
-               (cons "token" (encodeJWT *Secret 3600 ("iss" . "lovesWake") ("sub" . (: id)))) ) ) ) ) )
+            (list (cons "ok" "Your password has been updated.") ) ) ) ))
       
 
 (de loginError ()
