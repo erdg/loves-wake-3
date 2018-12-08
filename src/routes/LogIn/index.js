@@ -121,7 +121,7 @@ class LogIn extends React.Component {
                         style={{
                            display: 'flex',
                            flexDirection: 'row',
-                           justifyContent: 'space-around',
+                           justifyContent: 'space-between',
                            marginTop: 16 
                         }}
                      >
