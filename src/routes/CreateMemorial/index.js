@@ -20,8 +20,6 @@ import CreateMemorialBasicInfo from './CreateMemorialBasicInfo';
 // import CreateMemorialChooseInvitation from './CreateMemorialChooseInvitation';
 // import CreateMemorialCustomizeInvitation from './CreateMemorialCustomizeInvitation';
 // import CreateMemorialSendInvitations from './CreateMemorialSendInvitations';
-//
-//
 
 const dateObjFromStr = (string) => {
    let str = string.split(', ');
@@ -328,15 +326,81 @@ class CreateMemorial extends React.Component {
 
       return (
          <div style={{width: '92%', margin: '0 auto', marginTop: 16}}>
-            <Typography variant="headline">
+            {activeStep === 0 ? 
+            <Typography variant="headline" paragraph style={{marginTop: 8, marginBottom: 16}}>
                Create A New Memorial
             </Typography>
-            <Stepper activeStep={activeStep} orientation="vertical">
+               :
+            <div>
+               { this.state.activeStep > 0 &&
+                     <Fade in={activeStep > 0}
+                        style={{margin: '16px 0px'}}
+                     >
+                     <div>
+                     <Divider style={{margin: '4px 16px'}}/>
+                     <Typography variant="caption" style={{textAlign: 'center', margin: 4}}>
+                        in memoriam
+                     </Typography>
+                     <div
+                        style={{
+                           textAlign: 'center',
+                           display: 'flex',
+                           justifyContent: 'center',
+                        }}
+                     >
+                        <MemorialAvatar
+                           name={this.state.name}
+                           src={this.state.fileURL}
+                           born={this.state.born}
+                           died={this.state.died}
+                           variant="headline"
+                        >
+                           { this.state.born &&
+                              <Typography
+                                 style={{marginTop: 4}}
+                                 variant="caption"
+                              >
+                                 {this.state.born}
+                              </Typography>
+                           }
+                           {this.state.died &&
+                              <Typography
+                                 variant="caption"
+                                 style={{display: 'inline'}}
+                              >
+                                 {this.state.died}
+                              </Typography>
+                           }
+                        </MemorialAvatar>
+                     </div>
+                     <Divider
+                        style={{
+                           margin: '4px 16px',
+                           marginTop: this.state.born ? 4 : 24
+                        }}
+                     />
+                  </div>
+                  </Fade>
+               }
+            </div>
+            }
+
+            <Stepper
+               activeStep={activeStep}
+               orientation="vertical"
+               style={{
+                  padding: 0,
+                  paddingTop: activeStep === 0 ? 0 : 16
+               }}
+            >
                {steps.map((label, index) => {
                   const props = {};
                   const labelProps = {};
                   if (this.isStepOptional(index)) {
-                     labelProps.optional = <Typography variant="caption">Optional</Typography>;
+                     labelProps.optional = 
+                        <Typography variant="caption" style={{marginTop: this.state.activeStep === 1 ? -8 : 0}}>
+                           Optional
+                        </Typography>;
                   }
                   if (this.isStepSkipped(index)) {
                      props.completed = false;
@@ -362,8 +426,8 @@ class CreateMemorial extends React.Component {
                                           <Button
                                              variant="outlined"
                                              onClick={this.handleSkip}
-                                             style={{margin: 2}}
                                              size="small"
+                                             style={{margin: 2}}
                                              disabled={this.state.activeStep === 1 && this.state.fileURL}
                                           > Skip
                                           </Button>
@@ -371,8 +435,8 @@ class CreateMemorial extends React.Component {
                                        {(activeStep === 1 && !this.state.uploadSuccess) ||
                                        <Button
                                           variant="contained"
-                                          color="primary"
                                           size="small"
+                                          color="primary"
                                           onClick={this.state.activeStep === 2 ? this.handleCreateMemorial : this.handleNext}
                                           disabled={
                                              (this.state.activeStep === 0 && !this.state.name)
@@ -397,10 +461,10 @@ class CreateMemorial extends React.Component {
                         <Fade in={this.state.activeStepVisible}>
                            <StepContent>
                                  <div>
-                                    { this.state.activeStep > 0 &&
+                                    {/* this.state.activeStep > 0 &&
                                        <div>
-                                          <Divider style={{margin: '16px 48px'}}/>
-                                          <Typography variant="caption" style={{textAlign: 'center'}}>
+                                          <Divider style={{margin: 4}}/>
+                                          <Typography variant="caption" style={{textAlign: 'center', margin: 4}}>
                                              in memoriam
                                           </Typography>
                                           <div
@@ -408,7 +472,6 @@ class CreateMemorial extends React.Component {
                                                 textAlign: 'center',
                                                 display: 'flex',
                                                 justifyContent: 'center',
-                                                margin: '8px 0px'
                                              }}
                                           >
                                              <MemorialAvatar
@@ -419,10 +482,10 @@ class CreateMemorial extends React.Component {
                                              >
                                                 { this.state.born &&
                                                    <Typography
+                                                      style={{marginTop: 4}}
                                                       variant="caption"
-                                                      style={{display: 'inline'}}
                                                    >
-                                                      {!this.state.died && "b."} {this.state.born}
+                                                      {this.state.born}
                                                    </Typography>
                                                 }
                                                 {this.state.died &&
@@ -430,14 +493,20 @@ class CreateMemorial extends React.Component {
                                                       variant="caption"
                                                       style={{display: 'inline'}}
                                                    >
-                                                      {" -"} {this.state.died}
+                                                      {this.state.died}
                                                    </Typography>
                                                 }
                                              </MemorialAvatar>
                                           </div>
-                                          <Divider style={{margin: '16px 48px'}}/>
+                                          <Divider
+                                             style={{
+                                                margin: 4,
+                                                marginBottom: 24,
+                                                marginTop: this.state.born ? 4 : 24
+                                             }}
+                                          />
                                        </div>
-                                    }
+                                       */}
                                     {this.getStepContent(activeStep)}
                                     {this.state.activeStep === 2 && 
                                        (dateObjFromStr(this.state.born) > dateObjFromStr(this.state.died))
