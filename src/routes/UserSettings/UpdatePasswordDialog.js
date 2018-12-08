@@ -33,6 +33,10 @@ class UpdatePasswordDialog extends React.Component {
       this.props.updUserPassword(this.state.pw1);
    }
 
+   handleReset = () => {
+      this.setState({ pw1: '', pw2: '' })
+   }
+
    render () {
       return (
          <Dialog
@@ -128,7 +132,10 @@ class UpdatePasswordDialog extends React.Component {
                      onClick={
                         () => {
                            this.props.hideUpdatePasswordDialog();
-                           this.props.clearSuccess();
+                           setTimeout(() => {
+                              this.handleReset();
+                              this.props.clearSuccess();
+                           }, 500);
                         }
                      }
                   > Ok
