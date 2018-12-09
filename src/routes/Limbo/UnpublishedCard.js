@@ -270,6 +270,7 @@ const ChronicleCardHeader = (props) => (
             {props.item.date ?
                <div
                   style={{display: 'flex', alignItems: 'center', width: '100%'}}
+                  onClick={props.handleShowDatePicker}
                >
                   <Typography
                      variant="subheading"
@@ -280,7 +281,6 @@ const ChronicleCardHeader = (props) => (
                   </Typography>
                   <IconButton
                      style={{marginLeft: 'auto'}}
-                     onClick={props.handleShowDatePicker}
                   >
                      <EditIcon />
                   </IconButton>
@@ -288,6 +288,7 @@ const ChronicleCardHeader = (props) => (
                :
                <div
                   style={{display: 'flex', alignItems: 'center'}}
+                  onClick={props.handleShowDatePicker}
                >
                   <DateIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
                   <Typography
@@ -299,7 +300,6 @@ const ChronicleCardHeader = (props) => (
                   </Typography>
                   <Typography
                      variant="caption"
-                     onClick={props.handleShowDatePicker}
                      style={{
                         color: link3, marginLeft: 6,
                         cursor: 'pointer'
@@ -470,10 +470,15 @@ const ChronicleCardContent = (props) => {
             {props.content}
          </Typography>
          */}
-         <div style={{display: 'flex', alignItems: 'center'}}>
+         <div
+            style={{display: 'flex', alignItems: 'center'}}
+         >
             <AtlasIcon  style={{color: (props.item.location ? 'black' : 'rgba(0,0,0,0.54)')}} />
             {props.item.location ?
-               <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
+               <div
+                  style={{display: 'flex', alignItems: 'center', width: '100%'}}
+                  onClick={props.handleShowChronicleUpdateLocationModal}
+               >
                   <Typography
                      variant="caption"
                      style={{
@@ -483,7 +488,6 @@ const ChronicleCardContent = (props) => {
                      {props.item.location}
                   </Typography>
                   <IconButton
-                     onClick={props.handleShowChronicleUpdateLocationModal}
                      style={{marginLeft: 'auto'}}
                   >
                      <EditIcon />
@@ -492,6 +496,7 @@ const ChronicleCardContent = (props) => {
                   :
                   <div
                      style={{display: 'flex', alignItems: 'center'}}
+                     onClick={props.handleShowChronicleUpdateLocationModal}
                   >
                      <Typography
                         variant="caption"
@@ -506,7 +511,6 @@ const ChronicleCardContent = (props) => {
                            color: link3, marginLeft: 6,
                            cursor: 'pointer'
                         }}
-                        onClick={props.handleShowChronicleUpdateLocationModal}
                      > Add one
                      </Typography>
                   </div>
