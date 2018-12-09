@@ -146,7 +146,7 @@ class ChronicleCard extends React.Component {
                }
                square={true}
                elevation={0}
-               style={{overflow: 'visible'}}
+               style={{overflow: 'visible', marginTop: 8}}
             >
                <ChronicleCardHeader 
                   item={this.props.item}
@@ -162,6 +162,7 @@ class ChronicleCard extends React.Component {
                   publishChronicleItem={this.props.publishChronicleItem}
                   unpublishChronicleItem={this.props.unpublishChronicleItem}
                   memorialId={this.props.memorialId} 
+                  handleShowChronicleUpdateLocationModal={this.handleShowChronicleUpdateLocationModal}
                />
                <ChronicleCardMedia
                   item={this.props.item}
@@ -268,22 +269,27 @@ const ChronicleCardHeader = (props) => (
                </div>
             }
          </div>
-         {/*
          <div style={{display: 'flex', alignItems: 'center'}}>
-            <AtlasIcon  style={{color: (props.item.location ? 'black' : 'rgba(0,0,0,0.54)')}} />
             {props.item.location ?
                   <Typography
                      variant="caption"
                      style={{
-                        marginLeft: 8
+                        marginBottom: 8
                      }}
                   >
                      {props.item.location}
                   </Typography>
                   :
                   <div
-                     style={{display: 'flex', alignItems: 'center'}}
+                     style={{
+                        display: 'flex', 
+                        alignItems: 'center',
+                        marginBottom: (props.item.imageSrc || props.item.audioSrc || props.item.videoSrc ? 8 : 0),
+                        cursor: 'pointer'
+                     }}
+                     onClick={props.handleShowChronicleUpdateLocationModal}
                   >
+                     <AtlasIcon  style={{color: 'rgba(0,0,0,0.54)'}} />
                      <Typography
                         variant="caption"
                         style={{
@@ -297,13 +303,11 @@ const ChronicleCardHeader = (props) => (
                            color: link3, marginLeft: 6,
                            cursor: 'pointer'
                         }}
-                        onClick={props.handleShowChronicleUpdateLocationModal}
                      > Add one
                      </Typography>
                   </div>
             }
          </div>
-         */}
       </div>
       }
       action={
@@ -332,6 +336,9 @@ const ChronicleCardMenu = (props) => {
          <IconButton
             onClick={props.handleMenuClick}
             id={`chronicleCardMenuButton${props.item.id}`}
+            style={{
+               marginTop: -4
+            }}
          >
             <MoreVertIcon />
          </IconButton>
@@ -449,7 +456,7 @@ const ChronicleCardMedia = (props) => {
 
 const ChronicleCardContent = (props) => {
    return (
-      <CardContent>
+      <CardContent style={{paddingTop: 0}}>
          <ChronicleCardStory
             item={props.item}
             showStory={props.showStory}
@@ -459,40 +466,6 @@ const ChronicleCardContent = (props) => {
             handleShowChronicleUpdateStoryModal={props.handleShowChronicleUpdateStoryModal}
             handleCloseChronicleUpdateStoryModal={props.handleCloseChronicleUpdateStoryModal}
          />
-         <div style={{display: 'flex', alignItems: 'center'}}>
-            <AtlasIcon  style={{color: (props.item.location ? 'black' : 'rgba(0,0,0,0.54)')}} />
-            {props.item.location ?
-                  <Typography
-                     variant="caption"
-                     style={{
-                        marginLeft: 8
-                     }}
-                  >
-                     {props.item.location}
-                  </Typography>
-                  :
-                  <div
-                     style={{display: 'flex', alignItems: 'center'}}
-                  >
-                     <Typography
-                        variant="caption"
-                        style={{
-                           marginLeft: 8
-                        }}
-                     > No location yet.
-                     </Typography>
-                     <Typography
-                        variant="caption"
-                        style={{
-                           color: link3, marginLeft: 6,
-                           cursor: 'pointer'
-                        }}
-                        onClick={props.handleShowChronicleUpdateLocationModal}
-                     > Add one
-                     </Typography>
-                  </div>
-            }
-         </div>
       </CardContent>
    )
 }
@@ -503,14 +476,6 @@ const ChronicleCardStory = (props) => {
          <Collapse in={true} unmountOnExit >
             {props.item.txt ?
                <div style={{display: 'flex', alignItems: 'center'}}>
-                  <StoryIcon
-                     style={{
-                        marginRight: 8,
-                        alignSelf: 'flex-start',
-                        marginTop: 12,
-                        color: (props.item.txt ? 'black' : 'rgba(0,0,0,0.54)')
-                     }}
-                  />
                   {props.showStory ? 
                      <div>
                         <Typography
@@ -519,13 +484,17 @@ const ChronicleCardStory = (props) => {
                         />
                         <Typography
                            variant="caption"
-                           style={{color: link3, cursor: 'pointer', marginBottom: 10}}
+                           style={{
+                              color: link3, 
+                              cursor: 'pointer', 
+                              marginBottom: 10
+                           }}
                            onClick={props.handleHideStory}
                         > Read less
                         </Typography>
                      </div>
                         :
-                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <Typography
                            variant="body1"
                            dangerouslySetInnerHTML={{
@@ -540,7 +509,12 @@ const ChronicleCardStory = (props) => {
                         {props.item.txt.length > 46 &&
                            <Typography
                               variant="caption"
-                              style={{color: link3, cursor: 'pointer', marginLeft: 8}}
+                              style={{
+                                 color: link3, 
+                                 cursor: 'pointer', 
+                                 alignSelf: 'flex-start',
+                                 marginTop: -8 
+                              }}
                               onClick={props.handleShowStory}
                            > Read more
                            </Typography>
@@ -549,7 +523,14 @@ const ChronicleCardStory = (props) => {
                   }
                </div>
                   :
-               <div style={{display: 'flex', alignItems: 'center'}}>
+               <div 
+                  style={{
+                     display: 'flex',
+                     alignItems: 'center',
+                     marginTop: (props.item.imageSrc || props.item.audioSrc || props.item.videoSrc ? 8 : 0),
+                     cursor: 'pointer'
+                  }}
+               >
                   <StoryIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
                   <Typography variant="caption" style={{marginLeft: 8}}>
                      No story yet.
