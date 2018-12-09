@@ -15,7 +15,6 @@ const AppHeader = (props) => (
       {props.user.email &&
          <Headroom id="AppHeader"
             upTolerance={50}
-            downTolerance={25}
          >
             <AppBar position="static">
                <Toolbar>
