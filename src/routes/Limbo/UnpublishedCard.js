@@ -561,17 +561,25 @@ const ChronicleCardStory = (props) => {
                      }}
                   />
                   {props.showStory ? 
-                     <div>
-                        <Typography
-                           variant="body1"
-                           dangerouslySetInnerHTML={{__html: marked(props.item.txt.split("^J^J").join("\n"))}}
-                        />
-                        <Typography
-                           variant="caption"
-                           style={{color: link3, cursor: 'pointer'}}
-                           onClick={props.handleHideStory}
-                        > Read less
-                        </Typography>
+                     <div style={{display: 'flex', alignItems: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                           <Typography
+                              variant="body1"
+                              dangerouslySetInnerHTML={{__html: marked(props.item.txt.split("^J^J").join("\n"))}}
+                           />
+                           <Typography
+                              variant="caption"
+                              style={{color: link3, cursor: 'pointer'}}
+                              onClick={props.handleHideStory}
+                           > Read less
+                           </Typography>
+                        </div>
+                        <IconButton
+                           onClick={props.handleShowChronicleUpdateStoryModal}
+                           style={{marginLeft: 'auto', alignSelf: 'flex-start'}}
+                        >
+                           <EditIcon />
+                        </IconButton>
                      </div>
                         :
                      <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
