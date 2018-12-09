@@ -269,7 +269,7 @@ const ChronicleCardHeader = (props) => (
          <div style={{display: 'flex', alignItems: 'center'}}>
             {props.item.date ?
                <div
-                  style={{display: 'flex', alignItems: 'center', width: '100%'}}
+                  style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}
                   onClick={props.handleShowDatePicker}
                >
                   <Typography
@@ -287,7 +287,7 @@ const ChronicleCardHeader = (props) => (
                </div>
                :
                <div
-                  style={{display: 'flex', alignItems: 'center'}}
+                  style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
                   onClick={props.handleShowDatePicker}
                >
                   <DateIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
@@ -476,7 +476,7 @@ const ChronicleCardContent = (props) => {
             <AtlasIcon  style={{color: (props.item.location ? 'black' : 'rgba(0,0,0,0.54)')}} />
             {props.item.location ?
                <div
-                  style={{display: 'flex', alignItems: 'center', width: '100%'}}
+                  style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}
                   onClick={props.handleShowChronicleUpdateLocationModal}
                >
                   <Typography
@@ -495,7 +495,7 @@ const ChronicleCardContent = (props) => {
                </div>
                   :
                   <div
-                     style={{display: 'flex', alignItems: 'center'}}
+                     style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
                      onClick={props.handleShowChronicleUpdateLocationModal}
                   >
                      <Typography
