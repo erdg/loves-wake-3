@@ -13,7 +13,10 @@ import Headroom from 'react-headroom';
 const AppHeader = (props) => (
    <div>
       {props.user.email &&
-         <Headroom id="AppHeader">
+         <Headroom id="AppHeader"
+            upTolerance={50}
+            downTolerance={25}
+         >
             <AppBar position="static">
                <Toolbar>
                   <IconButton
