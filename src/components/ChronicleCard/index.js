@@ -533,7 +533,7 @@ const ChronicleCardStory = (props) => {
                >
                   <StoryIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
                   <Typography variant="caption" style={{marginLeft: 8}}>
-                     No story yet.
+                     No caption yet.
                   </Typography>
                   <Typography 
                      variant="caption"
