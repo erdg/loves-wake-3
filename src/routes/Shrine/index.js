@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 // import Typography from '@material-ui/core/Typography';
-import ShrineHeader from './ShrineHeader';
 import Iframe from 'components/Iframe';
 
 class Shrine extends React.Component {
@@ -22,9 +21,6 @@ class Shrine extends React.Component {
          <div style={{width: '100%'}}>
             { memorial.nm &&
                <div>
-                  <ShrineHeader
-                     memorial={memorial}
-                  />
                   <Iframe
                      title="ShrineIframe"
                      src="https://u0lddk.axshare.com/shrine.html"

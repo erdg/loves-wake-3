@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'unistore/react';
+import { actions } from 'store';
 import IconButton from '@material-ui/core/IconButton';
-
 import AddCardIcon from '@material-ui/icons/LibraryAdd';
-
 import ChronicleAddItemModal from './ChronicleAddItemModal';
+import { withRouter } from 'react-router';
 
-class ChronicleSpeedDial extends React.Component {
+class ChronicleFab extends React.Component {
    state = {
       visible: true,
       open: false,
@@ -34,22 +35,31 @@ class ChronicleSpeedDial extends React.Component {
    }
 
    render () {
+      // hacks all the way down
+      let location = this.props.location.pathname.split('/');
+      let memorial =
+         this.props.user.memorials ?
+            this.props.user.memorials.find((m) => (
+               m.urlStr === location[2] && m.urlNm === location[3]
+            )) 
+         : 
+         {};
       return (
          <div >
             <ChronicleAddItemModal
                showChronicleAddItemModal={this.state.showChronicleAddItemModal}
                handleCloseChronicleAddItemModal={this.handleCloseChronicleAddItemModal}
-               memorialId={this.props.memorial.id}
-               born={this.props.memorial.born.split(/[^\d]/).find((n) => n.length === 4)}
-               died={this.props.memorial.died ?
-                  this.props.memorial.died.split(/[^\d]/).find((n) => n.length === 4)
+               memorialId={memorial.id}
+               born={memorial.born.split(/[^\d]/).find((n) => n.length === 4)}
+               died={memorial.died ?
+                  memorial.died.split(/[^\d]/).find((n) => n.length === 4)
                   :
                   new Date().getFullYear()
                }
             />
             <IconButton
-               variant="fab"
                onClick={this.handleActionClick}
+               style={{color: 'white'}}
             > <AddCardIcon />
             </IconButton>
          </div>
@@ -57,4 +67,4 @@ class ChronicleSpeedDial extends React.Component {
    }
 }
 
-export default ChronicleSpeedDial;
+export default connect('user', actions)(withRouter(ChronicleFab));

@@ -331,7 +331,7 @@ class CreateMemorial extends React.Component {
                Create A New Memorial
             </Typography>
                :
-            <div>
+            <div style={{width: 320}}>
                { this.state.activeStep > 0 &&
                      <Fade in={activeStep > 0}
                         style={{margin: '16px 0px'}}

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 // import Typography from '@material-ui/core/Typography';
-import LimboHeader from './LimboHeader';
 import LimboContentList from './LimboContentList';
 
 class Limbo extends React.Component {
@@ -35,9 +34,6 @@ class Limbo extends React.Component {
          <div style={{width: '100%'}}>
             { memorial.nm &&
                <div>
-                  <LimboHeader
-                     memorial={memorial}
-                  />
                   <div style={{maxWidth: 600, margin: '0 auto'}}>
                      <LimboContentList memorial={memorial} />
                   </div>

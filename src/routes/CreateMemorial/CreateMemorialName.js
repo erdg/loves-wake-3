@@ -12,7 +12,6 @@ const CreateMemorialName = (props) => {
             variant="outlined"
             value={props.name}
             onChange={props.handleChange}
-            autoFocus
          />
       </div>
    )

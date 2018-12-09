@@ -248,34 +248,14 @@ class Memorial extends React.Component {
                                  </ListItem>
                               </List>
                            </Paper>
-                           {/*
-                           <Typography variant="body1" style={{marginTop: 24}}>
-                              {memorial.obituaryText}
-                           </Typography>
-                           */}
+                           
                            <Obituary 
                               name={memorial.nm}
                               memorialId={memorial.id}
                               obituary={memorial.obituaryText}
                            />
                         <div style={{margin: 16}}>
-                           {/*
-                           <Typography variant="body1" paragraph >
-                              After being diagnosed with cancer just 5 months ago, Karen was called to heaven on February 7th.  She is survived by husband, Bill Fox; children, Kara Galvin (Dan), Nick and Chris Fox; grandchildren Luca and Milo Galvin; mother, Anne Olson; and sisters, Susan Johnson, Sharon Stomberg, and Debbi Manley.
-                           </Typography>
-
-                           <Typography variant="body1" paragraph >
-                           Karen was an active member of her community as a Language Arts teacher at Edgewood Middle School and a volunteer at her church, Feed My Starving Children, and Special Olympics.  Her lush gardens and warm home glowed with hospitality for people, pets, songbirds, and butterflies. She lived for time spent with friends and family there; sharing good food, red wine, and laughter. Karen’s sparkling brown eyes, contagious laugh, moral compass, and understated intelligence will be missed by everyone she knew. We are all better for the time she spent with us.
-                           </Typography>
-
-                           <Typography variant="body1" paragraph >
-                           A memorial service will be held at Incarnation Lutheran Church, 4880 Hodgson Road in Shoreview on Friday, February 20. Visitation from 3:00pm with the service starting at 5:00pm. 
-                           </Typography>
-
-                           <Typography variant="body1" >
-                              Memorials to Special Olympics Minnesota.
-                           </Typography>
-                           */}
+                           
                         </div>
                      </div>
                   }

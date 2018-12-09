@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
-// import Typography from '@material-ui/core/Typography';
-import AtlasHeader from './AtlasHeader';
 import Iframe from 'components/Iframe';
 
 class Atlas extends React.Component {
@@ -22,10 +20,6 @@ class Atlas extends React.Component {
          <div style={{width: '100%'}}>
             { memorial.nm &&
                <div>
-                  <AtlasHeader
-                     memorial={memorial}
-                  />
-                  <div style={{maxWidth: 600, margin: '0 auto'}}>
                   <Iframe
                      title="AtlasIframe"
                      src="https://u0lddk.axshare.com/atlas.html"
@@ -39,7 +33,6 @@ class Atlas extends React.Component {
                         height: '99%'
                      }}
                   />
-                  </div>
                </div>
             }
          </div>

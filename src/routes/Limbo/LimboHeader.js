@@ -142,15 +142,6 @@ class LimboHeader extends React.Component {
                   <Typography variant="subheading" style={{paddingLeft: 8}}>
                      Limbo
                   </Typography>
-                  {/*
-                  <MemorialAvatar
-                     src={this.props.memorial.avatar}
-                     name={`${this.props.memorial.nm1}'s Chronicle`}
-                     style={{
-                        paddingLeft: 16
-                     }}
-                  />
-                  */}
                   <div style={{marginLeft: 'auto'}}>
                      <ChronicleFab memorial={this.props.memorial}/>
                   </div>
@@ -208,20 +199,6 @@ class LimboHeader extends React.Component {
                      }
                   </div>
                </Collapse>
-               {/*
-               <Tabs
-                  value={this.props.view}
-                  onChange={this.props.handleTabChange}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  fullWidth
-                  centered
-               >
-                  <Tab label="Shrine" value="S" />
-                  <Tab label="Chronicle" value="C" />
-                  <Tab label="Atlas" value="A" />
-               </Tabs>
-               */}
                <Divider />
             </Paper>
          </Slide>
