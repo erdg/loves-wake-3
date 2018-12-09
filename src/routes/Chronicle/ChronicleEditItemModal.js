@@ -380,12 +380,14 @@ class ChronicleEditItemModal extends React.Component {
                                controls
                             />
                          }
+                         {/*
                          <Button
                             variant="raised"
                             onClick={this.handleFileDelete}
                             style={{marginTop: 16}}
                          > Choose a different file
                          </Button>
+                         */}
                       </div>
                    }
                    <CardContent>
@@ -447,7 +449,7 @@ class ChronicleEditItemModal extends React.Component {
                             />
                                :
                             <div
-                               style={{display: 'flex', alignItems: 'center'}}
+                               style={{display: 'flex', alignItems: 'flex-start'}}
                                onClick={() => this.handleEditField("txt")}
                             >
                                <Typography
