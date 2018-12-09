@@ -498,7 +498,7 @@ const ChronicleCardStory = (props) => {
                         <Typography
                            variant="body1"
                            dangerouslySetInnerHTML={{
-                              __html: (props.item.txt.length > 46 ?
+                              __html: (props.item.txt.length > 140 ?
                                  `${marked(props.item.txt.split("^J^J").join("\n")).substring(0, 40)}...`
                                     :
                                  marked(props.item.txt.split("^J^J").join("\n"))
@@ -506,7 +506,7 @@ const ChronicleCardStory = (props) => {
                            }}
                            style={{alignSelf: 'flex-start'}}
                         />
-                        {props.item.txt.length > 46 &&
+                        {props.item.txt.length > 140 &&
                            <Typography
                               variant="caption"
                               style={{
