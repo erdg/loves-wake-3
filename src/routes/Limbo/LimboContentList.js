@@ -90,6 +90,7 @@ class LimboContentList extends React.Component {
                                        Card Published to Chronicle
                                     </Typography>
                                     <Button
+                                       size="small"
                                        onClick={() => this.props.unpublishChronicleItem(item.id, this.props.memorial.id)}
                                        style={{
                                           marginLeft: 'auto',
