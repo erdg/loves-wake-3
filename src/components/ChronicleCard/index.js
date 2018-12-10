@@ -33,9 +33,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 // import MessageIcon from '@material-ui/icons/Message';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import SettingsIcon from '@material-ui/icons/Settings';
-import AtlasIcon from '@material-ui/icons/Public';
+import AtlasIcon from '@material-ui/icons/LocationOn';
 import DateIcon from '@material-ui/icons/Event';
-import StoryIcon from '@material-ui/icons/ImportContacts';
+import StoryIcon from '@material-ui/icons/Notes';
 
 // import ChronicleCardComments from './ChronicleCardComments';
 import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
@@ -285,7 +285,8 @@ const ChronicleCardHeader = (props) => (
                         display: 'flex', 
                         alignItems: 'center',
                         marginBottom: (props.item.imageSrc || props.item.audioSrc || props.item.videoSrc ? 8 : 0),
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        marginLeft: -2
                      }}
                      onClick={props.handleShowChronicleUpdateLocationModal}
                   >
@@ -337,7 +338,8 @@ const ChronicleCardMenu = (props) => {
             onClick={props.handleMenuClick}
             id={`chronicleCardMenuButton${props.item.id}`}
             style={{
-               marginTop: -4
+               marginTop: -4,
+               marginRight: 12 
             }}
          >
             <MoreVertIcon />
