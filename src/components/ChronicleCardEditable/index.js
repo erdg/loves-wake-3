@@ -60,42 +60,10 @@ const ChronicleCardEditable = (props) => {
          }}
       >
          <CardHeader
-            title={<div>
-               {/*
-               !props.rendertitle ?
-                  <TextField
-                     id="title"
-                     label="Title"
-                     name="title"
-                     type="text"
-                     value={props.title}
-                     onChange={props.handleChange}
-                     onBlur={
-                        (e) => {
-                           props.title !== "" && props.handleRenderField(e);
-                        }
-                     }
-                     multiline
-                     style={{
-                        display: 'flex',
-                     }}
-                  />
-                  :
-                  <div style={{display: 'flex', alignItems: 'center'}}>
-                     <Typography variant="title">
-                        {props.title}
-                     </Typography>
-                     <IconButton
-                        onClick={() => props.handleEditField("title")}
-                        style={{marginLeft: 'auto'}}
-                     >
-                        <EditIcon />
-                     </IconButton>
-                  </div>
-                  */}
-               </div>
-            }
-            subheader={
+            style={{
+               paddingBottom: 0,
+            }}
+            title={
                <div
                   style={{
                      minWidth: (props.fullScreen ? 0 : 478),
@@ -125,6 +93,39 @@ const ChronicleCardEditable = (props) => {
                         </Typography>
                         <IconButton
                            onClick={() => props.handleEditField("date")}
+                           style={{marginLeft: 'auto'}}
+                        >
+                           <EditIcon />
+                        </IconButton>
+                     </div>
+                  }
+                  {!props.renderlocation ?
+                     <TextField
+                        variant="outlined"
+                        id="location"
+                        label="Location"
+                        name="location"
+                        type="text"
+                        value={props.location}
+                        onChange={props.handleChange}
+                        style={{
+                           margin: '16px 0px'
+                        }}
+                        onBlur={
+                           (e) => {
+                              props.location !== "" && props.handleRenderField(e);
+                           }
+                        }
+                     />
+                        :
+                     <div
+                        style={{display: 'flex', alignItems: 'center'}}
+                        onClick={() => props.handleEditField("location")}
+                     >
+                        <Typography variant="caption">
+                           {props.location}
+                        </Typography>
+                        <IconButton
                            style={{marginLeft: 'auto'}}
                         >
                            <EditIcon />
@@ -176,40 +177,6 @@ const ChronicleCardEditable = (props) => {
                   flexDirection: 'column'
                }}
             >
-               {!props.renderlocation ?
-                  <TextField
-                     variant="outlined"
-                     id="location"
-                     label="Location"
-                     name="location"
-                     type="text"
-                     value={props.location}
-                     onChange={props.handleChange}
-                     style={{
-                        margin: '16px 0px'
-                     }}
-                     onBlur={
-                        (e) => {
-                           props.location !== "" && props.handleRenderField(e);
-                        }
-                     }
-                  />
-                     :
-                  <div
-                     style={{display: 'flex', alignItems: 'center'}}
-                     onClick={() => props.handleEditField("location")}
-                  >
-                     <Typography variant="caption">
-                        {props.location}
-                     </Typography>
-                     <IconButton
-                        style={{marginLeft: 'auto'}}
-                     >
-                        <EditIcon />
-                     </IconButton>
-                  </div>
-               }
-
                {!props.rendertxt ?
                   <TextField
                      variant="outlined"
