@@ -34,9 +34,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 // import MessageIcon from '@material-ui/icons/Message';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import SettingsIcon from '@material-ui/icons/Settings';
-import AtlasIcon from '@material-ui/icons/Public';
+import AtlasIcon from '@material-ui/icons/LocationOn';
 import DateIcon from '@material-ui/icons/Event';
-import StoryIcon from '@material-ui/icons/ImportContacts';
+import StoryIcon from '@material-ui/icons/Notes';
 
 // import ChronicleCardComments from './ChronicleCardComments';
 import ChronicleEditItemModal from 'routes/Chronicle/ChronicleEditItemModal';
@@ -180,6 +180,7 @@ class ChronicleCard extends React.Component {
                   unpublishChronicleItem={this.props.unpublishChronicleItem}
                   memorialId={this.props.memorialId} 
                   handleShowDatePicker={this.handleShowDatePicker}
+                  handleShowChronicleUpdateLocationModal={this.handleShowChronicleUpdateLocationModal}
                />
                <ChronicleCardMedia
                   item={this.props.item}
@@ -194,6 +195,9 @@ class ChronicleCard extends React.Component {
                   handleShowChronicleUpdateStoryModal={this.handleShowChronicleUpdateStoryModal}
                   publishChronicleItem={this.props.publishChronicleItem}
                   unpublishChronicleItem={this.props.unpublishChronicleItem}
+                  showChronicleDeleteItemModal={this.state.showChronicleDeleteItemModal}
+                  handleShowChronicleDeleteItemModal={this.handleShowChronicleDeleteItemModal}
+                  handleCloseChronicleDeleteItemModal={this.handleCloseChronicleDeleteItemModal}
                />
                {/*
                <ChronicleCardActions
@@ -265,67 +269,99 @@ export default withStyles(styles)(connect('', actions)(ChronicleCard));
 const ChronicleCardHeader = (props) => (
    <CardHeader
       style={{paddingBottom: 0}}
-      subheader={
-         <div style={{display: 'flex', alignItems: 'center'}}>
-            {props.item.date ?
-               <div
-                  style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}
-                  onClick={props.handleShowDatePicker}
-               >
-                  <Typography
-                     variant="subheading"
-                     style={{
-                     }}
-                  >
-                     {props.item.date}
-                  </Typography>
-                  <IconButton
-                     style={{marginLeft: 'auto'}}
-                  >
-                     <EditIcon />
-                  </IconButton>
-               </div>
-               :
-               <div
-                  style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-                  onClick={props.handleShowDatePicker}
-               >
-                  <DateIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
-                  <Typography
-                     variant="caption"
-                     style={{
-                        marginLeft: 8
-                     }}
-                  > No date yet.
-                  </Typography>
-                  <Typography
-                     variant="caption"
-                     style={{
-                        color: link3, marginLeft: 6,
-                        cursor: 'pointer'
-                     }}
-                  > Add one
-                  </Typography>
-               </div>
-            }
-         </div>
-      }
       title={
-         props.isAdmin && 
-            <ChronicleCardMenu
-               item={props.item}
-               showMenu={props.showMenu}
-               handleMenuClick={props.handleMenuClick}
-               showChronicleEditItemModal={props.showChronicleEditItemModal}
-               handleShowChronicleEditItemModal={props.handleShowChronicleEditItemModal}
-               handleCloseChronicleEditItemModal={props.handleCloseChronicleEditItemModal}
-               showChronicleDeleteItemModal={props.showChronicleDeleteItemModal}
-               handleShowChronicleDeleteItemModal={props.handleShowChronicleDeleteItemModal}
-               handleCloseChronicleDeleteItemModal={props.handleCloseChronicleDeleteItemModal}
-               publishChronicleItem={props.publishChronicleItem}
-               unpublishChronicleItem={props.unpublishChronicleItem}
-               memorialId={props.memorialId} 
-            />
+         <div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+               {props.item.date ?
+                  <div
+                     style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}
+                     onClick={props.handleShowDatePicker}
+                  >
+                     <DateIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
+                     <Typography
+                        variant="subheading"
+                        style={{
+                           marginLeft: 8
+                        }}
+                     >
+                        {props.item.date}
+                     </Typography>
+                     <IconButton
+                        style={{marginLeft: 'auto'}}
+                     >
+                        <EditIcon />
+                     </IconButton>
+                  </div>
+                  :
+                  <div
+                     style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
+                     onClick={props.handleShowDatePicker}
+                  >
+                     <DateIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
+                     <Typography
+                        variant="caption"
+                        style={{
+                           marginLeft: 8
+                        }}
+                     > No date yet.
+                     </Typography>
+                     <Typography
+                        variant="caption"
+                        style={{
+                           color: link3, marginLeft: 6,
+                           cursor: 'pointer'
+                        }}
+                     > Add one
+                     </Typography>
+                  </div>
+               }
+            </div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+               {props.item.location ?
+                  <div
+                     style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}
+                     onClick={props.handleShowChronicleUpdateLocationModal}
+                  >
+                     <AtlasIcon  style={{color: 'rgba(0,0,0,0.54)'}} />
+                     <Typography
+                        variant="caption"
+                        style={{
+                           marginLeft: 8
+                        }}
+                     >
+                        {props.item.location}
+                     </Typography>
+                     <IconButton
+                        style={{marginLeft: 'auto'}}
+                     >
+                        <EditIcon />
+                     </IconButton>
+                  </div>
+                     :
+                  <div
+                     style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
+                     onClick={props.handleShowChronicleUpdateLocationModal}
+                  >
+                     <AtlasIcon  style={{color: 'rgba(0,0,0,0.54)'}} />
+                     <Typography
+                        variant="caption"
+                        style={{
+                           marginLeft: 8
+                        }}
+                     > No location yet.
+                     </Typography>
+                     <Typography
+                        variant="caption"
+                        style={{
+                           color: link3, marginLeft: 6,
+                           cursor: 'pointer'
+                        }}
+                     > Add one
+                     </Typography>
+                  </div>
+               }
+            </div>
+         </div>
       }
    />
 )
@@ -464,58 +500,7 @@ const ChronicleCardMedia = (props) => {
 
 const ChronicleCardContent = (props) => {
    return (
-      <CardContent>
-         {/*
-         <Typography variant="body1">
-            {props.content}
-         </Typography>
-         */}
-         <div
-            style={{display: 'flex', alignItems: 'center'}}
-         >
-            <AtlasIcon  style={{color: (props.item.location ? 'black' : 'rgba(0,0,0,0.54)')}} />
-            {props.item.location ?
-               <div
-                  style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}
-                  onClick={props.handleShowChronicleUpdateLocationModal}
-               >
-                  <Typography
-                     variant="caption"
-                     style={{
-                        marginLeft: 8
-                     }}
-                  >
-                     {props.item.location}
-                  </Typography>
-                  <IconButton
-                     style={{marginLeft: 'auto'}}
-                  >
-                     <EditIcon />
-                  </IconButton>
-               </div>
-                  :
-                  <div
-                     style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-                     onClick={props.handleShowChronicleUpdateLocationModal}
-                  >
-                     <Typography
-                        variant="caption"
-                        style={{
-                           marginLeft: 8
-                        }}
-                     > No location yet.
-                     </Typography>
-                     <Typography
-                        variant="caption"
-                        style={{
-                           color: link3, marginLeft: 6,
-                           cursor: 'pointer'
-                        }}
-                     > Add one
-                     </Typography>
-                  </div>
-            }
-         </div>
+      <CardContent style={{paddingTop: 0}}>
          <ChronicleCardStory
             item={props.item}
             showStory={props.showStory}
@@ -528,17 +513,25 @@ const ChronicleCardContent = (props) => {
          <div
             style={{
                display: 'flex',
-               width: '100%'
+               width: '100%',
+               marginTop: 8
             }}
          >
+            <Button
+               size="small"
+               onClick={props.handleShowChronicleDeleteItemModal}
+               style={{
+                  marginLeft: 'auto',
+                  marginRight: 8
+               }}
+            > Delete
+            </Button>
             <Button
                variant="contained"
                disabled={!props.item.date ? true : false}
                color="primary"
+               size="small"
                onClick={() => props.publishChronicleItem(props.item.id, props.memorialId)}
-               style={{
-                  marginLeft: 'auto',
-               }}
             > Publish
             </Button>
          </div>
@@ -549,89 +542,103 @@ const ChronicleCardContent = (props) => {
 
 const ChronicleCardStory = (props) => {
    return (
-         <Collapse in={true} unmountOnExit >
-            {props.item.txt ?
-               <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
-                  <StoryIcon
-                     style={{
-                        marginRight: 8,
-                        alignSelf: 'flex-start',
-                        marginTop: 12,
-                        color: (props.item.txt ? 'black' : 'rgba(0,0,0,0.54)')
-                     }}
-                  />
-                  {props.showStory ? 
+      <div>
+         {props.item.txt ?
+            <div style={{display: 'flex', alignItems: 'center', width: '100%', cursor: 'pointer'}}>
+               <StoryIcon
+                  style={{
+                     marginRight: 8,
+                     alignSelf: 'flex-start',
+                     marginTop: 12,
+                     color: 'rgba(0,0,0,0.54)'
+                  }}
+               />
+               {props.showStory ? 
+                  <div style={{display: 'flex', alignItems: 'center'}}>
+                     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                        <Typography
+                           variant="body1"
+                           dangerouslySetInnerHTML={{__html: marked(props.item.txt.split("^J^J").join("\n"))}}
+                        />
+                        <Typography
+                           variant="caption"
+                           style={{color: link3, cursor: 'pointer'}}
+                           onClick={props.handleHideStory}
+                        > Read less
+                        </Typography>
+                     </div>
+                     <IconButton
+                        onClick={props.handleShowChronicleUpdateStoryModal}
+                        style={{marginLeft: 'auto', alignSelf: 'flex-start'}}
+                     >
+                        <EditIcon />
+                     </IconButton>
+                  </div>
+                     :
+                  <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                      <div style={{display: 'flex', alignItems: 'center'}}>
-                        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                           <Typography
-                              variant="body1"
-                              dangerouslySetInnerHTML={{__html: marked(props.item.txt.split("^J^J").join("\n"))}}
-                           />
-                           <Typography
-                              variant="caption"
-                              style={{color: link3, cursor: 'pointer'}}
-                              onClick={props.handleHideStory}
-                           > Read less
-                           </Typography>
-                        </div>
+                        <Typography
+                           variant="body1"
+                           dangerouslySetInnerHTML={{
+                              __html: (props.item.txt.length > 46 ?
+                                 `${marked(props.item.txt.split("^J^J").join("\n")).substring(0, 40)}...`
+                                    :
+                                 marked(props.item.txt.split("^J^J").join("\n"))
+                              )
+                           }}
+                           style={{alignSelf: 'flex-start'}}
+                        />
                         <IconButton
                            onClick={props.handleShowChronicleUpdateStoryModal}
-                           style={{marginLeft: 'auto', alignSelf: 'flex-start'}}
+                           style={{marginLeft: 'auto'}}
                         >
                            <EditIcon />
                         </IconButton>
                      </div>
-                        :
-                     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                        <div style={{display: 'flex', alignItems: 'center'}}>
-                           <Typography
-                              variant="body1"
-                              dangerouslySetInnerHTML={{
-                                 __html: (props.item.txt.length > 46 ?
-                                    `${marked(props.item.txt.split("^J^J").join("\n")).substring(0, 40)}...`
-                                       :
-                                    marked(props.item.txt.split("^J^J").join("\n"))
-                                 )
-                              }}
-                              style={{alignSelf: 'flex-start'}}
-                           />
-                           <IconButton
-                              onClick={props.handleShowChronicleUpdateStoryModal}
-                              style={{marginLeft: 'auto'}}
-                           >
-                              <EditIcon />
-                           </IconButton>
-                        </div>
-                        {props.item.txt.length > 46 &&
-                           <Typography
-                              variant="caption"
-                              style={{color: link3, cursor: 'pointer'}}
-                              onClick={props.handleShowStory}
-                           > Read more
-                           </Typography>
-                        }
-                     </div>
-                  }
-               </div>
-                  :
-               <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
-                  <StoryIcon style={{color: 'rgba(0,0,0,0.54)'}}/>
-                  <Typography variant="caption" style={{marginLeft: 8}}>
-                     No story yet.
-                  </Typography>
-                  <Typography 
-                     variant="caption"
-                     onClick={props.handleShowChronicleUpdateStoryModal}
-                     style={{
-                        color: link3, marginLeft: 6,
-                        cursor: 'pointer'
-                     }}
-                  >
-                     Add one 
-                  </Typography>
-               </div>
-            }
-         </Collapse>
+                     {props.item.txt.length > 46 &&
+                        <Typography
+                           variant="caption"
+                           style={{color: link3, cursor: 'pointer'}}
+                           onClick={props.handleShowStory}
+                        > Read more
+                        </Typography>
+                     }
+                  </div>
+               }
+            </div>
+               :
+            <div
+               style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                  marginTop: 8,
+               }}
+            >
+               <StoryIcon 
+                  style={{color: 'rgba(0,0,0,0.54)', cursor: 'pointer'}}
+                  onClick={props.handleShowChronicleUpdateStoryModal}
+               />
+               <Typography
+                  variant="caption" 
+                  style={{marginLeft: 8, cursor: 'pointer'}}
+                  onClick={props.handleShowChronicleUpdateStoryModal}
+               >
+                  No caption yet.
+               </Typography>
+               <Typography 
+                  variant="caption"
+                  onClick={props.handleShowChronicleUpdateStoryModal}
+                  style={{
+                     color: link3, marginLeft: 6,
+                     cursor: 'pointer'
+                  }}
+               >
+                  Add one 
+               </Typography>
+            </div>
+         }
+      </div>
    )
 }
 
