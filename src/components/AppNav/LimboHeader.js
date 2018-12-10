@@ -47,7 +47,7 @@ const LimboHeader = (props) => {
             <ChronicleFab />
          </div>
          <IconButton
-            style={{marginRight: 4, color: 'white'}}
+            style={{color: 'white'}}
          > <MoreVertIcon />
          </IconButton>
       </div>
