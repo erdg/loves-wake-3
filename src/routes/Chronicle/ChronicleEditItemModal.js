@@ -28,7 +28,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FileUpload from 'components/FileUpload';
 
-import ErrorSnackbar from 'components/ErrorSnackbar';
 import DatePicker from 'components/DatePicker';
 
 class ChronicleEditItemModal extends React.Component {
@@ -50,7 +49,6 @@ class ChronicleEditItemModal extends React.Component {
       renderlocation: this.props.item.location ? true : false,
       rendertxt: this.props.item.txt ? true : false,
       renderMediaThumbnail: this.props.item.imageSrc || this.props.item.audioSrc || this.props.item.videoSrc || false,
-      error: false,
       edited: false,
    }
 
@@ -131,7 +129,6 @@ class ChronicleEditItemModal extends React.Component {
          renderlocation: false,
          rendertxt: false,
          renderMediaThumbnail: false,
-         error: false,
          edited: false,
       })
    }
@@ -144,12 +141,6 @@ class ChronicleEditItemModal extends React.Component {
    // it  would certainly make this thing shorter...
    //
    updChronicle = () => {
-      if (!this.state.edited) {
-         this.setState({ error: true });
-         return;
-      }
-      this.setState({ error: false });
-
       // if there's an image to upload...
       if (this.state.fileURL) {
          // data
@@ -227,7 +218,8 @@ class ChronicleEditItemModal extends React.Component {
                disableTypography
                style={{
                   background: theme.palette.primary.main,
-                  display: 'flex'
+                  display: 'flex',
+                  padding: 12 
                }}
             >
                <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
@@ -241,36 +233,36 @@ class ChronicleEditItemModal extends React.Component {
                   > <CloseIcon style={{color: 'white'}}/>
                   </IconButton>
                   <Typography
-                     variant="title"
-                     component="h2"
+                     variant="headline"
                      style={{
                         color: 'white',
                         display: 'inline',
                         marginLeft: 16 
                      }}
-                  > Edit Chronicle Card
+                  > Edit Content
                   </Typography>
-                  <Button
-                     onClick={
-                        () => {
-                           this.updChronicle();
+                  {this.state.edited &&
+                     <Button
+                        onClick={
+                           () => {
+                              this.updChronicle();
+                           }
                         }
-                     }
-                     style={{color: 'white', marginLeft: 'auto'}}
-                  > Update
-                  </Button>
+                        style={{color: 'white', marginLeft: 'auto'}}
+                     > Update
+                     </Button>
+                  }
                </div>
             </DialogTitle>
             <DialogContent style={{padding: 0}}>
-               <ErrorSnackbar
-                  message="Nothing has changed"
-                  open={this.state.error}
-               />
                <Card
                   style={{marginTop: 8, width: '100%'}}
                   elevation={0}
                >
                    <CardHeader
+                      style={{
+                         paddingBottom: 0,
+                      }}
                       title={
                          <div>
                          {/*
@@ -329,6 +321,40 @@ class ChronicleEditItemModal extends React.Component {
                                      }
                                   }
                                />
+                           {!this.state.renderlocation ?
+                            <TextField
+                               variant="outlined"
+                               id="location"
+                               label="Location"
+                               name="location"
+                               type="text"
+                               value={this.state.location}
+                               onChange={this.handleChange}
+                               style={{
+                                  margin: '16px 0px'
+                               }}
+                               onBlur={
+                                  (e) => {
+                                     this.state.location !== "" && this.handleRenderField(e);
+                                  }
+                               }
+                            />
+                               :
+                            <div
+                               style={{display: 'flex', alignItems: 'center', margin: '4px 0px'}}
+                               onClick={() => this.handleEditField("location")}
+                            >
+                               <Typography variant="caption">
+                                  {this.state.location}
+                               </Typography>
+                               <IconButton
+                                  style={{marginLeft: 'auto'}}
+                               >
+                                  <EditIcon />
+                               </IconButton>
+                            </div>
+                         }
+
                               {/* :
                                <div
                                   style={{display: 'flex', alignItems: 'center'}}
@@ -398,40 +424,7 @@ class ChronicleEditItemModal extends React.Component {
                             flexDirection: 'column'
                          }}
                       >
-                        {!this.state.renderlocation ?
-                            <TextField
-                               variant="outlined"
-                               id="location"
-                               label="Location"
-                               name="location"
-                               type="text"
-                               value={this.state.location}
-                               onChange={this.handleChange}
-                               style={{
-                                  margin: '16px 0px'
-                               }}
-                               onBlur={
-                                  (e) => {
-                                     this.state.location !== "" && this.handleRenderField(e);
-                                  }
-                               }
-                            />
-                               :
-                            <div
-                               style={{display: 'flex', alignItems: 'center'}}
-                               onClick={() => this.handleEditField("location")}
-                            >
-                               <Typography variant="caption">
-                                  {this.state.location}
-                               </Typography>
-                               <IconButton
-                                  style={{marginLeft: 'auto'}}
-                               >
-                                  <EditIcon />
-                               </IconButton>
-                            </div>
-                         }
-                         {!this.state.rendertxt ?
+                                                 {!this.state.rendertxt ?
                             <TextField
                                variant="outlined"
                                multiline

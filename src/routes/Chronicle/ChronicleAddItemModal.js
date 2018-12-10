@@ -3,7 +3,6 @@ import { actions, API_ENDPOINT } from 'store';
 import { connect } from 'unistore/react';
 import theme from 'theme';
 
-import ErrorSnackbar from 'components/ErrorSnackbar';
 // import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -43,7 +42,6 @@ class ChronicleAddItemModal extends React.Component {
       renderlocation: false,
       rendertxt: false,
       renderMediaThumbnail: false,
-      error: false,
    }
 
    handleChange = (e) => {
@@ -111,7 +109,6 @@ class ChronicleAddItemModal extends React.Component {
          renderlocation: false,
          rendertxt: false,
          renderMediaThumbnail: false,
-         error: false,
       })
    }
 
@@ -123,13 +120,6 @@ class ChronicleAddItemModal extends React.Component {
    // it  would certainly make this thing shorter...
    //
    newChronicle = () => {
-      // handle errors
-      if (!(this.state.file || this.state.txt)) {
-         this.setState({ error: true });
-         return;
-      }
-      this.setState({ error: false });
-
       // if there's an image to upload...
       if (this.state.fileURL) {
          // data
@@ -193,7 +183,8 @@ class ChronicleAddItemModal extends React.Component {
                disableTypography
                style={{
                   background: theme.palette.primary.main,
-                  display: 'flex'
+                  display: 'flex',
+                  padding: 12
                }}
             >
                <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
@@ -207,31 +198,28 @@ class ChronicleAddItemModal extends React.Component {
                   > <CloseIcon style={{color: 'white'}}/>
                   </IconButton>
                   <Typography
-                     variant="title"
-                     component="h2"
+                     variant="headline"
                      style={{
                         color: 'white',
                         display: 'inline',
                         marginLeft: 16 
                      }}
-                  > Add a Card to Chronicle
+                  > Upload Content
                   </Typography>
-                  <Button
-                     onClick={
-                        () => {
-                           this.newChronicle();
+                  {(this.state.fileURL || this.state.txt) &&
+                     <Button
+                        onClick={
+                           () => {
+                              this.newChronicle();
+                           }
                         }
-                     }
-                     style={{color: 'white', marginLeft: 'auto'}}
-                  > Submit
-                  </Button>
+                        style={{color: 'white', marginLeft: 'auto'}}
+                     > Submit
+                     </Button>
+                  }
                </div>
             </DialogTitle>
             <DialogContent style={{padding: 0}}>
-               <ErrorSnackbar
-                  message="Nothing to submit"
-                  open={this.state.error}
-               />
                <ChronicleCardEditable
                   title={this.state.title}
                   location={this.state.location}
@@ -249,7 +237,6 @@ class ChronicleAddItemModal extends React.Component {
                   renderlocation={this.state.renderlocation}
                   rendertxt={this.state.rendertxt}
                   renderMediaThumbnail={this.state.renderMediaThumbnail}
-                  error={this.state.error}
                   handleChange={this.handleChange}
                   handleRenderField={this.handleRenderField}
                   handleEditField={this.handleEditField}
