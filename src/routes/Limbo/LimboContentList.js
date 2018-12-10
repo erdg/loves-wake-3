@@ -13,7 +13,7 @@ import CardContent from '@material-ui/core/CardContent';
 class LimboContentList extends React.Component {
    render () {
       // only chronicle items that have been 'published'
-      // let unpublishedItems = this.props.memorial.items.filter(itm => itm.published === "false");
+      let unpublishedItems = this.props.memorial.items.filter(itm => itm.published === "false");
 
       if (this.props.memorial.items.length === 0) {
          return (
@@ -36,7 +36,8 @@ class LimboContentList extends React.Component {
       } else {
          return (
             <div>
-               {this.props.memorial.items.map((item, i) => (
+               {/*this.props.memorial.items.map((item, i) => (*/}
+               {unpublishedItems.map((item, i) => (
                   <LazyLoad 
                      key={i}
                      height={200}
