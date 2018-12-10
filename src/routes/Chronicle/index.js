@@ -14,8 +14,6 @@ class Chronicle extends React.Component {
    }
 
    render () {
-      // to the top! weee!!
-      window.scrollTo(0,0);
       let memorial =
          this.props.user.memorials ?
             this.props.user.memorials.find((m) => (
