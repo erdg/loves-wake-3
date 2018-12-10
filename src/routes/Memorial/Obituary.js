@@ -36,8 +36,7 @@ class Obituary extends React.Component {
                         size="small"
                         onClick={this.showEditObituaryModal}
                         style={{color: 'rgba(0,0,0,0.54)'}}
-                     > <EditIcon style={{marginRight: 4}}/> 
-                        Edit
+                     > Edit
                      </Button>
                   </div>
                   <Typography variant="body1"
