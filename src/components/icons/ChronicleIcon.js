@@ -3,12 +3,85 @@ import React from 'react';
 const ChronicleIcon = (props) => (
    <span {...props}
       dangerouslySetInnerHTML={{__html:
-         `<svg xmlns="http://www.w3.org/2000/svg" id="svg3222" viewBox="0 0 5.2916665 5.2916669"
-         height="20" width="20" fill=${props.fill}>
-             <g transform="translate(0 -291.708)" id="layer1">
-                 <path id="path1466" d="m 1.3229168,291.70832 c -0.291041,0 -0.52916697,0.23812 -0.52916697,0.52917 v 0.52916 1.45521 H -1.6666667e-7 v 0.26458 H 0.79374983 v 1.45521 0.52917 c 0,0.29104 0.23812597,0.52916 0.52916697,0.52916 h 2.645833 c 0.291042,0 0.529167,-0.23812 0.529167,-0.52916 v -0.52917 -1.45521 h 0.79375 v -0.26458 h -0.79375 v -1.45521 -0.52916 c 0,-0.29105 -0.238125,-0.52917 -0.529167,-0.52917 z m 0,0.52917 h 2.645833 v 2.77812 c 0,-0.44184 -0.881063,-0.66146 -1.322916,-0.66146 -0.441852,0 -1.322917,0.21962 -1.322917,0.66146 z m 1.322917,0.52916 c -0.291042,0 -0.526583,0.23813 -0.526583,0.52917 0,0.29104 0.235541,0.52917 0.526583,0.52917 0.291044,0 0.529166,-0.23813 0.529166,-0.52917 0,-0.29104 -0.238122,-0.52917 -0.529166,-0.52917 z m -1.190625,2.64583 a 0.13229165,0.13229165 0 0 1 0.132291,0.1323 0.13229165,0.13229165 0 0 1 -0.132291,0.13229 0.13229165,0.13229165 0 0 1 -0.132292,-0.13229 0.13229165,0.13229165 0 0 1 0.132292,-0.1323 z m 0.396875,0 h 2.116666 v 0.26459 h -2.116666 z m -0.396875,0.52917 a 0.13229165,0.13229165 0 0 1 0.132291,0.13229 0.13229165,0.13229165 0 0 1 -0.132291,0.13229 0.13229165,0.13229165 0 0 1 -0.132292,-0.13229 0.13229165,0.13229165 0 0 1 0.132292,-0.13229 z m 0.396875,0 h 2.116666 v 0.26458 h -2.116666 z"
-                 strokeWidth="0.265" />
+         `<svg
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:cc="http://creativecommons.org/ns#"
+            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            xmlns:svg="http://www.w3.org/2000/svg"
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            width="20"
+            height="20"
+            viewBox="0 0 5.2916665 5.2916669"
+            fill=${props.fill}
+            id="svg3222">
+           <metadata
+              id="metadata9">
+             <rdf:RDF>
+               <cc:Work
+                  rdf:about="">
+                 <dc:format>image/svg+xml</dc:format>
+                 <dc:type
+                    rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                 <dc:title></dc:title>
+               </cc:Work>
+             </rdf:RDF>
+           </metadata>
+           <defs
+              id="defs7">
+             <clipPath
+                id="clipPath4752"
+                clipPathUnits="userSpaceOnUse">
+               <rect
+                  y="6.9453125"
+                  x="32.477604"
+                  height="6.3499999"
+                  width="7.4083333"
+                  id="rect4754"
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+             </clipPath>
+           </defs>
+           <g
+              transform="translate(-113.77083,-31.485417)"
+              id="g1579"
+              style="fill-opacity:1">
+             <g
+                id="g1577"
+                style="fill-opacity:1">
+               <path
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.1113812;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                  d="m 115.35832,31.75 v 0.529166 2.645834 1.5875 h 3.70417 V 34.925 32.279166 31.75 Z m 0.52917,0.529166 h 2.64583 V 34.925 h -2.64583 z"
+                  id="path1565" />
+               <path
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.1113812;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                  d="m 113.77084,31.75 v 0.529167 h 0.79375 L 114.82918,32.014583 114.56459,31.75 Z"
+                  id="path1567" />
+               <circle
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.39343643;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                  id="circle1569"
+                  cx="114.3"
+                  cy="33.070164"
+                  r="0.26458335" />
+               <circle
+                  r="0.26458335"
+                  cy="35.189583"
+                  cx="114.3"
+                  id="circle1571"
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.39343643;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+               <circle
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.39343643;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                  id="circle1573"
+                  cx="114.3"
+                  cy="34.131248"
+                  r="0.26458335" />
+               <circle
+                  r="0.26458335"
+                  cy="36.247917"
+                  cx="114.3"
+                  id="circle1575"
+                  style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0.39343643;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
              </g>
+           </g>
          </svg>`
       }}
    />
