@@ -214,7 +214,7 @@ class AppDatePickerNoTextField extends React.Component {
             <DialogTitle
                disableTypography
                style={{
-                  background: theme.palette.primary.main,
+                  background: theme.palette.primary.dark,
                   color: 'white'
                }}
             >
@@ -257,7 +257,11 @@ class AppDatePickerNoTextField extends React.Component {
                               conditionals that are possible in jsx. I won't be able to read this next
                               week. */}
                        <StepLabel
-                          onClick={this.state.activeStep === index ? null : this.state.year ? () => this.gotoStep(index) : null}
+                          onClick={
+                             this.state.activeStep === index ?
+                                null : this.state.year ? 
+                                   () => this.gotoStep(index) : null
+                          }
                           style={{
                              cursor: (this.state.year ? 'pointer' : 'unset'),
                              display: 'flex',

@@ -232,7 +232,7 @@ class AppDatePicker extends React.Component {
             <DialogTitle
                disableTypography
                style={{
-                  background: theme.palette.primary.main,
+                  background: theme.palette.primary.dark,
                   color: 'white'
                }}
             >
