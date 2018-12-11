@@ -501,7 +501,7 @@ const ChronicleCardStory = (props) => {
                            variant="body1"
                            dangerouslySetInnerHTML={{
                               __html: (props.item.txt.length > 140 ?
-                                 `${marked(props.item.txt.split("^J^J").join("\n")).substring(0, 40)}...`
+                                 `${marked(props.item.txt.split("^J^J").join("\n")).substring(0, 140)}...`
                                     :
                                  marked(props.item.txt.split("^J^J").join("\n"))
                               )
