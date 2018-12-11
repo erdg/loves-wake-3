@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import CheckIcon from '@material-ui/icons/Check';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import theme from 'theme';
 
@@ -64,15 +65,12 @@ const FileUpload = (props) => {
                      }
                   </Button>
                   { props.uploading &&
-                     <CircularProgress
-                        size={80}
-                        style={{
-                           position: 'absolute',
-                           top: -12,
-                           right: 88,
-                           zIndex: 1
-                        }}
+                     <div>
+                     <LinearProgress
+                        variant="indeterminate"
+                        style={{width: '50%', margin: '0 auto', marginTop: 16}}
                      />
+                     </div>
                   }
                </div>
             </Dropzone>
