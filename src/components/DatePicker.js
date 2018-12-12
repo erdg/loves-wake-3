@@ -35,7 +35,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 
 import theme from 'theme';
 
-import { link3 } from 'links';
+import { link1 } from 'links';
 
 function getSteps() {
    return ['Year', 'Month / Season / Holiday', 'Day'];
@@ -300,7 +300,7 @@ class AppDatePicker extends React.Component {
                                     onClick={index === 1 ? () => this.gotoStep(3) : () => this.handleNext()}
                                     style={{
                                        display: (this.state.activeStep !== index ? 'none' : 'unset'),
-                                       color: link3
+                                       color: link1
                                     }}
                                  > Skip
                                  </Button>
@@ -412,9 +412,7 @@ class DatePickerYear extends React.Component {
                      }}
                   >
                      <Button
-                        color="primary"
-                        variant="raised"
-                        style={{marginRight: 24}}
+                        style={{marginRight: 24, color: 'white', background: link1 }}
                      > {date}
                      </Button>
                      <Typography
@@ -436,10 +434,8 @@ class DatePickerYear extends React.Component {
                      date.toString().endsWith('0') ?
                         <div key={i} style={{display: 'flex', alignItems: 'center', width: '100%'}}>
                            <Button
-                              variant="raised"
-                              color="primary"
                               onClick={() => this.props.handleSetYear(date)}
-                              style={{margin: 4}}
+                              style={{margin: 4, color: 'white', background: link1}}
                            > {date}
                            </Button>
                            <div
@@ -461,10 +457,8 @@ class DatePickerYear extends React.Component {
                            :
                         <Button
                            key={i}
-                           variant="raised"
-                           color="primary"
                            onClick={() => this.props.handleSetYear(date)}
-                           style={{margin: 4, display: 'inline-block'}}
+                           style={{margin: 4, display: 'inline-block', color: 'white', background: link1}}
                         > {date}
                         </Button>
                ))}
@@ -516,8 +510,6 @@ class DatePickerMonthSeasonHoliday extends React.Component {
                      {months.map((month, i) => (
                         <Button
                            key={i}
-                           variant="raised"
-                           color="primary"
                            onClick={
                               () => {
                                  this.props.handleNext();
@@ -527,7 +519,9 @@ class DatePickerMonthSeasonHoliday extends React.Component {
                            style={{
                               margin: 8,
                               justifyContent: 'left',
-                              textTransform: 'unset'
+                              textTransform: 'unset',
+                              color: 'white',
+                              backgroundColor: link1
                            }}
                         > {month}
                         </Button>
@@ -544,8 +538,6 @@ class DatePickerMonthSeasonHoliday extends React.Component {
                      {seasons.map((season, i) => (
                         <Button
                            key={i}
-                           variant="raised"
-                           color="primary"
                            onClick={
                               () => {
                                  this.props.gotoStep(3);
@@ -555,7 +547,9 @@ class DatePickerMonthSeasonHoliday extends React.Component {
                            style={{
                               margin: 8,
                               justifyContent: 'left',
-                              textTransform: 'unset'
+                              textTransform: 'unset',
+                              color: 'white',
+                              backgroundColor: link1
                            }}
                         > {season}
                         </Button>
@@ -572,7 +566,6 @@ class DatePickerMonthSeasonHoliday extends React.Component {
                      {holidays.map((holiday, i) => (
                         <Button
                            key={i}
-                           variant="raised"
                            color="primary"
                            onClick={
                               () => {
@@ -583,7 +576,7 @@ class DatePickerMonthSeasonHoliday extends React.Component {
                            style={{
                               margin: 8,
                               justifyContent: 'left',
-                              textTransform: 'unset'
+                              textTransform: 'unset',
                            }}
                         > {holiday}
                         </Button>
