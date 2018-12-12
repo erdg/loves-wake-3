@@ -238,7 +238,7 @@ class AppDatePicker extends React.Component {
                   }
                </div>
             </DialogTitle>
-            <DialogContent style={{width: this.props.fullScreen ? '100%' : 340}} >
+            <DialogContent style={{width: this.props.fullScreen ? 'initial' : 340}} >
                <Stepper activeStep={activeStep} style={{margin: 0, padding: '16px 0px'}} orientation="vertical">
                 {steps.map((label, index) => {
                   return (
