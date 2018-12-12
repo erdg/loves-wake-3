@@ -3,6 +3,7 @@ import ChronicleCard from 'components/ChronicleCard';
 import LazyLoad from 'react-lazyload';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import ChronicleCoverPhoto from './ChronicleCoverPhoto';
 
 const ChronicleContentList = (props) => {
    // only chronicle items that have been 'published'
@@ -143,6 +144,7 @@ const ChronicleContentList = (props) => {
    // console.log("sorted: ", sorted);
    return (
       <div style={{marginTop: 16}}>
+         <ChronicleCoverPhoto memorial={props.memorial} />
          {sorted.map((item, i) => (
             isNaN(item) ?
                <LazyLoad 
