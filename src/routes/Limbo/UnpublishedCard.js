@@ -560,7 +560,7 @@ const ChronicleCardContent = (props) => {
                onClick={props.handleShowChronicleDeleteItemModal}
                style={{
                   marginLeft: 'auto',
-                  marginRight: 8
+                  marginRight: 8 
                }}
             > Delete
             </Button>
@@ -570,7 +570,9 @@ const ChronicleCardContent = (props) => {
                color="primary"
                size="small"
                onClick={() => props.publishChronicleItem(props.item.id, props.memorialId)}
-            > Publish
+               style={{display: 'flex', alignItems: 'center'}}
+            > 
+               <ChronicleIcon fill="white" style={{marginRight: 8, marginBottom: -4}} /> Publish
             </Button>
          </div>
       </CardContent>
