@@ -4,7 +4,7 @@ import marked from 'marked';
 import { connect } from 'unistore/react';
 import { actions } from 'store';
 
-import { link3 } from 'links';
+import { link1 } from 'links';
 import theme from 'theme';
 
 // material-ui
@@ -327,7 +327,7 @@ const ChronicleCardHeader = (props) => (
                      <Typography
                         variant="caption"
                         style={{
-                           color: link3, marginLeft: 6,
+                           color: link1, marginLeft: 6,
                            cursor: 'pointer'
                         }}
                      > Add one
@@ -387,7 +387,7 @@ const ChronicleCardHeader = (props) => (
                      <Typography
                         variant="caption"
                         style={{
-                           color: link3, marginLeft: 6,
+                           color: link1, marginLeft: 6,
                            cursor: 'pointer'
                         }}
                      > Add one
@@ -630,7 +630,7 @@ const ChronicleCardStory = (props) => {
                      <Typography
                         variant="caption"
                         style={{
-                           color: link3,
+                           color: link1,
                            cursor: 'pointer',
                            alignSelf: 'flex-start',
                            marginLeft: 16,
@@ -684,7 +684,7 @@ const ChronicleCardStory = (props) => {
                         <Typography
                            variant="caption"
                            style={{
-                              color: link3,
+                              color: link1,
                               cursor: 'pointer',
                               marginTop: 8,
                               marginLeft: 16
@@ -724,7 +724,7 @@ const ChronicleCardStory = (props) => {
                <Typography 
                   variant="caption"
                   style={{
-                     color: link3, marginLeft: 6,
+                     color: link1, marginLeft: 6,
                      cursor: 'pointer'
                   }}
                >
