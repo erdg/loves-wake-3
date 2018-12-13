@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'unistore/react';
+import { actions } from 'store';
 import history from '../../history';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -25,7 +27,13 @@ import HeartIcon from '@material-ui/icons/Favorite';
 import HomePageBanner from 'components/HomePageBanner';
 
 
-const Home = (props) => {
+class Home extends React.Component {
+
+   componentDidMount () {
+      (window.sessionStorage.getItem('loginToken') && !this.props.user.email) && this.props.getUserData();
+   }
+
+   render (props) {
    return (
       <div>
          <div style={{position: 'relative'}}>
@@ -440,6 +448,7 @@ const Home = (props) => {
          </div>
       </div>
    )
+   }
 }
 
-export default Home;
+export default connect('user', actions)(Home);
