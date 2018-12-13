@@ -73,6 +73,7 @@ class LogIn extends React.Component {
                <CircularProgress
                   color="primary"
                   size={60}
+                  style={{position: 'absolute', top: '50%', left: '50%'}}
                />
                   :
                <div style={{display: 'flex', flexDirection: 'column', width: 300, alignItems: 'stretch'}}>
@@ -80,9 +81,8 @@ class LogIn extends React.Component {
                   <Typography
                      variant="headline"
                      component="h3"
-                     color="primary"
                      style={{margin: '16px 0px'}}
-                  > Login
+                  >  Login
                   </Typography>
                   { this.props.error &&
                      <Paper
