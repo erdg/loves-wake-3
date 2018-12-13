@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { link3 } from 'links';
 import EditObituaryModal from './EditObituaryModal';
 import marked from 'marked';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 // import history from '../../history';
 
 class Obituary extends React.Component {

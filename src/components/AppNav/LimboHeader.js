@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'unistore/react';
-import { actions } from 'store';
+// import { connect } from 'unistore/react';
+// import { actions } from 'store';
 // import Tabs from '@material-ui/core/Tabs';
 // import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +17,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import history from '../../history';
 import LimboIcon from '@material-ui/icons/Waves';
 import ChronicleFab from 'routes/Chronicle/ChronicleFab';
-import EventsIcon from '@material-ui/icons/Assignment';
+// import EventsIcon from '@material-ui/icons/Assignment';
 
 const LimboHeader = (props) => {
    return (

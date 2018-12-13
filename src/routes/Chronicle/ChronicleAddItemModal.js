@@ -7,11 +7,8 @@ import theme from 'theme';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Fade from '@material-ui/core/Fade';
-import Zoom from '@material-ui/core/Zoom';
 import FileUpload from 'components/FileUpload';
 import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
 // import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -31,18 +28,18 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import CheckIcon from '@material-ui/icons/CheckCircle';
 import StoryIcon from '@material-ui/icons/LibraryBooks';
 import UploadPhotoIcon from '@material-ui/icons/PhotoLibrary';
-import UploadVideoIcon from '@material-ui/icons/VideoLibrary';
-import UploadAudioIcon from '@material-ui/icons/LibraryMusic';
+// import UploadVideoIcon from '@material-ui/icons/VideoLibrary';
+// import UploadAudioIcon from '@material-ui/icons/LibraryMusic';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { link3 } from 'links';
+// import { link3 } from 'links';
 import AddIcon from '@material-ui/icons/Add';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 // import EditIcon from '@material-ui/icons/Edit';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 // import FileUpload from 'components/FileUpload';
 
-import ChronicleCardEditable from 'components/ChronicleCardEditable';
+// import ChronicleCardEditable from 'components/ChronicleCardEditable';
 
 class ChronicleAddItemModal extends React.Component {
    state = {

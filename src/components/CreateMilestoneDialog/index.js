@@ -1,11 +1,11 @@
 import React from 'react';
-import { actions, API_ENDPOINT } from 'store';
+import { actions } from 'store';
 import { connect } from 'unistore/react';
 import theme from 'theme';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Dialog from '@material-ui/core/Dialog';
 // import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
@@ -26,7 +26,6 @@ class CreateMilestoneDialog extends React.Component {
                }
             }
             fullScreen={this.props.fullScreen}
-            fullScreen
          >
             <DialogTitle
                disableTypography

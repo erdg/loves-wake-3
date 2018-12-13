@@ -5,7 +5,7 @@ import { connect } from 'unistore/react';
 import { actions } from 'store';
 
 import { link1 } from 'links';
-import theme from 'theme';
+// import theme from 'theme';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -14,26 +14,26 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 // import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
+// import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 
 //icons
 // import FavoriteIcon from '@material-ui/icons/Favorite';
 import EditIcon from '@material-ui/icons/Edit';
-import LimboIcon from '@material-ui/icons/Waves';
+// import LimboIcon from '@material-ui/icons/Waves';
 import ChronicleIcon from 'components/icons/ChronicleIcon';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 // import ExpandMore from '@material-ui/icons/ExpandMore';
 // import ExpandLess from '@material-ui/icons/ExpandLess';
 // import MessageIcon from '@material-ui/icons/Message';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import SettingsIcon from '@material-ui/icons/Settings';
 import AtlasIcon from '@material-ui/icons/LocationOn';
 import DateIcon from '@material-ui/icons/Event';
@@ -404,78 +404,78 @@ const ChronicleCardHeader = (props) => (
    />
 )
 
-const ChronicleCardMenu = (props) => {
-   return (
-      <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
-         <IconButton
-            onClick={props.handleMenuClick}
-            id={`chronicleCardMenuButton${props.item.id}`}
-            style={{marginLeft: 'auto'}}
-         >
-            <MoreVertIcon />
-         </IconButton>
-         {/*props.showMenu &&
-               <Paper
-                  elevation={0}
-                  style={{
-                     position: 'absolute',
-                     top: 0,
-                     right: -200,
-                     height: document.getElementById(`chronicleCard${props.item.id}`).scrollHeight,
-                     backgroundColor: '#eee'
-                  }}
-               >
-         */}
-         <Menu
-            open={props.showMenu}
-            onClose={props.handleMenuClick}
-            anchorEl={() => document.getElementById(`chronicleCardMenuButton${props.item.id}`)}
-         >
-                     <MenuItem button
-                        disabled={!props.item.date ? true : false}
-                        onClick={
-                           props.item.published === 'true' ?
-                              () => {
-                                 props.unpublishChronicleItem(props.item.id, props.memorialId);
-                                 props.handleMenuClick();
-                              }
-                              : 
-                              () => props.publishChronicleItem(props.item.id, props.memorialId)
-                        }
-                     >
-                        <ListItemIcon>
-                           {props.item.published === 'true' ?
-                                 <LimboIcon />
-                                 :
-                                 <ChronicleIcon style={{marginTop: 4, marginLeft: 2}} fill={'rgba(0,0,0,0.54)'}/>
-                           }
-                        </ListItemIcon>
-                        <ListItemText
-                           inset
-                           primary={props.item.published === 'true' ? "Unpublish" : "Publish"}
-                           style={{marginLeft: 1}}
-                        />
-                     </MenuItem>
-                     <MenuItem button
-                        onClick={props.handleShowChronicleEditItemModal}
-                     >
-                        <ListItemIcon>
-                           <EditIcon />
-                        </ListItemIcon>
-                        <ListItemText inset primary="Edit item" />
-                     </MenuItem>
-                     <MenuItem button
-                        onClick={props.handleShowChronicleDeleteItemModal}
-                     >
-                        <ListItemIcon>
-                           <DeleteIcon />
-                        </ListItemIcon>
-                        <ListItemText inset primary="Delete item" />
-                     </MenuItem>
-                  </Menu>
-      </div>
-   )
-}
+// const ChronicleCardMenu = (props) => {
+//    return (
+//       <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
+//          <IconButton
+//             onClick={props.handleMenuClick}
+//             id={`chronicleCardMenuButton${props.item.id}`}
+//             style={{marginLeft: 'auto'}}
+//          >
+//             <MoreVertIcon />
+//          </IconButton>
+//          {/*props.showMenu &&
+//                <Paper
+//                   elevation={0}
+//                   style={{
+//                      position: 'absolute',
+//                      top: 0,
+//                      right: -200,
+//                      height: document.getElementById(`chronicleCard${props.item.id}`).scrollHeight,
+//                      backgroundColor: '#eee'
+//                   }}
+//                >
+//          */}
+//          <Menu
+//             open={props.showMenu}
+//             onClose={props.handleMenuClick}
+//             anchorEl={() => document.getElementById(`chronicleCardMenuButton${props.item.id}`)}
+//          >
+//                      <MenuItem button
+//                         disabled={!props.item.date ? true : false}
+//                         onClick={
+//                            props.item.published === 'true' ?
+//                               () => {
+//                                  props.unpublishChronicleItem(props.item.id, props.memorialId);
+//                                  props.handleMenuClick();
+//                               }
+//                               : 
+//                               () => props.publishChronicleItem(props.item.id, props.memorialId)
+//                         }
+//                      >
+//                         <ListItemIcon>
+//                            {props.item.published === 'true' ?
+//                                  <LimboIcon />
+//                                  :
+//                                  <ChronicleIcon style={{marginTop: 4, marginLeft: 2}} fill={'rgba(0,0,0,0.54)'}/>
+//                            }
+//                         </ListItemIcon>
+//                         <ListItemText
+//                            inset
+//                            primary={props.item.published === 'true' ? "Unpublish" : "Publish"}
+//                            style={{marginLeft: 1}}
+//                         />
+//                      </MenuItem>
+//                      <MenuItem button
+//                         onClick={props.handleShowChronicleEditItemModal}
+//                      >
+//                         <ListItemIcon>
+//                            <EditIcon />
+//                         </ListItemIcon>
+//                         <ListItemText inset primary="Edit item" />
+//                      </MenuItem>
+//                      <MenuItem button
+//                         onClick={props.handleShowChronicleDeleteItemModal}
+//                      >
+//                         <ListItemIcon>
+//                            <DeleteIcon />
+//                         </ListItemIcon>
+//                         <ListItemText inset primary="Delete item" />
+//                      </MenuItem>
+//                   </Menu>
+//       </div>
+//    )
+// }
 
 const ChronicleCardMedia = (props) => {
    return (

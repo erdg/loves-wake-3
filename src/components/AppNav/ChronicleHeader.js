@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'unistore/react';
-import { actions } from 'store';
+// import { connect } from 'unistore/react';
+// import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
 
 
