@@ -81,6 +81,7 @@ class LogIn extends React.Component {
                   <Typography
                      variant="headline"
                      component="h3"
+                     color="primary"
                      style={{margin: '16px 0px'}}
                   >  Login
                   </Typography>
