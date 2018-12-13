@@ -24,7 +24,8 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 // import CardContent from '@material-ui/core/CardContent';
 // import CardActions from '@material-ui/core/CardActions';
-
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import StarIcon from '@material-ui/icons/Stars';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import CheckIcon from '@material-ui/icons/CheckCircle';
@@ -107,7 +108,7 @@ class ChronicleAddItemModal extends React.Component {
                         display: 'inline',
                         marginLeft: 16 
                      }}
-                  > Upload Content
+                  > Add Something
                   </Typography>
                   {(this.state.fileURL || this.state.txt) &&
                      <Button
@@ -126,6 +127,33 @@ class ChronicleAddItemModal extends React.Component {
                </div>
             </DialogTitle>
             <DialogContent style={{padding: 0}}>
+
+               <div
+                  onClick={this.props.openCreateMilestoneDialog}
+                  style={{
+                     display: 'flex',
+                     alignItems: 'center',
+                     margin: 16,
+                     background: '#f0f0f0',
+                     borderRadius: 4,
+                     cursor: 'pointer'
+                  }}
+               >
+                  <IconButton>
+                     <StarIcon 
+                        style={{color: 'rgba(0,0,0,0.54)', cursor: 'pointer', alignSelf: 'flex-start'}}
+                     />
+                  </IconButton>
+                  <Typography
+                     variant="subheading" 
+                     style={{marginLeft: 8, cursor: 'pointer'}}
+                  >
+                     Milestone
+                  </Typography>
+                  <IconButton style={{marginLeft: 'auto'}}>
+                     <ArrowForwardIcon />
+                  </IconButton>
+               </div>
 
                <div
                   onClick={this.handleUploadPhotoClick}
@@ -230,56 +258,28 @@ class ChronicleAddItemModal extends React.Component {
                   </IconButton>
                </div>
 
-                  <Collapse
-                     in={this.state.uploadStory}
-                     style={{
-                        margin: 16,
-                        marginTop: 10,
-                        paddingTop: 6,
-                        marginBottom: this.state.uploadStory ? 16 : 0
-                     }}
-                  >
-                     <TextField
-                        label="Story or Memory"
-                        name="txt"
-                        variant="outlined"
-                        multiline
-                        rows={10}
-                        onChange={this.handleChange}
-                        style={{
-                           width: '100%',
-                        }}
-                     />
-                  </Collapse>
-               {/*
-               <div
+               <Collapse
+                  in={this.state.uploadStory}
                   style={{
-                     display: 'flex',
-                     alignItems: 'center',
-                     width: '100%',
-                     marginTop: 16,
-                     marginBottom: 16,
-                     background: '#f0f0f0',
-                     borderRadius: 4,
-                     cursor: 'pointer'
+                     margin: 16,
+                     marginTop: 10,
+                     paddingTop: 6,
+                     marginBottom: this.state.uploadStory ? 16 : 0
                   }}
                >
-                  <IconButton>
-                     <UploadVideoIcon 
-                        style={{color: 'rgba(0,0,0,0.54)', cursor: 'pointer', alignSelf: 'flex-start'}}
-                     />
-                  </IconButton>
-                  <Typography
-                     variant="subheading" 
-                     style={{marginLeft: 8, cursor: 'pointer'}}
-                  >
-                     Video
-                  </Typography>
-                  <IconButton style={{marginLeft: 'auto'}}>
-                     <AddIcon />
-                  </IconButton>
-               </div>
-
+                  <TextField
+                     label="Story or Memory"
+                     name="txt"
+                     variant="outlined"
+                     multiline
+                     rows={10}
+                     onChange={this.handleChange}
+                     style={{
+                        width: '100%',
+                     }}
+                  />
+               </Collapse>
+               {/*
                <div
                   style={{
                      display: 'flex',
@@ -314,6 +314,7 @@ class ChronicleAddItemModal extends React.Component {
                      display: 'flex',
                      alignItems: 'center',
                      margin: '0px 16px',
+                     marginBottom: 16,
                      background: '#f0f0f0',
                      borderRadius: 4,
                      cursor: 'pointer'
@@ -328,7 +329,7 @@ class ChronicleAddItemModal extends React.Component {
                      variant="subheading" 
                      style={{marginLeft: 8, cursor: 'pointer'}}
                   >
-                     Many
+                     Upload Many
                   </Typography>
                   <IconButton style={{marginLeft: 'auto'}}>
                      <AddIcon />
