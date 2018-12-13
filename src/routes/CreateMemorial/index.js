@@ -148,6 +148,10 @@ class CreateMemorial extends React.Component {
       !this.props.user.email && this.props.getUserData();
    }
 
+   gotoStep = (index) => {
+      this.setState({ activeStep: index })
+   }
+
    handleChange = (e) => {
       this.setState({ [e.target.name]: e.target.value });
    }
@@ -407,7 +411,9 @@ class CreateMemorial extends React.Component {
                   }
                   return (
                      <Step key={label} {...props} style={{width: 320}}>
-                        <StepLabel {...labelProps}>
+                        <StepLabel {...labelProps}
+                           onClick={!this.state.name ?  null : () => this.gotoStep(index)}
+                        >
                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                               {label}
                               <div style={{alignSelf: 'flex-end'}}>
