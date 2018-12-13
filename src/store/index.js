@@ -38,11 +38,24 @@ let store = devtools(createStore({
    // TODO - refactor this nested mess!
    user: {},
 
+   // modal/dialog flags
+   showCreateMilestoneDialog: false,
+
 }))
 // })
 
 let actions = store => ({
 
+   // FRONTEND FUNCTIONS
+   openCreateMilestoneDialog (state) {
+      store.setState({ showCreateMilestoneDialog: true })
+   },
+
+   closeCreateMilestoneDialog (state) {
+      store.setState({ showCreateMilestoneDialog: false })
+   },
+
+   // API/BACKEND FUNCTIONS
    addChronicleItem (state, item, memorialId) {
       // fuck this noise
       // this is the pattern
