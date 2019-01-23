@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 
 // API
 // development
-const API_ENDPOINT = "http://192.168.0.48:8887/";
+// const API_ENDPOINT = "http://192.168.0.48:8887/";
 
 // christine's house
 // const API_ENDPOINT = "http://192.168.1.23:8887/";
@@ -18,10 +18,10 @@ const API_ENDPOINT = "http://192.168.0.48:8887/";
 
 // production
 // const API_ENDPOINT = "https://erikdgustafson.com/api/";
-// const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
+const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
 
-let store = devtools(createStore({
-// let store = createStore({
+// let store = devtools(createStore({
+let store = createStore({
 
    // loading state toggle for store actions
    loading: false,
@@ -41,8 +41,8 @@ let store = devtools(createStore({
    // modal/dialog flags
    showCreateMilestoneDialog: false,
 
-}))
-// })
+// }))
+})
 
 let actions = store => ({
 
@@ -138,10 +138,13 @@ let actions = store => ({
             });
             // store login token in sessionStorage
             window.sessionStorage.setItem('loginToken', json.loginToken);
+            // store copy of token in localStorage, so I don't have to login 
+            // every bloody time I close the browser
+            window.localStorage.setItem('loveswakeUserToken', json.loginToken);
             history.push("/user");
             // call getUserData
-            this.getUserData(state);
-            console.log('JWT: ', json.loginToken);
+            // this.getUserData(state);
+            // console.log('JWT: ', json.loginToken);
          }
       })
       .catch((error) => store.setState({ error: error.message, loading: false }))
@@ -151,7 +154,11 @@ let actions = store => ({
       store.setState({ loading: true });
       fetch(API_ENDPOINT + "!getUserData", {
             method: "POST",
-            body: JSON.stringify({ loginToken: window.sessionStorage.getItem('loginToken')})
+         body: JSON.stringify({
+            loginToken: (window.sessionStorage.getItem('loginToken') ||
+               window.localStorage.getItem('loveswakeUserToken')
+            )
+         })
       })
       .then((res) => {
          // if token has expired, route to login page
