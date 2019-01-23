@@ -115,7 +115,7 @@ const ShrinesContent = connect('user')(
                shrines={testData.follower}
             />
             */}
-            { props.user.memorials.map((m, index) => (
+            { props.user.memorials && props.user.memorials.map((m, index) => (
                <ListItem
                   key={index}
                   button
