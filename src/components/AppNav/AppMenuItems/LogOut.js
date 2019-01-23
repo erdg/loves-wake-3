@@ -3,6 +3,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PowerIcon from '@material-ui/icons/PowerSettingsNew';
+import { connect } from 'unistore/react';
+import { actions } from 'store';
 
 import theme from '../../../theme';
 
@@ -11,7 +13,9 @@ const style = {
 }
 
 const LogOut = (props) => (
-   <ListItem button>
+   <ListItem button
+      onClick={props.logoutUser}
+   >
       <ListItemIcon>
          <PowerIcon style={style} color="primary" />
       </ListItemIcon>
@@ -19,4 +23,4 @@ const LogOut = (props) => (
    </ListItem>
 )
 
-export default LogOut;
+export default connect('user', actions)(LogOut);

@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 
 // API
 // development
-// const API_ENDPOINT = "http://192.168.0.48:8887/";
+const API_ENDPOINT = "http://192.168.0.48:8887/";
 
 // christine's house
 // const API_ENDPOINT = "http://192.168.1.23:8887/";
@@ -18,7 +18,7 @@ import update from 'immutability-helper';
 
 // production
 // const API_ENDPOINT = "https://erikdgustafson.com/api/";
-const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
+// const API_ENDPOINT = "https://erikdgustafson.com/lw3/";
 
 // let store = devtools(createStore({
 let store = createStore({
@@ -148,6 +148,16 @@ let actions = store => ({
          }
       })
       .catch((error) => store.setState({ error: error.message, loading: false }))
+   },
+
+   logoutUser (state, em, pw) {
+      // see ya!
+      history.push("/login");
+      // remove login token from sessionStorage
+      window.sessionStorage.removeItem('loginToken');
+      // remove login token from localStorage
+      window.localStorage.removeItem('loveswakeUserToken');
+      return { user: {}};
    },
 
    getUserData (state) {
