@@ -162,12 +162,14 @@ let actions = store => ({
 
    getUserData (state) {
       store.setState({ loading: true });
+      // if no token in sessionStorage, check localStorage to refresh
+      if (!window.sessionStorage.getItem('loginToken')) {
+         window.sessionStorage.setItem('loginToken', window.localStorage.getItem('loveswakeUserToken'))
+      }
       fetch(API_ENDPOINT + "!getUserData", {
             method: "POST",
          body: JSON.stringify({
-            loginToken: (window.sessionStorage.getItem('loginToken') ||
-               window.localStorage.getItem('loveswakeUserToken')
-            )
+            loginToken: window.sessionStorage.getItem('loginToken')
          })
       })
       .then((res) => {
