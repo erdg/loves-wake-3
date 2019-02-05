@@ -2,7 +2,7 @@ import React from 'react';
 // import { connect } from 'unistore/react';
 // import { actions } from 'store';
 import Typography from '@material-ui/core/Typography';
-
+import { withRouter } from 'react-router';
 
 import IconButton from '@material-ui/core/IconButton';
 // import SettingsIcon from '@material-ui/icons/Settings';
@@ -28,7 +28,7 @@ const ChronicleHeader = (props) => {
          }}
       >
          <IconButton
-            onClick={() => {history.goBack()}}
+            onClick={() => {history.push("/" + props.location.pathname.split("/").splice(1,3).join("/"))}}
          >
             <ArrowBackIcon style={{color: 'white'}}/>
          </IconButton>
@@ -50,4 +50,4 @@ const ChronicleHeader = (props) => {
    )
 }
 
-export default ChronicleHeader;
+export default withRouter(ChronicleHeader);

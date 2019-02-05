@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 // import { connect } from 'unistore/react';
 // import { actions } from 'store';
 // import Tabs from '@material-ui/core/Tabs';
@@ -32,7 +33,7 @@ const LimboHeader = (props) => {
          }}
       >
          <IconButton
-            onClick={() => {history.goBack()}}
+            onClick={() => {history.push("/" + props.location.pathname.split("/").splice(1,3).join("/"))}}
             style={{color: 'white'}}
          >
             <ArrowBackIcon />
@@ -54,4 +55,4 @@ const LimboHeader = (props) => {
    )
 }
 
-export default LimboHeader;
+export default withRouter(LimboHeader);

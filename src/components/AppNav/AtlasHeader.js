@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { withRouter } from 'react-router';
 
 import history from '../../history';
 import AtlasIcon from 'components/icons/AtlasIcon';
@@ -25,7 +26,7 @@ const AtlasHeader = (props) => {
          }}
       >
          <IconButton
-            onClick={() => {history.goBack()}}
+            onClick={() => {history.push("/" + props.location.pathname.split("/").splice(1,3).join("/"))}}
          >
             <ArrowBackIcon style={{color: 'white'}}/>
          </IconButton>
@@ -44,4 +45,4 @@ const AtlasHeader = (props) => {
    )
 }
 
-export default AtlasHeader;
+export default withRouter(AtlasHeader);
