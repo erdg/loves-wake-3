@@ -105,7 +105,7 @@ class Home extends React.Component {
                   What is this? Who is this for?
                </Typography>
                <Typography variant="body1" paragraph >
-                  Love’s Wake is a tool made of collective memory. Here, you collaborate with others to
+                  Love’s Wake is a tool for collecting memories. Here, you collaborate with others to
                   build a memorial for someone you’ve all lost. Everyone contributes their pictures, memories, and energy.
                </Typography>
                <Typography variant="body1" paragraph >
